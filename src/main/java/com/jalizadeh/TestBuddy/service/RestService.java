@@ -1,7 +1,9 @@
 package com.jalizadeh.TestBuddy.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.jalizadeh.TestBuddy.exception.RestTemplateResponseErrorHandler;
+import com.jalizadeh.TestBuddy.filter.EmptyFilter;
+import com.jalizadeh.TestBuddy.filter.InvalidFilter;
+import com.jalizadeh.TestBuddy.filter.MissingFilter;
+import com.jalizadeh.TestBuddy.interfaces.iFilter;
 
 @Service
 public class RestService {
@@ -32,7 +38,55 @@ public class RestService {
 	}
 	
 
-	public StringBuffer sendRequest(String httpMethod, String url, Map<String, String> headerMap, Map<String, String> dataMap) {
+	public StringBuffer sendRequest() {
+		
+		/**
+		 * Total cases:
+		 * (2^p-1)*scenarios + 1 (ok case which is only 1)
+		 * 
+		 * P = 3 (user, pass, grant)
+		 * scenarios = 3 (empty, invalid, missing)
+		 * => 7 * 3 + 1 = 22 test case
+		 */
+		
+		final String sample="curl POST 'https://exmaple.com' --header 'Accept: application/json' --header 'Content-Type: application/x-www-form-urlencoded'  --header 'Authorization: Basic XYZ' --data-raw 'username=user@name.com&password=password123&grant_type=password'";
+		
+		
+		String httpMethod = "";
+		String url = "";
+		Map<String, String> header = new HashMap<String, String>();
+		Map<String, String> dataMap = new HashMap<String, String>();
+		
+		
+		String inputSplit[] = sample.split(" ");
+		for(String i : inputSplit) {
+			if(i.contains("GET") || i.contains("POST"))	
+				httpMethod = i;
+			
+			if(i.contains("https://"))
+				url = i.substring(1,i.length()-1);
+			
+			if(i.contains(": ")) {
+				String[] hPair = i.split(": ");
+				header.put(hPair[0], hPair[1]);
+			}
+			
+			if(i.contains("&")) {
+				
+				String[] dataPair = i.substring(1,i.length()-1).split("&");
+				for(String dp : dataPair) {
+					String[] d = dp.split("=");
+					dataMap.put(d[0], d[1]);
+				}
+			}
+		}
+		
+		System.out.println(httpMethod + " / " + url + " / " + header.size() + " / " + dataMap.size());
+		for (Entry<String, String> entry : dataMap.entrySet()) {
+		    System.out.println(entry.getKey() + "\t" + entry.getValue().toString());
+		}
+		
+		
 		// set headers
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -96,47 +150,24 @@ public class RestService {
 		//run first case which all are OK
 		result.append(handleRequest("OK - #0", url, dataMap, headers));
 		
-		//empty
-		for(int j = 1; j < lenght; j++) {
-			temp.clear();
-			temp.putAll(dataMap);
-			for(int i = 0; i < pNum; i++) {
-				if(!arr[i][j]) {
-					//System.out.println(dataArr[i] + " - " + i + "/"+j);
-					temp.put(dataArr[i], "");
-				}
-			}
-			
-			result.append(handleRequest("EMPTY - #" + j, url, temp, headers));
-		}
 		
-		//invalid
-		for (int j = 1; j < lenght; j++) {
-			temp.clear();
-			temp.putAll(dataMap);
-			for (int i = 0; i < pNum; i++) {
-				if (!arr[i][j]) {
-					// System.out.println(dataArr[i] + " - " + i + "/"+j);
-					temp.put(dataArr[i], dataMap.get(dataArr[i]) + "_INVALID");
-				}
-			}
-
-			result.append(handleRequest("INVALID - #" + j, url, temp, headers));
-		}
+		List<iFilter> filters = new ArrayList<iFilter>();
+		filters.add(new EmptyFilter());
+		//filters.add(new InvalidFilter());
+		//filters.add(new MissingFilter());
 		
-		
-		//missing
-		for (int j = 1; j < lenght; j++) {
-			temp.clear();
-			temp.putAll(dataMap);
-			for (int i = 0; i < pNum; i++) {
-				if (!arr[i][j]) {
-					// System.out.println(dataArr[i] + " - " + i + "/"+j);
-					temp.remove(dataArr[i]);
+		for(iFilter filter : filters) {
+			for(int j = 1; j < lenght; j++) {
+				temp.clear();
+				temp.putAll(dataMap);
+				for(int i = 0; i < pNum; i++) {
+					if(!arr[i][j]) {
+						temp = filter.applyFilter(temp, dataArr[i]);
+					}
 				}
+				
+				result.append(handleRequest(filter.getFilterName() + " - #" + j, url, temp, headers));
 			}
-
-			result.append(handleRequest("MISSING - #" + j, url, temp, headers));
 		}
 		
 		

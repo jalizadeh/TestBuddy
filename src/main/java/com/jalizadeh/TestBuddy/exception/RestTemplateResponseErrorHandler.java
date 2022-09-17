@@ -21,11 +21,9 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
     @Override
     public void handleError(ClientHttpResponse httpResponse) throws IOException {
 
-        if (httpResponse.getStatusCode()
-          .series() == HttpStatus.Series.SERVER_ERROR) {
+        if (httpResponse.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR) {
             // handle SERVER_ERROR
-        } else if (httpResponse.getStatusCode()
-          .series() == HttpStatus.Series.CLIENT_ERROR) {
+        } else if (httpResponse.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
             // handle CLIENT_ERROR
             if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
                 //throw new NotFoundException();
