@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "ebcb7357-60d8-4923-8cbf-1704bd61ddac",
+		"name": "TestBuddy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Simple 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+							"postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "username=mn_1631547449@byom.de&password=secret123&grant_type=password"
+				},
+				"url": {
+					"raw": "https://customer-i.bmwgroup.com/gcdm/oauth/token",
+					"protocol": "https",
+					"host": [
+						"customer-i",
+						"bmwgroup",
+						"com"
+					],
+					"path": [
+						"gcdm",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "400 - Empty body",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://customer-i.bmwgroup.com/gcdm/oauth/token",
+							"protocol": "https",
+							"host": [
+								"customer-i",
+								"bmwgroup",
+								"com"
+							],
+							"path": [
+								"gcdm",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 18 Sep 2022 07:31:55 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "87"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": ""
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Authorization, Origin, X-c2b-Authorization, X-c2b-mTAN, X-Requested-With, X-c2b-Sender-Id, X-c2b-External-Id, Content-Type, Accept, Cache-Control, KeyId, x-dtc"
+						},
+						{
+							"key": "Access-Control-Max-Age",
+							"value": "3628800"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE, HEAD"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin"
+						},
+						{
+							"key": "x-c2b-request-id",
+							"value": "rrt-1374166732152246650-d-geu1-19272-335589859-3"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"invalid_request\",\n    \"error_description\": \"Parameter response_type is missing\"\n}"
+				},
+				{
+					"name": "401 - Invalid Auth",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "username=mn_1631547449@byom.de&password=secret123&grant_type=password"
+						},
+						"url": {
+							"raw": "https://customer-i.bmwgroup.com/gcdm/oauth/token",
+							"protocol": "https",
+							"host": [
+								"customer-i",
+								"bmwgroup",
+								"com"
+							],
+							"path": [
+								"gcdm",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 18 Sep 2022 07:32:15 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-CorrelationID",
+							"value": "Id-7fc92663b2d61758f3c3ac8e 0"
+						},
+						{
+							"key": "Accept",
+							"value": "*/*"
+						},
+						{
+							"key": "Authorization",
+							"value": "Basic cXFjZGkzOmo1dG1hanBj"
+						},
+						{
+							"key": "Host",
+							"value": "int-api-emea.bmwgroup.net"
+						},
+						{
+							"key": "Postman-Token",
+							"value": "c2465b18-00db-4177-af04-10158e7c08e8"
+						},
+						{
+							"key": "traceparent",
+							"value": "00-5088c37986e92d3f298576dcdbf8d3ba-2fcf7f306c2bf45e-01"
+						},
+						{
+							"key": "tracestate",
+							"value": "ec57fc0c-3d6bc570@dt=fw4;4;73a212fd;36ea;4;0;0;1e4;a4e8;2h01;3h73a212fd;4h36ea;5h01;7h2fcf7f306c2bf45e"
+						},
+						{
+							"key": "X-dynaTrace",
+							"value": "FW4;1030473072;4;1940001533;14058;4;-329778164;484;f5bf;2h01;3h73a212fd;4h36ea;5h01;6h5088c37986e92d3f298576dcdbf8d3ba;7h2fcf7f306c2bf45e"
+						},
+						{
+							"key": "X-dynaTrace-Application",
+							"value": "v=2;appId=ea7c4b59f27d43eb;cookieDomain=bmwgroup.com;rid=553468539;rpid=256069962;en=l00w9ezo"
+						},
+						{
+							"key": "X-dynaTrace-RequestState",
+							"value": "agentId=0x03960a2c73a212fd&pathDepth=1"
+						},
+						{
+							"key": "X-ruxit-Apache-ServerNamePorts",
+							"value": "customer-i.bmwgroup.com"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": ""
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Authorization, Origin, X-c2b-Authorization, X-c2b-mTAN, X-Requested-With, X-c2b-Sender-Id, X-c2b-External-Id, Content-Type, Accept, Cache-Control, KeyId, x-dtc"
+						},
+						{
+							"key": "Access-Control-Max-Age",
+							"value": "3628800"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE, HEAD"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "strict-origin"
+						},
+						{
+							"key": "x-c2b-request-id",
+							"value": "rrt-1374166732152246650-d-geu1-19272-335589859-5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"Client authentication failed (e.g., unknown client, no client authentication included, or unsupported authentication method).\"\n}"
+				}
+			]
+		},
+		{
+			"name": "ACF1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+							"postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{sso_client_secret}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{sso_client_id}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "username={{loginId}}&password=secret123&grant_type=password"
+				},
+				"url": {
+					"raw": "https://customer-i.bmwgroup.com/gcdm/oauth/token",
+					"protocol": "https",
+					"host": [
+						"customer-i",
+						"bmwgroup",
+						"com"
+					],
+					"path": [
+						"gcdm",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
