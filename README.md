@@ -30,3 +30,8 @@ Considering a request with 3 parameters, will produce 8 test cases (2^3). The fo
 | P2  | T  | T  | F  | F  | T  | T  | F  | F  |
 | P3  | T  | T  | T  | T  | F  | F  | F  | F  |
 | Result  | **T**  | **F**  | **F**  | **F**  | **F**  | **F**  | **F**  | **F**  |
+
+## Result
+The end result will be auto-generated JSON file of the collection containing all the test cases
+
+![](doc/result-1.JPG)

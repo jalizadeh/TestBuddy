@@ -18,14 +18,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.jalizadeh.TestBuddy.exception.RestTemplateResponseErrorHandler;
 import com.jalizadeh.TestBuddy.filter.EmptyFilter;
-import com.jalizadeh.TestBuddy.filter.InvalidFilter;
-import com.jalizadeh.TestBuddy.filter.MissingFilter;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanHeader;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
-import com.jalizadeh.TestBuddy.runner.PostmanRunResult;
 
 @Service
 public class RestService {
@@ -33,6 +30,7 @@ public class RestService {
 	private final RestTemplate restTemplate;
 	private StringBuffer result= new StringBuffer();
 	private List<PostmanResponse> responseList = new ArrayList<PostmanResponse>();
+	private PostmanItem item = null;
 	
 	
 	public RestService(RestTemplateBuilder restTemplateBuilder) {
@@ -183,10 +181,7 @@ public class RestService {
 
 	
 	public List<PostmanResponse> parseCollection(PostmanCollection collection) {
-		PostmanItem item = collection.item.get(0).item.get(0);
-		
-		String name = item.name;
-		
+		item = collection.item.get(0).item.get(0);
 		
 		String httpMethod = item.request.method;
 		String url = item.request.url.raw;
@@ -348,6 +343,8 @@ public class RestService {
 		postmanResponse.code = response.getStatusCodeValue();
 		postmanResponse._postman_previewlanguage = "json";
 		postmanResponse.body = response.getBody();
+		postmanResponse.header = new ArrayList<PostmanHeader>();
+		postmanResponse.originalRequest = item.request;
 		
 		
 		//return title + body + "<br>" + resp;
