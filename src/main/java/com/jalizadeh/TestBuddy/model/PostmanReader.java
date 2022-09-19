@@ -44,9 +44,7 @@ public class PostmanReader {
 			return readCollectionFileClasspath(filePath);
 		}
 		InputStream stream = new FileInputStream(new File(filePath));
-		//new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.joining("\n"));
 		PostmanCollection collection = om.readValue(stream, PostmanCollection.class);
-		System.out.println(collection.info._postman_id);
 		stream.close();
 		return collection;
 	}

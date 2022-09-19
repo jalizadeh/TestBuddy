@@ -1,13 +1,16 @@
 package com.jalizadeh.TestBuddy.runner;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanFolder;
+import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanReader;
 import com.jalizadeh.TestBuddy.model.PostmanVariables;
 
@@ -58,14 +61,32 @@ public class PostmanCollectionRunner implements Runnable {
 		PostmanRunResult runResult = new PostmanRunResult();
 
 		PostmanReader reader = new PostmanReader();
-		PostmanCollection c = reader.readCollectionFile(colFilename);
-		c.init();
+		PostmanCollection collection = reader.readCollectionFile(colFilename);
+		collection.init();
 		//PostmanEnvironment e = reader.readEnvironmentFile(envFilename);
 		//e.init();
 		PostmanFolder folder = null;
 		if (folderName != null && !folderName.isEmpty()) {
-			folder = c.folderLookup.get(folderName);
+			folder = collection.folderLookup.get(folderName);
 		}
+		
+		for(PostmanFolder f : collection.item ) {
+			System.out.println("Reuqest: " + f.name + " /  " + f.item.size());
+			
+			for(PostmanItem item : f.item) {
+				System.out.println("item: " + item.name);
+			}
+		}
+		
+		
+		//writing test to new file
+		ObjectMapper mapper = new ObjectMapper();
+	    try {  
+	        mapper.writeValue(new File("C:/Users/Javad Alizadeh/Desktop/result.json"), collection );
+	    } catch (IOException e) {  
+	        e.printStackTrace();  
+	    } 
+	    
 
 		/*
 		PostmanVariables var;
@@ -93,10 +114,48 @@ public class PostmanCollectionRunner implements Runnable {
 		}
 		*/
 
-		logger.info("@@@@@ Yay! All Done!");
-		logger.info(runResult.toString());
+		logger.info("---- Collection loaded succesfully ----");
 		return runResult;
 	}
+	
+	
+	
+	
+	public PostmanCollection parseCollection(String colFilename, String envFilename, String folderName,
+			boolean haltOnError, boolean useSharedPostmanVars) throws IOException {
+		logger.info("@@@@@ POSTMAN Runner start: {}", colFilename);
+		PostmanRunResult runResult = new PostmanRunResult();
+
+		PostmanReader reader = new PostmanReader();
+		PostmanCollection collection = reader.readCollectionFile(colFilename);
+		collection.init();
+		//PostmanEnvironment e = reader.readEnvironmentFile(envFilename);
+		//e.init();
+		PostmanFolder folder = null;
+		if (folderName != null && !folderName.isEmpty()) {
+			folder = collection.folderLookup.get(folderName);
+		}
+		
+		for(PostmanFolder f : collection.item ) {
+			System.out.println("Reuqest: " + f.name + " /  " + f.item.size());
+			
+			for(PostmanItem item : f.item) {
+				System.out.println("item: " + item.name);
+			}
+		}
+		
+		//writing test to new file
+		ObjectMapper mapper = new ObjectMapper();
+	    try {  
+	        mapper.writeValue(new File("C:/Users/Javad Alizadeh/Desktop/result.json"), collection );
+	    } catch (IOException e) {  
+	        e.printStackTrace();
+	    } 
+	    
+		logger.info("---- Collection loaded succesfully ----");
+		return collection;
+	}
+	
 
 	/*
 	private boolean runFolder(boolean haltOnError, PostmanRequestRunner runner, PostmanVariables var,
