@@ -334,7 +334,6 @@ public class RestService {
 		String body = response.getBody();
 		String resp = response.toString();
 		
-		
 		System.err.println(title);
 		System.out.println(body + "\n" + resp);
 		
@@ -346,8 +345,6 @@ public class RestService {
 		postmanResponse.header = new ArrayList<PostmanHeader>();
 		postmanResponse.originalRequest = item.request;
 		
-		
-		//return title + body + "<br>" + resp;
 		return postmanResponse;
 	}
 }

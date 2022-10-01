@@ -7,7 +7,6 @@ import java.util.Map;
 public class PostmanCollection {
 	public PostmanInfo info;
 	public List<PostmanFolder> item;
-	public String schema;
 
 	public Map<String, PostmanFolder> folderLookup = new HashMap<>();
 
