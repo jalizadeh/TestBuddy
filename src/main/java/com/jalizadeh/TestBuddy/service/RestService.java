@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -185,6 +186,12 @@ public class RestService {
 		
 		String httpMethod = item.request.method;
 		String url = item.request.url.raw;
+
+		//how data should be parsed and sent to endpoint
+		String bodyMode = item.request.body.mode;
+		String bodyOptions = item.request.body.options.raw.language;
+		String dataType = bodyMode + "-" + bodyOptions;
+		
 		Map<String, String> header = item.request.getHeaders();
 		String data = item.request.getData();
 		Map<String, String> dataMap = new HashMap<String, String>();
@@ -262,8 +269,12 @@ public class RestService {
 		}
 
 		
+		//for now only raw_text is supported
+		//TODO: change to oop to support Urlencode / JSON 
+		
+		
 		//run first case which all are OK
-		responseList.add(handleCollectionRequest(0, "OK", "", url, dataMap, headers));
+		responseList.add(handleCollectionRequestRaw_Text(0, "OK", "", url, dataMap, headers));
 		
 		
 		List<iFilter> filters = new ArrayList<iFilter>();
@@ -286,7 +297,7 @@ public class RestService {
 				
 				String paramNames = String.join(",", paramName);
 				paramName.clear();
-				responseList.add(handleCollectionRequest(j, filter.getFilterName(), paramNames, url, temp, headers));
+				responseList.add(handleCollectionRequestRaw_Text(j, filter.getFilterName(), paramNames, url, temp, headers));
 			}
 		}
 		
@@ -317,7 +328,7 @@ public class RestService {
 	}
 	
 	
-	private PostmanResponse handleCollectionRequest(int count, String testCase, String paramName, String url, Map<String, String> dataMap, HttpHeaders headers) {
+	private PostmanResponse handleCollectionRequestRaw_Text(int count, String testCase, String paramName, String url, Map<String, String> dataMap, HttpHeaders headers) {
 		//start delay
 		try {
 			TimeUnit.SECONDS.sleep(1);
@@ -325,7 +336,11 @@ public class RestService {
 			e.printStackTrace();
 		}
 		
-		HttpEntity<Map<String, String>> entity = new HttpEntity<>(dataMap, headers);
+		String concatData = dataMap.entrySet().stream().map((entry) -> 
+					entry.getKey() + "=" + entry.getValue()
+				).collect(Collectors.joining("&"));
+		
+		HttpEntity<String> entity = new HttpEntity<String>(concatData, headers);		
 		ResponseEntity<String> response = this.restTemplate.postForEntity(url, entity, String.class);
 		
 		PostmanResponse postmanResponse = new PostmanResponse();
@@ -343,8 +358,10 @@ public class RestService {
 		postmanResponse._postman_previewlanguage = "json";
 		postmanResponse.body = response.getBody();
 		postmanResponse.header = new ArrayList<PostmanHeader>();
+		item.request.body.raw = concatData;
 		postmanResponse.originalRequest = item.request;
 		
-		return postmanResponse;
+		PostmanResponse newPR = postmanResponse;
+		return newPR;
 	}
 }

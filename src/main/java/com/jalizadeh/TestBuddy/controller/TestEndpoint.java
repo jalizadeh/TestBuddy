@@ -66,13 +66,15 @@ public class TestEndpoint {
 			return new ResponseEntity<String>("Invalid body", HttpStatus.BAD_REQUEST);
 		}
 		
-		ResponseEntity<String> response;
+		//by default it is bad request
+		ResponseEntity<String> response = new ResponseEntity<String>("Unknown error", HttpStatus.BAD_REQUEST);
+		
 		String[] bodyData = body.split("&");
 		Map<String, String> paramMap = new HashMap<String, String>();
 		
 		for(String param : bodyData) {
 			String[] pSplit = param.split("=");
-			paramMap.put(pSplit[0], pSplit[1]);
+			paramMap.put(pSplit[0], pSplit.length == 2 ? pSplit[1] : "");
 		}
 		
 		/*
@@ -95,9 +97,8 @@ public class TestEndpoint {
 		}
 		
 		if(!paramMap.get("grant_type").equals("password")) {
-			response = new ResponseEntity<String>("Invalid grant_type", HttpStatus.OK);
+			response = new ResponseEntity<String>("Invalid grant_type", HttpStatus.BAD_REQUEST);
 		}
-		
 		
 		return response;
 	}
