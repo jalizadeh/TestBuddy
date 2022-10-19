@@ -1,13 +1,14 @@
 package com.jalizadeh.TestBuddy.service;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,7 @@ public class RestService {
 	private StringBuffer result= new StringBuffer();
 	private List<PostmanResponse> responseList = new ArrayList<PostmanResponse>();
 	private PostmanItem item = null;
+	private int delay = 0;
 	
 	
 	public RestService(RestTemplateBuilder restTemplateBuilder) {
@@ -187,8 +189,11 @@ public class RestService {
 	}
 
 	
-	public List<PostmanResponse> parseCollection(PostmanCollection collection) throws CloneNotSupportedException {
+	public PostmanCollection parseCollection(PostmanCollection collection, Optional<Integer> delay) throws CloneNotSupportedException {
 		responseList.clear();
+		this.delay = (int) delay.orElse(0); 
+		
+		//for now, always the first item is selected
 		item = collection.item.get(0).item.get(0);
 		
 		String httpMethod = item.request.method;
@@ -199,8 +204,8 @@ public class RestService {
 		String bodyOptions = item.request.body.options.raw.language;
 		String dataType = bodyMode + "-" + bodyOptions;
 		
-		Map<String, String> header = item.request.getHeaders();
 		String data = item.request.getData();
+		Map<String, String> header = item.request.getHeaders();
 		Map<String, String> dataMap = new HashMap<String, String>();
 		
 		String[] dataPair = data.split("&");
@@ -220,11 +225,8 @@ public class RestService {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
 
-		
-
 		int pNum = dataMap.size();
 		int lenght = (int) Math.pow(2, pNum);
-		// iTestCase[][] arr = new TestCase[pNum][lenght];
 		boolean[][] arr = new boolean[pNum][lenght];
 
 		int space = 0;
@@ -235,7 +237,6 @@ public class RestService {
 			counter = 1;
 			lastVal = true;
 			for (int j = 0; j < lenght; j++) {
-				// arr[i][j] = new TestCase(lastVal);
 				arr[i][j] = lastVal;
 
 				if (counter == space) {
@@ -309,7 +310,10 @@ public class RestService {
 		}
 		
 		
-		return responseList;
+		item.response = responseList;
+		collection.info.name = collection.info.name + " " + LocalDateTime.now(); 
+		
+		return collection;
 	}
 	
 	
@@ -337,14 +341,13 @@ public class RestService {
 	
 	private PostmanResponse handleCollectionRequestRaw_Text(int count, String testCase, String paramName, 
 			String url, Map<String, String> dataMap, HttpHeaders headers) throws CloneNotSupportedException {
-		/*
+
 		//start delay
 		try {
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.SECONDS.sleep(delay);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		*/
 		
 		String concatData = dataMap.entrySet().stream().map((entry) -> 
 					entry.getKey() + "=" + entry.getValue()

@@ -3,6 +3,7 @@ package com.jalizadeh.TestBuddy.runner;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,13 +130,16 @@ public class PostmanCollectionRunner implements Runnable {
 		PostmanReader reader = new PostmanReader();
 		PostmanCollection collection = reader.readCollectionFile(colFilename);
 		collection.init();
+		
 		//PostmanEnvironment e = reader.readEnvironmentFile(envFilename);
 		//e.init();
+		
 		PostmanFolder folder = null;
 		if (folderName != null && !folderName.isEmpty()) {
 			folder = collection.folderLookup.get(folderName);
 		}
 		
+		System.out.println("Folder list:");
 		for(PostmanFolder f : collection.item ) {
 			System.out.println("Reuqest: " + f.name + " /  " + f.item.size());
 			
@@ -143,15 +147,7 @@ public class PostmanCollectionRunner implements Runnable {
 				System.out.println("item: " + item.name);
 			}
 		}
-		
-		//writing test to new file
-		ObjectMapper mapper = new ObjectMapper();
-	    try {  
-	        mapper.writeValue(new File("C:/Users/Javad Alizadeh/Desktop/result.json"), collection );
-	    } catch (IOException e) {  
-	        e.printStackTrace();
-	    } 
-	    
+
 		logger.info("---- Collection loaded succesfully ----");
 		return collection;
 	}

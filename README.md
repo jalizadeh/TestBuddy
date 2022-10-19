@@ -10,14 +10,17 @@ First phase, focuses on importing requests from **Postman** collection and savin
 A parameter of a request can be a string, number, boolean, array, object, etc. Providing correct parameter leads to a positive test, while incorrect one (for any possible reason) can lead to negative test case.
 
 ### Sceanrios:
-- All parameters are OK (+)
-- Empty parameter (-)
+- [x] All parameters are OK (+)
+- [x] Empty parameter (-)
     - the parameter exists but it is empty
-- Invalid parameter (-)
+- [x] Invalid parameter (-)
     - the parameter exists and it is invalid
-- Missing parameter (-)
+- [x] Missing parameter (-)
     - the parameter does not exist
 - and more ...
+
+The checked scenarios above are implemented via the **iFilter** interface.
+
 
 ### Example
 > Note: This example assumes only with correct parameters, the test will be positive (response is 200 OK)
@@ -34,4 +37,7 @@ Considering a request with 3 parameters, will produce 8 test cases (2^3). The fo
 ## Result
 The end result will be auto-generated JSON file of the collection containing all the test cases
 
+[Sample Result](doc/result-full.json)
+
 ![](doc/result-1.JPG)
+
