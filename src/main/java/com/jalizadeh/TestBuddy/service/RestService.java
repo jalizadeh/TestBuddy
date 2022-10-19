@@ -1,11 +1,13 @@
 package com.jalizadeh.TestBuddy.service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -19,10 +21,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.jalizadeh.TestBuddy.exception.RestTemplateResponseErrorHandler;
 import com.jalizadeh.TestBuddy.filter.EmptyFilter;
+import com.jalizadeh.TestBuddy.filter.InvalidFilter;
+import com.jalizadeh.TestBuddy.filter.MissingFilter;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
+import com.jalizadeh.TestBuddy.model.PostmanBody;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanHeader;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
+import com.jalizadeh.TestBuddy.model.PostmanRequest;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
 @Service
@@ -181,7 +187,8 @@ public class RestService {
 	}
 
 	
-	public List<PostmanResponse> parseCollection(PostmanCollection collection) {
+	public List<PostmanResponse> parseCollection(PostmanCollection collection) throws CloneNotSupportedException {
+		responseList.clear();
 		item = collection.item.get(0).item.get(0);
 		
 		String httpMethod = item.request.method;
@@ -279,8 +286,8 @@ public class RestService {
 		
 		List<iFilter> filters = new ArrayList<iFilter>();
 		filters.add(new EmptyFilter());
-		//filters.add(new InvalidFilter());
-		//filters.add(new MissingFilter());
+		filters.add(new InvalidFilter());
+		filters.add(new MissingFilter());
 
 		List<String> paramName = new ArrayList<String>();
 		
@@ -328,17 +335,21 @@ public class RestService {
 	}
 	
 	
-	private PostmanResponse handleCollectionRequestRaw_Text(int count, String testCase, String paramName, String url, Map<String, String> dataMap, HttpHeaders headers) {
+	private PostmanResponse handleCollectionRequestRaw_Text(int count, String testCase, String paramName, 
+			String url, Map<String, String> dataMap, HttpHeaders headers) throws CloneNotSupportedException {
+		/*
 		//start delay
 		try {
 			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		*/
 		
 		String concatData = dataMap.entrySet().stream().map((entry) -> 
 					entry.getKey() + "=" + entry.getValue()
 				).collect(Collectors.joining("&"));
+		System.out.println(concatData);
 		
 		HttpEntity<String> entity = new HttpEntity<String>(concatData, headers);		
 		ResponseEntity<String> response = this.restTemplate.postForEntity(url, entity, String.class);
@@ -358,10 +369,17 @@ public class RestService {
 		postmanResponse._postman_previewlanguage = "json";
 		postmanResponse.body = response.getBody();
 		postmanResponse.header = new ArrayList<PostmanHeader>();
-		item.request.body.raw = concatData;
-		postmanResponse.originalRequest = item.request;
 		
-		PostmanResponse newPR = postmanResponse;
-		return newPR;
+		/**
+		 * As I need change the data for each body, I need to clone the original object
+		 * otherwise, every time I modify the original reference
+		 */
+		PostmanRequest newReq = (PostmanRequest) item.request.clone();
+		PostmanBody newBody = (PostmanBody) item.request.body.clone();
+		newBody.raw = concatData;
+		newReq.body = newBody;
+		postmanResponse.originalRequest = newReq;
+		
+		return postmanResponse;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostmanRequest {
+public class PostmanRequest implements Cloneable{
 	
 	public PostmanAuth auth;
 	public String method;
@@ -90,4 +90,14 @@ public class PostmanRequest {
 		}
 		return result;
 	}
+
+	
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+	
+	
+	
 }

@@ -32,7 +32,7 @@ public class Handler {
 	
 	
 	@GetMapping("/json")
-	public List<PostmanResponse> parseJson() {  
+	public List<PostmanResponse> parseJson() throws CloneNotSupportedException {  
 	    String jsonPath = "C:/sample.json";
 	    
 	    PostmanCollection collection = new PostmanCollection();
