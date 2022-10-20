@@ -8,11 +8,14 @@ import java.util.Map.Entry;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.jalizadeh.TestBuddy.model.PostmanCollection;
 
 @RestController
 public class TestEndpoint {
@@ -76,6 +79,45 @@ public class TestEndpoint {
 			String[] pSplit = param.split("=");
 			paramMap.put(pSplit[0], pSplit.length == 2 ? pSplit[1] : "");
 		}
+		
+		/*
+		for (Entry<String, String> p : paramMap.entrySet()) {
+			System.out.println(p.getKey() + "\t" + p.getValue().toString());
+		}
+		*/
+		
+		if(paramMap.size() != 3 
+				|| !paramMap.containsKey("username") 
+				|| !paramMap.containsKey("password")
+				|| !paramMap.containsKey("grant_type")) {
+			return new ResponseEntity<String>("Missing parameter",HttpStatus.BAD_REQUEST);
+		}
+		
+		if(paramMap.get("username").equals("user@name.com") && paramMap.get("password").equals("123456")) {
+			response = new ResponseEntity<String>("OK", HttpStatus.OK);
+		} else {
+			response = new ResponseEntity<String>("Username or password is invalid",HttpStatus.UNAUTHORIZED);
+		}
+		
+		if(!paramMap.get("grant_type").equals("password")) {
+			response = new ResponseEntity<String>("Invalid grant_type", HttpStatus.BAD_REQUEST);
+		}
+		
+		return response;
+	}
+	
+	
+	@PostMapping( value = "/xform", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ResponseEntity<String> parseXForm(@RequestParam Map<String, String> body) throws Exception {
+		
+		if( body == null || body.isEmpty() ) {
+			return new ResponseEntity<String>("Invalid body", HttpStatus.BAD_REQUEST);
+		}
+		
+		//by default it is bad request
+		ResponseEntity<String> response = new ResponseEntity<String>("Unknown error", HttpStatus.BAD_REQUEST);
+		
+		Map<String, String> paramMap = body;
 		
 		/*
 		for (Entry<String, String> p : paramMap.entrySet()) {

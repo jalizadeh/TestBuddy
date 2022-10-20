@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PostmanRequest implements Cloneable{
 	
@@ -20,10 +21,8 @@ public class PostmanRequest implements Cloneable{
 			switch (body.mode) {
 				case "raw":
 					return body.raw;
-				/*
 				case "urlencoded":
 					return urlFormEncodeData(body.urlencoded);
-				*/
 				default:
 					return "";
 			}
@@ -38,20 +37,22 @@ public class PostmanRequest implements Cloneable{
 				case "raw":
 					return var.replace(body.raw);
 				case "urlencoded":
-					return urlFormEncodeData(var, body.urlencoded);
+					return urlFormEncodeData(body.urlencoded);
 				default:
 					return "";
 			}
 		}
 	}
 
-	public String urlFormEncodeData(PostmanVariables var, List<PostmanUrlEncoded> formData) {
+	public String urlFormEncodeData(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
 		String result = "";
 		int i = 0;
 		for (PostmanUrlEncoded encoded : formData) {
-			result += encoded.key + "=" + URLEncoder.encode(var.replace(encoded.value));
+			//result += encoded.key + "=" + URLEncoder.encode(var.replace(encoded.value));
+			result += encoded.key + "=" + URLEncoder.encode(encoded.value);
 			if (i < formData.size() - 1) {
 				result += "&";
+				i++;
 			}
 		}
 		return result;
