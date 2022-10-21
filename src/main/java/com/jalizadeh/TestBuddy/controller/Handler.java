@@ -20,11 +20,6 @@ public class Handler {
 	@Autowired
 	private RestService restService;
 
-	@GetMapping("/curl")
-	public StringBuffer parseCurl() {
-		return restService.sendRequest();
-	}
-
 	@GetMapping("/json")
 	public PostmanCollection parseJson(@RequestParam(required = false) Optional<Integer> delay) throws CloneNotSupportedException {
 		String jsonPath = "C:/sample.json";
@@ -32,7 +27,6 @@ public class Handler {
 		PostmanCollection collection = new PostmanCollection();
 		ObjectMapper mapper = new ObjectMapper();
 		PostmanCollection parsedCollection = null;
-
 		
 		try {
 			collection = new PostmanCollectionRunner().parseCollection(jsonPath, null, "Test", false, false);
