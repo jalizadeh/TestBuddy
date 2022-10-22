@@ -24,6 +24,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.jalizadeh.TestBuddy.exception.RestTemplateResponseErrorHandler;
 import com.jalizadeh.TestBuddy.filter.EmptyFilter;
+import com.jalizadeh.TestBuddy.filter.InvalidFilter;
+import com.jalizadeh.TestBuddy.filter.MissingFilter;
+import com.jalizadeh.TestBuddy.filter.RandomFilter;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.interfaces.iRequest;
 import com.jalizadeh.TestBuddy.model.PostmanBody;
@@ -141,9 +144,10 @@ public class RestService {
 		
 		
 		List<iFilter> filters = new ArrayList<iFilter>();
-		filters.add(new EmptyFilter());
+		//filters.add(new EmptyFilter());
 		//filters.add(new InvalidFilter());
 		//filters.add(new MissingFilter());
+		filters.add(new RandomFilter());
 
 		Map<String, String> modifiedParameters = new HashMap<>();
 		List<String> paramName = new ArrayList<String>();
