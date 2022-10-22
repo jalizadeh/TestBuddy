@@ -27,7 +27,6 @@ public class Handler {
 
 		PostmanCollection collection = new PostmanCollection();
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(Include.NON_NULL);
 		PostmanCollection parsedCollection = null;
 		
 		try {

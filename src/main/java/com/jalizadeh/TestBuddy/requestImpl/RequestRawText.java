@@ -4,36 +4,21 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
-import com.jalizadeh.TestBuddy.exception.RestTemplateResponseErrorHandler;
-import com.jalizadeh.TestBuddy.interfaces.iRequest;
+import com.jalizadeh.TestBuddy.interfaces.RequestAbstract;
+import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
 import com.jalizadeh.TestBuddy.model.PostmanBody;
 import com.jalizadeh.TestBuddy.model.PostmanHeader;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanRequest;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
-public class RequestRawText implements iRequest {
-	
-	@Autowired
-	private final RestTemplate restTemplate;
-	
-	@Autowired
-	private RestTemplateBuilder restTemplateBuilder;
+public class RequestRawText extends RequestPostmanAbstract {
 	
 	
-	public RequestRawText() {
-		this.restTemplateBuilder = new RestTemplateBuilder();
-		this.restTemplate = restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
-	}
-	
-
 	@Override
 	public PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName, String url,
 			Map<String, String> dataMap, HttpHeaders headers) throws CloneNotSupportedException {
