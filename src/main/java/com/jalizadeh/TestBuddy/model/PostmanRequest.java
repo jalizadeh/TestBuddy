@@ -49,7 +49,7 @@ public class PostmanRequest implements Cloneable{
 		int i = 0;
 		for (PostmanUrlEncoded encoded : formData) {
 			//result += encoded.key + "=" + URLEncoder.encode(var.replace(encoded.value));
-			result += encoded.key + "=" + URLEncoder.encode(encoded.value);
+			result += encoded.key + "=" + encoded.value;
 			if (i < formData.size() - 1) {
 				result += "&";
 				i++;

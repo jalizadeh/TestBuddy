@@ -1,6 +1,7 @@
 package com.jalizadeh.TestBuddy.requestImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ import com.jalizadeh.TestBuddy.model.PostmanHeader;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanRequest;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
+import com.jalizadeh.TestBuddy.model.PostmanUrlEncoded;
 
 public class RequestUrlencodedText implements iRequest{
 
@@ -76,8 +78,12 @@ public class RequestUrlencodedText implements iRequest{
 		postmanResponse.name = response.getStatusCodeValue() + " - " + testCase + " " + paramName;
 		postmanResponse.status = response.getStatusCode().name();
 		postmanResponse.code = response.getStatusCodeValue();
-		postmanResponse._postman_previewlanguage = "json";
 		postmanResponse.body = response.getBody();
+		
+		//TODO: based on response's Content-Type
+		postmanResponse._postman_previewlanguage = "json";
+		
+		//TODO: fetch response's header
 		postmanResponse.header = new ArrayList<PostmanHeader>();
 
 		/**
@@ -86,7 +92,17 @@ public class RequestUrlencodedText implements iRequest{
 		 */
 		PostmanRequest newReq = (PostmanRequest) item.request.clone();
 		PostmanBody newBody = (PostmanBody) item.request.body.clone();
-		newBody.raw = concatData;
+		
+		List<PostmanUrlEncoded> urlencodedList = new ArrayList<PostmanUrlEncoded>();
+		for(Entry<String, String>  e : dataMap.entrySet()) {
+			PostmanUrlEncoded u = new PostmanUrlEncoded();
+			u.key = e.getKey();
+			u.value = e.getValue();
+			u.type = "text";
+			urlencodedList.add(u);
+		}
+		
+		newBody.urlencoded = urlencodedList;
 		newReq.body = newBody;
 		postmanResponse.originalRequest = newReq;
 

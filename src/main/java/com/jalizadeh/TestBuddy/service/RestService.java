@@ -79,7 +79,7 @@ public class RestService {
 		delay = (int) inDelay.orElse(0); 
 		
 		//for now, only the first request in the first item is selected
-		item = collection.item.get(0).item.get(0);
+		item = collection.item.get(0).item.get(1);
 		
 		String httpMethod = item.request.method;
 		String url = item.request.url.raw;
@@ -144,9 +144,9 @@ public class RestService {
 		
 		
 		List<iFilter> filters = new ArrayList<iFilter>();
-		//filters.add(new EmptyFilter());
-		//filters.add(new InvalidFilter());
-		//filters.add(new MissingFilter());
+		filters.add(new EmptyFilter());
+		filters.add(new InvalidFilter());
+		filters.add(new MissingFilter());
 		filters.add(new RandomFilter());
 
 		Map<String, String> modifiedParameters = new HashMap<>();

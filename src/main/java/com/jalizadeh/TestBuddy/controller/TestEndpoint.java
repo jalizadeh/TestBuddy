@@ -1,5 +1,7 @@
 package com.jalizadeh.TestBuddy.controller;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -108,16 +110,14 @@ public class TestEndpoint {
 	
 	
 	@PostMapping( value = "/xform", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public ResponseEntity<String> parseXForm(@RequestParam Map<String, String> body) throws Exception {
+	public ResponseEntity<String> parseXForm(@RequestParam Map<String, String> paramMap) throws Exception {
 		
-		if( body == null || body.isEmpty() ) {
+		if( paramMap == null || paramMap.isEmpty() ) {
 			return new ResponseEntity<String>("Invalid body", HttpStatus.BAD_REQUEST);
 		}
 		
 		//by default it is bad request
 		ResponseEntity<String> response = new ResponseEntity<String>("Unknown error", HttpStatus.BAD_REQUEST);
-		
-		Map<String, String> paramMap = body;
 		
 		/*
 		for (Entry<String, String> p : paramMap.entrySet()) {

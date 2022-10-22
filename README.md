@@ -17,6 +17,8 @@ A parameter of a request can be a string, number, boolean, array, object, etc. P
     - the parameter exists and it is invalid
 - [x] Missing parameter (-)
     - the parameter does not exist
+- [x] Random parameter (-)
+    - the parameter is a random value (first part of UUID)
 - and more ...
 
 The checked scenarios above are implemented via the **iFilter** interface.
@@ -41,3 +43,14 @@ The end result will be auto-generated JSON file of the collection containing all
 
 ![](doc/result-1.JPG)
 
+
+
+## Request Types based on body format
+
+### raw
+- The body is plain text
+- **&amp;** seperated
+
+### x-www-form-urlencoded
+- key-value pairs
+- parameters can be disabled (*not implemented yet*)
