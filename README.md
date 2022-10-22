@@ -39,9 +39,9 @@ Considering a request with 3 parameters, will produce 8 test cases (2^3). The fo
 ## Result
 The end result will be auto-generated JSON file of the collection containing all the test cases
 
-[Sample Result](doc/result-full.json)
+[Sample Result](assets/result-full.json)
 
-![](doc/result-1.JPG)
+![](assets/result-1.JPG)
 
 
 
