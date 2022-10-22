@@ -15,7 +15,6 @@ import org.springframework.util.MultiValueMap;
 
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
 import com.jalizadeh.TestBuddy.model.PostmanBody;
-import com.jalizadeh.TestBuddy.model.PostmanHeader;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanRequest;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
@@ -63,12 +62,11 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 		postmanResponse.status = response.getStatusCode().name();
 		postmanResponse.code = response.getStatusCodeValue();
 		postmanResponse.body = response.getBody();
+		postmanResponse.header = extractResponseHeader(response);
 		
 		//TODO: based on response's Content-Type
 		postmanResponse._postman_previewlanguage = "json";
 		
-		//TODO: fetch response's header
-		postmanResponse.header = new ArrayList<PostmanHeader>();
 
 		/**
 		 * As I need change the data for each body, I need to clone the original object

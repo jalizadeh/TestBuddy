@@ -1,6 +1,5 @@
 package com.jalizadeh.TestBuddy.requestImpl;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -8,10 +7,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import com.jalizadeh.TestBuddy.interfaces.RequestAbstract;
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
 import com.jalizadeh.TestBuddy.model.PostmanBody;
-import com.jalizadeh.TestBuddy.model.PostmanHeader;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanRequest;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
@@ -47,13 +44,13 @@ public class RequestRawText extends RequestPostmanAbstract {
 
 		System.err.println(title);
 		System.out.println(body + "\n" + resp);
-
+		
 		postmanResponse.name = response.getStatusCodeValue() + " - " + testCase + " " + paramName;
 		postmanResponse.status = response.getStatusCode().name();
 		postmanResponse.code = response.getStatusCodeValue();
+		postmanResponse.header = extractResponseHeader(response);
 		postmanResponse._postman_previewlanguage = "json";
 		postmanResponse.body = response.getBody();
-		postmanResponse.header = new ArrayList<PostmanHeader>();
 
 		/**
 		 * As I need change the data for each body, I need to clone the original object
@@ -67,5 +64,4 @@ public class RequestRawText extends RequestPostmanAbstract {
 
 		return postmanResponse;
 	}
-
 }

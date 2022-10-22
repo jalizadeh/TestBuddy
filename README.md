@@ -54,3 +54,20 @@ The end result will be auto-generated JSON file of the collection containing all
 ### x-www-form-urlencoded
 - key-value pairs
 - parameters can be disabled (*not implemented yet*)
+
+
+
+## TODO
+- [x] Parse Postman collectiodn
+- [x] Parse *raw* body
+- [x] Parse *x-www-form-urlencoded* body
+- ...
+- [x] Add response's headers to PostmanResponse object
+- [ ] Fix _postman_previewlanguage
+- [ ] Use requests's header in RestService
+- [ ] Apply filter on header too
+- [ ] Bounding tests (filter)
+- [ ] Detach delay from RestService
+- [ ] Prettify result JSON
+- [ ] Selectable filter
+- [ ] Inject Postman environment file

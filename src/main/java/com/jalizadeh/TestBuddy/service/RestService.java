@@ -9,18 +9,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import com.jalizadeh.TestBuddy.exception.RestTemplateResponseErrorHandler;
 import com.jalizadeh.TestBuddy.filter.EmptyFilter;
 import com.jalizadeh.TestBuddy.filter.InvalidFilter;
 import com.jalizadeh.TestBuddy.filter.MissingFilter;
 import com.jalizadeh.TestBuddy.filter.RandomFilter;
-import com.jalizadeh.TestBuddy.interfaces.RequestAbstract;
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
