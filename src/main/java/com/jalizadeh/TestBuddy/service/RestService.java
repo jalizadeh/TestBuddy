@@ -61,10 +61,11 @@ public class RestService {
 			String dataType = bodyMode + "-" + bodyOptions;
 			
 			// set headers
-			//Map<String, String> header = item.request.getHeaders();
 			HttpHeaders headers = new HttpHeaders();
-			//headers.setContentType(MediaType.APPLICATION_JSON);
-			//headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+			for(Entry<String, String> e : item.request.getHeaders().entrySet()) {
+				headers.add(e.getKey(), e.getValue());
+			}
+			
 			
 			String data = item.request.getData();
 			Map<String, String> dataMap = new HashMap<String, String>();

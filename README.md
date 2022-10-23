@@ -61,10 +61,10 @@ The end result will be auto-generated JSON file of the collection containing all
 - [x] Parse Postman collectiodn
 - [x] Parse *raw* body
 - [x] Parse *x-www-form-urlencoded* body
-- ...
+- [x] Export populated Postman collection
 - [x] Add response's headers to PostmanResponse object
+- [x] Use requests's header in RestService
 - [ ] Fix _postman_previewlanguage
-- [ ] Use requests's header in RestService
 - [ ] Apply filter on header too
 - [ ] Bounding tests (filter)
 - [ ] Detach delay from RestService
