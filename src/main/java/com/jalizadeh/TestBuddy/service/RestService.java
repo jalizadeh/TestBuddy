@@ -2,7 +2,6 @@ package com.jalizadeh.TestBuddy.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import com.jalizadeh.TestBuddy.filter.EmptyFilter;
@@ -65,8 +63,8 @@ public class RestService {
 			// set headers
 			//Map<String, String> header = item.request.getHeaders();
 			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+			//headers.setContentType(MediaType.APPLICATION_JSON);
+			//headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 			
 			String data = item.request.getData();
 			Map<String, String> dataMap = new HashMap<String, String>();

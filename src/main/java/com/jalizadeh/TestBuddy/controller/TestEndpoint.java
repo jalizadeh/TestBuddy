@@ -1,11 +1,9 @@
 package com.jalizadeh.TestBuddy.controller;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.Map.Entry;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.jalizadeh.TestBuddy.model.PostmanCollection;
 
 @RestController
 public class TestEndpoint {
@@ -132,7 +128,7 @@ public class TestEndpoint {
 			return new ResponseEntity<String>("Missing parameter",HttpStatus.BAD_REQUEST);
 		}
 		
-		if(paramMap.get("username").equals("user@name.com") && paramMap.get("password").equals("123456")) {
+		if(URLDecoder.decode(paramMap.get("username")).equals("user@name.com") && URLDecoder.decode(paramMap.get("password")).equals("123456")) {
 			response = new ResponseEntity<String>("OK", HttpStatus.OK);
 		} else {
 			response = new ResponseEntity<String>("Username or password is invalid",HttpStatus.UNAUTHORIZED);
