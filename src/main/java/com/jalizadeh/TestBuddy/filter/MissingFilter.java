@@ -13,8 +13,8 @@ public class MissingFilter implements iFilter{
 	}
 
 	@Override
-	public String getFilterName() {
-		return "MISSING";
+	public Filters getFilterName() {
+		return Filters.MISSING;
 	}
 
 }

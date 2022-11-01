@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 
-public class EmptyFilter implements  iFilter{
+public class EmptyFilter implements iFilter{
 	
 	@Override
 	public Map<String, String> applyFilter(Map<String, String> parameters, String parameterName) {
@@ -13,8 +13,8 @@ public class EmptyFilter implements  iFilter{
 	}
 
 	@Override
-	public String getFilterName() {
-		return "EMPTY";
+	public Filters getFilterName() {
+		return Filters.EMPTY;
 	}
 
 

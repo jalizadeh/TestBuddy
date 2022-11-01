@@ -13,8 +13,8 @@ public class InvalidFilter implements iFilter{
 	}
 
 	@Override
-	public String getFilterName() {
-		return "INVALID";
+	public Filters getFilterName() {
+		return Filters.INVALID;
 	}
 
 

@@ -8,8 +8,8 @@ import com.jalizadeh.TestBuddy.interfaces.iFilter;
 public class RandomFilter implements iFilter{
 
 	@Override
-	public String getFilterName() {
-		return "RANDOM";
+	public Filters getFilterName() {
+		return Filters.RANDOM;
 	}
 
 	@Override

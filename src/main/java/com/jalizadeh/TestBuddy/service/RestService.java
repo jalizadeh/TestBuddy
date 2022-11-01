@@ -11,10 +11,7 @@ import java.util.Optional;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import com.jalizadeh.TestBuddy.filter.EmptyFilter;
-import com.jalizadeh.TestBuddy.filter.InvalidFilter;
-import com.jalizadeh.TestBuddy.filter.MissingFilter;
-import com.jalizadeh.TestBuddy.filter.RandomFilter;
+import com.jalizadeh.TestBuddy.central.FiltersManager;
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
@@ -112,12 +109,8 @@ public class RestService {
 			//run first case which all are OK (the only test with all correct parameters)
 			responseList.add(request.handleRequest(item, 0, "OK", "", url, dataMap, headers));
 			
-			
-			List<iFilter> filters = new ArrayList<iFilter>();
-			filters.add(new EmptyFilter());
-			filters.add(new InvalidFilter());
-			filters.add(new MissingFilter());
-			filters.add(new RandomFilter());
+			//List of filters should provided in the request's body
+			List<iFilter> filters = FiltersManager.getInstance().getFilters();
 
 			List<String> parameterName = new ArrayList<String>();
 			Map<String, String> modifiedParameters = new HashMap<>();
@@ -136,7 +129,7 @@ public class RestService {
 					}
 					
 					String paramNames = String.join(",", parameterName);
-					responseList.add(request.handleRequest(item, j, filter.getFilterName(), paramNames, url, modifiedParameters, headers));
+					responseList.add(request.handleRequest(item, j, filter.getFilterName().toString(), paramNames, url, modifiedParameters, headers));
 				}
 			}
 			

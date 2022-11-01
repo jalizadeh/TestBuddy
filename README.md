@@ -81,7 +81,7 @@ Postman Collection Parser
 - [ ] Group similar results
 
 Filters
-- [ ] Selectable filter
+- [x] Selectable filter
 - [ ] Apply filter on headers
 - [ ] Apply filter on query parameters
 - [ ] Boundry tests
