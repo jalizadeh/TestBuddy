@@ -39,6 +39,19 @@ Considering a request with 3 parameters, will produce 8 test cases (2^3). The fo
 ## Result
 The end result will be auto-generated JSON file of the collection containing all the test cases
 
+```
+curl -X POST 'localhost:8080/json?delay=1' \
+-H 'Content-Type: application/json' \
+--data-raw '{
+    "filters" : [
+        "EMPTY",
+        "RANDOM",
+        "INVALID",
+        "MISSING"
+    ]
+}'
+```
+
 [Sample Result](assets/result-full.json)
 
 ![](assets/result-1.JPG)

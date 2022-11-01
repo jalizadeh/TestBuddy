@@ -134,8 +134,9 @@ public class RestService {
 			}
 			
 			item.response = responseList;
-			collection.info.name = collection.info.name + " " + LocalDateTime.now(); 
 		}
+		
+		collection.info.name = collection.info.name + " " + LocalDateTime.now(); 
 		
 		return collection;
 	}
