@@ -1,18 +1,22 @@
 package com.jalizadeh.TestBuddy.central;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.jalizadeh.TestBuddy.filter.Filters;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 
 public class FiltersManager {
 
 	private static FiltersManager instance;
-	private List<iFilter> listFilters;
+	private Map<Filters, iFilter> filters;
 	
 	
 	private FiltersManager() {
-		this.listFilters = new ArrayList<>();
+		this.filters = new HashMap<>();
 	}
 	
 	
@@ -25,11 +29,11 @@ public class FiltersManager {
 	
 	
 	public void addFilter(iFilter filter) {
-		this.listFilters.add(filter);
+		this.filters.put(filter.getFilterName(), filter);
 	}
 	
 	public List<iFilter> getFilters(){
-		return this.listFilters;
+		return this.filters.values().stream().collect(Collectors.toList());
 	}
 	
 }
