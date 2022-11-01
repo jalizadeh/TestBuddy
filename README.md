@@ -58,16 +58,31 @@ The end result will be auto-generated JSON file of the collection containing all
 
 
 ## TODO
-- [x] Parse Postman collectiodn
+
+Test Endpoint
+- [x] /rawBody for requests with *raw* body
+- [x] /xForm for requests with *x-www-form-urlencoded* body
+- [ ] RestAssured tests
+
+
+Postman Collection Parser
+- [x] Parse Postman collection
 - [x] Parse *raw* body
 - [x] Parse *x-www-form-urlencoded* body
 - [x] Export populated Postman collection
 - [x] Add response's headers to PostmanResponse object
 - [x] Use requests's header in RestService
 - [ ] Fix _postman_previewlanguage
-- [ ] Apply filter on header too
-- [ ] Bounding tests (filter)
 - [ ] Detach delay from RestService
 - [ ] Prettify result JSON
+- [ ] Load Postman environment file
+- [ ] Statistics
+- [ ] Report / Log
+- [ ] Group similar results
+
+Filters
 - [ ] Selectable filter
-- [ ] Inject Postman environment file
+- [ ] Apply filter on headers
+- [ ] Apply filter on query parameters
+- [ ] Boundry tests
+- [ ] Test inventory (providing desired input data)
