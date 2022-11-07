@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
+import com.jalizadeh.TestBuddy.types.Filters;
 
 public class RandomFilter implements iFilter{
 

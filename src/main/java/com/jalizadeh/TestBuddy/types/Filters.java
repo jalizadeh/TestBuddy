@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.filter;
+package com.jalizadeh.TestBuddy.types;
 
 public enum Filters {
 	EMPTY,

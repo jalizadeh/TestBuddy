@@ -2,7 +2,7 @@ package com.jalizadeh.TestBuddy.interfaces;
 
 import java.util.Map;
 
-import com.jalizadeh.TestBuddy.filter.Filters;
+import com.jalizadeh.TestBuddy.types.Filters;
 
 public interface iFilter {
 	

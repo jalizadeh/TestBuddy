@@ -3,6 +3,7 @@ package com.jalizadeh.TestBuddy.filter;
 import java.util.Map;
 
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
+import com.jalizadeh.TestBuddy.types.Filters;
 
 public class MissingFilter implements iFilter{
 

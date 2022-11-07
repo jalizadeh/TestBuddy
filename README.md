@@ -96,6 +96,7 @@ Postman Collection Parser
 
 Filters
 - [x] Selectable filter
+- [ ] Allow empty filter list
 - [ ] Apply filter on headers
 - [ ] Apply filter on query parameters
 - [ ] Boundry tests

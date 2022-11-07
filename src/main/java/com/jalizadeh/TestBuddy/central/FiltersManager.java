@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.jalizadeh.TestBuddy.filter.Filters;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
+import com.jalizadeh.TestBuddy.types.Filters;
 
 public class FiltersManager {
 

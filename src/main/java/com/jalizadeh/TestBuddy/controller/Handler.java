@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.TestBuddy.central.FilterFactory;
 import com.jalizadeh.TestBuddy.central.FiltersManager;
-import com.jalizadeh.TestBuddy.filter.Filters;
+import com.jalizadeh.TestBuddy.model.InputRequest;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.runner.PostmanCollectionRunner;
 import com.jalizadeh.TestBuddy.service.RestService;
-import com.jalizadeh.TestBuddy.types.InputRequest;
+import com.jalizadeh.TestBuddy.types.Filters;
 
 @RestController
 public class Handler {
