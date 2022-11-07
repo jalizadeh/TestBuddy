@@ -8,17 +8,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.jalizadeh.TestBuddy.central.FiltersManager;
+import com.jalizadeh.TestBuddy.central.RequestFactory;
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
-import com.jalizadeh.TestBuddy.requestImpl.RequestRawText;
-import com.jalizadeh.TestBuddy.requestImpl.RequestUrlencodedText;
 
 @Service
 public class RestService {
@@ -27,6 +27,9 @@ public class RestService {
 	
 	private int pNum; //number of parameters in the request's body 
 	private int lenght;
+	
+	@Autowired
+	RequestFactory requestFactory;
 	
 	
 
@@ -82,7 +85,7 @@ public class RestService {
 			}
 			*/
 			
-			// T/F table of possibilites / cases
+			// T/F table of possibilities / cases
 			boolean[][] scenarioTable = scenarioTable(dataMap.size());
 			
 			String[] dataArr = new String[dataMap.size()]; 
@@ -94,17 +97,10 @@ public class RestService {
 			}
 			
 			
-			switch (dataType) {
-				case "raw-text":
-					request = new RequestRawText();
-					break;
-				case "urlencoded-text":
-					request = new RequestUrlencodedText();
-					break;
-				default:
-					throw new Exception("Request type is not correct / supported yet");
-			}
-		
+			//based on the input collection, the appropriate request handler is selected
+			request = requestFactory.getRequest(dataType);
+
+			
 			
 			//run first case which all are OK (the only test with all correct parameters)
 			responseList.add(request.handleRequest(item, 0, "OK", "", url, dataMap, headers));

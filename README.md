@@ -92,6 +92,7 @@ Postman Collection Parser
 - [ ] Statistics
 - [ ] Report / Log
 - [ ] Group similar results
+- [ ] Support all request types (GET/POST/PUT/DELETE)
 
 Filters
 - [x] Selectable filter

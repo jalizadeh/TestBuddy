@@ -10,7 +10,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -20,9 +19,14 @@ import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanRequest;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 import com.jalizadeh.TestBuddy.model.PostmanUrlEncoded;
+import com.jalizadeh.TestBuddy.types.RequestBodyType;
 
 public class RequestUrlencodedText extends RequestPostmanAbstract{
 
+	@Override
+	public String bodyType() {
+		return RequestBodyType.URLENCODEC_TEXT.type();
+	}
 	
 	@Override
 	public PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName, String url,
@@ -91,5 +95,7 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 
 		return postmanResponse;
 	}
+
+	
 
 }

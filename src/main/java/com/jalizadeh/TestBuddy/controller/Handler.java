@@ -13,10 +13,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.TestBuddy.central.FilterFactory;
 import com.jalizadeh.TestBuddy.central.FiltersManager;
 import com.jalizadeh.TestBuddy.filter.Filters;
-import com.jalizadeh.TestBuddy.model.InputRequest;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.runner.PostmanCollectionRunner;
 import com.jalizadeh.TestBuddy.service.RestService;
+import com.jalizadeh.TestBuddy.types.InputRequest;
 
 @RestController
 public class Handler {
@@ -57,9 +57,11 @@ public class Handler {
 
 
 	private void extractFilters(InputRequest input) {
+		FiltersManager instance = FiltersManager.getInstance();
+		
 		for(Filters f : input.getFilters()) {
 			try {
-				FiltersManager.getInstance().addFilter(filterFactory.create(f));
+				instance.addFilter(filterFactory.create(f));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

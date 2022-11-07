@@ -14,6 +14,8 @@ import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
 public abstract class RequestPostmanAbstract extends RequestAbstract{
 	
+	public abstract String bodyType();
+	
 	public abstract PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName, 
 			String url, Map<String, String> dataMap, HttpHeaders headers) throws CloneNotSupportedException;
 	
