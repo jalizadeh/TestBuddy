@@ -26,11 +26,9 @@ public class FilterFactory {
 	
 	
 	public iFilter create(Filters filterName) throws Exception {
-		for(iFilter f : listFilters) {
-			if(f.getFilterName().equals(filterName))
-				return f;
-		}
-		
-		throw new Exception("The filter: \"" + filterName + "\" doesnt exist");
+		return listFilters.stream()
+			.filter(f -> f.getFilterName().equals(filterName))
+			.findFirst()
+			.orElseThrow(() -> new Exception("The filter: \"" + filterName + "\" doesnt exist"));
 	}
 }

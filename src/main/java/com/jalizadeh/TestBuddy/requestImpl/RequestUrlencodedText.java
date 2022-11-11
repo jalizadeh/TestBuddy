@@ -3,7 +3,6 @@ package com.jalizadeh.TestBuddy.requestImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpEntity;
@@ -35,17 +34,15 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		dataMap.entrySet().stream().forEach(e -> map.add(e.getKey(), e.getValue()));
 		
-		for(Entry<String, String> e : dataMap.entrySet()) {
-			map.add(e.getKey(), e.getValue());
-		}
-
 
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 		
 		
-		String concatData = dataMap.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue())
+		String concatData = dataMap.entrySet().stream()
+				.map(e -> e.getKey() + "=" + e.getValue())
 				.collect(Collectors.joining("&"));
 		System.out.println(concatData);
 
@@ -81,13 +78,14 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 		PostmanBody newBody = (PostmanBody) item.request.body.clone();
 		
 		List<PostmanUrlEncoded> urlencodedList = new ArrayList<PostmanUrlEncoded>();
-		for(Entry<String, String>  e : dataMap.entrySet()) {
-			PostmanUrlEncoded u = new PostmanUrlEncoded();
-			u.key = e.getKey();
-			u.value = e.getValue();
-			u.type = "text";
-			urlencodedList.add(u);
-		}
+		dataMap.entrySet().stream()
+			.forEach(e -> {
+				PostmanUrlEncoded u = new PostmanUrlEncoded();
+				u.key = e.getKey();
+				u.value = e.getValue();
+				u.type = "text";
+				urlencodedList.add(u);
+			});
 		
 		newBody.urlencoded = urlencodedList;
 		newReq.body = newBody;

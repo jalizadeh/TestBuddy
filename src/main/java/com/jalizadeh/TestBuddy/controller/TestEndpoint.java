@@ -4,6 +4,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,13 +71,13 @@ public class TestEndpoint {
 		//by default it is bad request
 		ResponseEntity<String> response = new ResponseEntity<String>("Unknown error", HttpStatus.BAD_REQUEST);
 		
-		String[] bodyData = body.split("&");
 		Map<String, String> paramMap = new HashMap<String, String>();
 		
-		for(String param : bodyData) {
-			String[] pSplit = param.split("=");
-			paramMap.put(pSplit[0], pSplit.length == 2 ? pSplit[1] : "");
-		}
+		Stream.of(body.split("&"))
+			.forEach(param -> {
+				String[] pSplit = param.split("=");
+				paramMap.put(pSplit[0], pSplit.length == 2 ? pSplit[1] : "");
+			});
 		
 		/*
 		for (Entry<String, String> p : paramMap.entrySet()) {

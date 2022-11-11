@@ -70,10 +70,7 @@ public class Handler {
 
 
 	private boolean validateInput(InputRequest input) {
-		if(input == null || input.getFilters().size() == 0)
-			return false;
-
-		return true;
+		return (input == null || input.getFilters().size() == 0) ? false : true; 
 	}
 	
 

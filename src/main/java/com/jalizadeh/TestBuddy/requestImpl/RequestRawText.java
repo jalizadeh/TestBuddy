@@ -35,7 +35,8 @@ public class RequestRawText extends RequestPostmanAbstract {
 		}
 		*/
 
-		String concatData = dataMap.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue())
+		String concatData = dataMap.entrySet().stream()
+				.map(e -> e.getKey() + "=" + e.getValue())
 				.collect(Collectors.joining("&"));
 		System.out.println(concatData);
 
