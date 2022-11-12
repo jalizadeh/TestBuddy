@@ -31,8 +31,11 @@ public class FiltersManager {
 		this.filters.put(filter.getFilterName(), filter);
 	}
 	
+	//List is sorted ascending by filter's name
 	public List<iFilter> getFilters(){
-		return this.filters.values().stream().collect(Collectors.toList());
+		return this.filters.values().stream()
+				.sorted((a,b) -> a.getFilterName().compareTo(b.getFilterName()))
+				.collect(Collectors.toList());
 	}
 	
 }

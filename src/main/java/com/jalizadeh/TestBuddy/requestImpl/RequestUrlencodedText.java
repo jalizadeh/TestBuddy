@@ -33,6 +33,7 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 		
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
+		//extract data from "urlencoded" field of the Postman collection
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		dataMap.entrySet().stream().forEach(e -> map.add(e.getKey(), e.getValue()));
 		
@@ -41,12 +42,12 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 		
 		
+		/*
 		String concatData = dataMap.entrySet().stream()
 				.map(e -> e.getKey() + "=" + e.getValue())
 				.collect(Collectors.joining("&"));
 		System.out.println(concatData);
 
-		/*
 		HttpEntity<String> entity = new HttpEntity<String>(concatData, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 		 */

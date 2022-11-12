@@ -57,8 +57,8 @@ public class RestService {
 
 			//how data should be parsed and sent to endpoint
 			String bodyMode = item.request.body.mode;
-			String bodyOptions = item.request.body.options.raw.language;
-			String dataType = bodyMode + "-" + bodyOptions;
+			//String bodyOptions = item.request.body.options.raw.language;
+			String dataType = bodyMode; // + "-" + bodyOptions;
 			
 			// set headers
 			HttpHeaders headers = new HttpHeaders();
