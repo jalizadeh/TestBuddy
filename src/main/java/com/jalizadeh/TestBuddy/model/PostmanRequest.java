@@ -3,9 +3,7 @@ package com.jalizadeh.TestBuddy.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PostmanRequest implements Cloneable{
 	
@@ -15,6 +13,10 @@ public class PostmanRequest implements Cloneable{
 	public PostmanBody body;
 	public PostmanUrl url;
 	
+	
+	public String getBodyMode() {
+		return (body == null || body.mode == null) ? "" : body.mode;
+	}
 
 	public String getData() {
 		if (body == null || body.mode == null)  {
@@ -50,10 +52,14 @@ public class PostmanRequest implements Cloneable{
 	
 	//TODO: fix for request with raw-json which causes serialization issue
 	private Map<String, String> rawDataMap(String raw) {
+		if (body == null || body.raw == null)  {
+			return new HashMap<>();
+		}
+		
 		Map<String, String> dataMap = new HashMap<>();
 		for(String dp : raw.split("&")) {
 			String[] d = dp.split("=");
-			dataMap.put(d[0], d[1]);
+			dataMap.put(d[0], (d.length == 1) ? "" : d[1]);
 		}
 		return dataMap;
 	}
@@ -77,7 +83,7 @@ public class PostmanRequest implements Cloneable{
 	*/
 	
 	
-	public String urlFormEncodeData(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
+	private String urlFormEncodeData(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
 		String result = "";
 		int i = 0;
 		for (PostmanUrlEncoded encoded : formData) {
@@ -91,7 +97,13 @@ public class PostmanRequest implements Cloneable{
 		return result;
 	}
 
-	public Map<String, String> urlFormEncodeDataMap(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
+	//TODO: it should be
+	//MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+	private Map<String, String> urlFormEncodeDataMap(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
+		if (body == null || body.urlencoded == null)  {
+			return new HashMap<>();
+		}
+		
 		Map<String, String> dataMap = new HashMap<>();
 		formData.stream()
 			//.filter(i -> Objects.nonNull(i.disabled))

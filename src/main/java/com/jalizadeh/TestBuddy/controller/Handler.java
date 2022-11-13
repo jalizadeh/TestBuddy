@@ -62,6 +62,7 @@ public class Handler {
 
 	private void extractFilters(InputRequest input) {
 		FiltersManager instance = FiltersManager.getInstance();
+		instance.clearFilters();
 		
 		for(Filters f : input.getFilters()) {
 			try {

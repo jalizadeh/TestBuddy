@@ -37,5 +37,10 @@ public class FiltersManager {
 				.sorted((a,b) -> a.getFilterName().compareTo(b.getFilterName()))
 				.collect(Collectors.toList());
 	}
+
+
+	public void clearFilters() {
+		this.filters.clear();
+	}
 	
 }

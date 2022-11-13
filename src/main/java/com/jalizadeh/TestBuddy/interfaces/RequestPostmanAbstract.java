@@ -16,9 +16,9 @@ public abstract class RequestPostmanAbstract extends RequestAbstract{
 	
 	public abstract String bodyType();
 	
-	public abstract PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName, 
-			String url, Map<String, String> dataMap, HttpHeaders headers) throws CloneNotSupportedException;
-	
+	public abstract PostmanResponse handleRequest(PostmanItem item, int count, String testCase, 
+			String paramName, Map<String, String> dataMap,
+			ResponseEntity<String> response) throws CloneNotSupportedException;
 	
 	
 	protected List<PostmanHeader> extractResponseHeader(ResponseEntity<String> response) {
@@ -27,7 +27,6 @@ public abstract class RequestPostmanAbstract extends RequestAbstract{
 			PostmanHeader ph = new PostmanHeader();
 			ph.key = e.getKey();
 			ph.value = e.getValue();
-			System.out.println(ph);
 			responseHeaderList.add(ph);
 		}
 		

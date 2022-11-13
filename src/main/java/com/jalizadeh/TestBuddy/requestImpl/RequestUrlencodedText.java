@@ -28,9 +28,10 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 	}
 	
 	@Override
-	public PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName, String url,
-			Map<String, String> dataMap, HttpHeaders headers) throws CloneNotSupportedException {
+	public PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName,
+			Map<String, String> dataMap, ResponseEntity<String> response) throws CloneNotSupportedException {
 		
+		/*
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
 		//extract data from "urlencoded" field of the Postman collection
@@ -40,7 +41,7 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
-		
+		*/
 		
 		/*
 		String concatData = dataMap.entrySet().stream()
@@ -79,6 +80,7 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 		PostmanBody newBody = (PostmanBody) item.request.body.clone();
 		
 		List<PostmanUrlEncoded> urlencodedList = new ArrayList<PostmanUrlEncoded>();
+		
 		dataMap.entrySet().stream()
 			.forEach(e -> {
 				PostmanUrlEncoded u = new PostmanUrlEncoded();
@@ -87,7 +89,7 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 				u.type = "text";
 				urlencodedList.add(u);
 			});
-		
+			
 		newBody.urlencoded = urlencodedList;
 		newReq.body = newBody;
 		postmanResponse.originalRequest = newReq;

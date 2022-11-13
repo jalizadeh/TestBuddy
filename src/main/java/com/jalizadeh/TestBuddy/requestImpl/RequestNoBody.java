@@ -1,10 +1,7 @@
 package com.jalizadeh.TestBuddy.requestImpl;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
@@ -14,11 +11,11 @@ import com.jalizadeh.TestBuddy.model.PostmanRequest;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 import com.jalizadeh.TestBuddy.types.RequestBodyType;
 
-public class RequestRawText extends RequestPostmanAbstract {
+public class RequestNoBody extends RequestPostmanAbstract {
 	
 	@Override
 	public String bodyType() {
-		return RequestBodyType.RAW_TEXT.type();
+		return RequestBodyType.NO_BODY.type();
 	}
 	
 	
@@ -59,16 +56,12 @@ public class RequestRawText extends RequestPostmanAbstract {
 		postmanResponse.code = response.getStatusCodeValue();
 		postmanResponse.header = extractResponseHeader(response);
 		postmanResponse._postman_previewlanguage = "json";
-		postmanResponse.body = response.getBody();
 
 		/**
 		 * As I need change the data for each body, I need to clone the original object
 		 * otherwise, every time I modify the original reference
 		 */
 		PostmanRequest newReq = (PostmanRequest) item.request.clone();
-		PostmanBody newBody = (PostmanBody) item.request.body.clone();
-		newBody.raw = mapToString(dataMap);
-		newReq.body = newBody;
 		postmanResponse.originalRequest = newReq;
 
 		return postmanResponse;
