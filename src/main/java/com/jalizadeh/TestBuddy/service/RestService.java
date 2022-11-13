@@ -8,14 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.jalizadeh.TestBuddy.central.FiltersManager;
-import com.jalizadeh.TestBuddy.central.RequestFactory;
-import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
-import com.jalizadeh.TestBuddy.interfaces.TempReq;
+import com.jalizadeh.TestBuddy.interfaces.ServiceRequest;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
@@ -29,8 +26,7 @@ public class RestService {
 	private int pNum; //number of parameters in the request's body 
 	private int lenght;
 	
-	@Autowired
-	RequestFactory requestFactory;
+	
 	
 	
 
@@ -50,29 +46,20 @@ public class RestService {
 		
 		for(PostmanItem item : collection.item.get(0).item) {
 
-			RequestPostmanAbstract request = null;
 			List<PostmanResponse> responseList = new ArrayList<PostmanResponse>();
+			ServiceRequest request = new ServiceRequest(item.request.getFullUrl(), item.request.method, item.request.getBodyMode());
 			
-			
-			TempReq req = new TempReq(item.request.getFullUrl(), item.request.method);
+			//having body as Map is easier to apply filters on the parameters
+			Map<String, String> dataMap = item.request.getDataMap();
 			
 			
 			// set headers, if exists
-			if(item.request.getHeaders().size() > 0) {
-				//System.out.println(item.request.getHeaders());
-				req.setHeaders(extractHeader(item.request.getHeaders()));
-			}
+			if(item.request.getHeaders().size() > 0)
+				request.setHeaders(extractHeader(item.request.getHeaders()));
 			
-			
-			if(item.request.getDataMap().size() > 0) {
-				req.setData(item.request.getData());
-			}
-			
-			//responseList.add(request.handleRequest(item, 0, "OK", "", url, dataMap, headers));
-			
-			
-			//200 OK
-			req.handleRequest();
+			//set request body data, if exists
+			if(dataMap.size() > 0) 
+				request.setData(item.request.getData());
 			
 			
 			/*
@@ -81,9 +68,7 @@ public class RestService {
 				System.out.println(entry.getKey() + "\t" + entry.getValue().toString());
 			}
 			*/
-			
-			
-			/*
+
 			
 			// T/F table of possibilities / cases
 			boolean[][] scenarioTable = scenarioTable(dataMap.size());
@@ -96,39 +81,38 @@ public class RestService {
 				System.out.println("OK\t" + entry.getKey() + "\t" + entry.getValue().toString());
 			}
 			
-			
-			//based on the input collection, the appropriate request handler is selected
-			request = requestFactory.getRequest(dataType);
 
 			
+			//200 OK
+			responseList.add(request.handleRequest(item, 0, "OK", "", dataMap));
 			
-			//run first case which all are OK (the only test with all correct parameters)
-			responseList.add(request.handleRequest(item, 0, "OK", "", url, dataMap, headers));
-			
-			//List of filters should provided in the request's body
-			List<iFilter> filters = FiltersManager.getInstance().getFilters();
 
-			List<String> parameterName = new ArrayList<String>();
-			Map<String, String> modifiedParameters = new HashMap<>();
-			
-			for(iFilter filter : filters) {
-				for(int j = 1; j < lenght; j++) {
-					parameterName.clear();
-					modifiedParameters.clear();
-					modifiedParameters.putAll(dataMap);
-					
-					for(int i = 0; i < pNum; i++) {
-						if(!scenarioTable[i][j]) {
-							parameterName.add(dataArr[i]);
-							modifiedParameters = filter.applyFilter(modifiedParameters, dataArr[i]);
+			//Not all requests have body to apply filters on them
+			if(dataMap.size() > 0) {
+				//List of filters should provided in the request's body
+				List<iFilter> filters = FiltersManager.getInstance().getFilters();
+
+				List<String> parameterName = new ArrayList<String>();
+				Map<String, String> modifiedParameters = new HashMap<>();
+				
+				for(iFilter filter : filters) {
+					for(int j = 1; j < lenght; j++) {
+						parameterName.clear();
+						modifiedParameters.clear();
+						modifiedParameters.putAll(dataMap);
+						
+						for(int i = 0; i < pNum; i++) {
+							if(!scenarioTable[i][j]) {
+								parameterName.add(dataArr[i]);
+								modifiedParameters = filter.applyFilter(modifiedParameters, dataArr[i]);
+							}
 						}
+						
+						String paramNames = String.join(",", parameterName);
+						responseList.add(request.handleRequest(item, j, filter.getFilterName().toString(), paramNames, modifiedParameters));
 					}
-					
-					String paramNames = String.join(",", parameterName);
-					responseList.add(request.handleRequest(item, j, filter.getFilterName().toString(), paramNames, url, modifiedParameters, headers));
 				}
 			}
-			*/
 			
 			item.response = responseList;
 		}

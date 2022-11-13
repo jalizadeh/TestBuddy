@@ -85,6 +85,11 @@ Postman Collection Parser
 - [x] Export populated Postman collection
 - [x] Add response's headers to PostmanResponse object
 - [x] Use requests's header in RestService
+- [ ] Support all request methods
+	- [x] GET
+	- [x] POST
+	- [ ] PUT
+	- [ ] DELETE
 - [ ] Fix _postman_previewlanguage
 - [ ] Detach delay from RestService
 - [ ] Prettify result JSON
@@ -92,7 +97,6 @@ Postman Collection Parser
 - [ ] Statistics
 - [ ] Report / Log
 - [ ] Group similar results
-- [ ] Support all request types (GET/POST/PUT/DELETE)
 
 Filters
 - [x] Selectable filter

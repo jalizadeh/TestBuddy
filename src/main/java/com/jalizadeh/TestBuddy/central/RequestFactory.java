@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
+import com.jalizadeh.TestBuddy.requestImpl.RequestNoBody;
 import com.jalizadeh.TestBuddy.requestImpl.RequestRawText;
 import com.jalizadeh.TestBuddy.requestImpl.RequestUrlencodedText;
 
@@ -13,6 +14,7 @@ import com.jalizadeh.TestBuddy.requestImpl.RequestUrlencodedText;
 public class RequestFactory {
 
 	private List<RequestPostmanAbstract> postmanRequests = Arrays.asList(
+				new RequestNoBody(),
 				new RequestRawText(),
 				new RequestUrlencodedText()
 			); 
