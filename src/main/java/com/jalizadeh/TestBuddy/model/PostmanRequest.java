@@ -3,6 +3,9 @@ package com.jalizadeh.TestBuddy.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PostmanRequest implements Cloneable{
 	
@@ -12,6 +15,7 @@ public class PostmanRequest implements Cloneable{
 	public PostmanBody body;
 	public PostmanUrl url;
 	
+
 	public String getData() {
 		if (body == null || body.mode == null)  {
 			return "";
@@ -26,7 +30,36 @@ public class PostmanRequest implements Cloneable{
 			}
 		}
 	}
+	
+	
+	public Map<String,String> getDataMap() {
+		if (body == null || body.mode == null)  {
+			return new HashMap<>();
+		} else {
+			switch (body.mode) {
+				case "raw":
+					return rawDataMap(body.raw);
+				case "urlencoded":
+					return urlFormEncodeDataMap(body.urlencoded);
+				default:
+					return new HashMap<>();
+			}
+		}
+	}
 
+	
+	//TODO: fix for request with raw-json which causes serialization issue
+	private Map<String, String> rawDataMap(String raw) {
+		Map<String, String> dataMap = new HashMap<>();
+		for(String dp : raw.split("&")) {
+			String[] d = dp.split("=");
+			dataMap.put(d[0], d[1]);
+		}
+		return dataMap;
+	}
+
+	
+	/*
 	public String getData(PostmanVariables var) {
 		if (body == null || body.mode == null)  {
 			return "";
@@ -41,7 +74,9 @@ public class PostmanRequest implements Cloneable{
 			}
 		}
 	}
-
+	*/
+	
+	
 	public String urlFormEncodeData(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
 		String result = "";
 		int i = 0;
@@ -56,9 +91,34 @@ public class PostmanRequest implements Cloneable{
 		return result;
 	}
 
+	public Map<String, String> urlFormEncodeDataMap(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
+		Map<String, String> dataMap = new HashMap<>();
+		formData.stream()
+			//.filter(i -> Objects.nonNull(i.disabled))
+			//.filter(i -> !i.disabled)
+			.forEach(i-> dataMap.put(i.key, i.value));
+		
+		return dataMap;
+	}
+
 	public String getUrl(PostmanVariables var) {
 		return var.replace(url.raw);
 	}
+	
+	
+	public String getFullUrl() {
+		PostmanUrl u = this.url;
+		String difiniteUrl = u.protocol + "://" 
+				+ u.host.stream().collect(Collectors.joining(".")) 
+				+ ":" 
+				+ u.port;
+		
+		if(u.path != null && u.path.size() > 0)
+			return difiniteUrl + "/" + u.path.stream().collect(Collectors.joining("/"));
+		
+		return difiniteUrl;
+	}
+	
 
 	public Map<String, String> getHeaders(PostmanVariables var) {
 		Map<String, String> result = new HashMap<>();
@@ -96,7 +156,5 @@ public class PostmanRequest implements Cloneable{
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
-	
-	
 	
 }

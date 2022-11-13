@@ -38,7 +38,7 @@ public class RequestRawText extends RequestPostmanAbstract {
 		String concatData = dataMap.entrySet().stream()
 				.map(e -> e.getKey() + "=" + e.getValue())
 				.collect(Collectors.joining("&"));
-		System.out.println(concatData);
+		//System.out.println(concatData);
 
 		HttpEntity<String> entity = new HttpEntity<String>(concatData, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
@@ -49,8 +49,8 @@ public class RequestRawText extends RequestPostmanAbstract {
 		String body = response.getBody();
 		String resp = response.toString();
 
-		System.err.println(title);
-		System.out.println(body + "\n" + resp);
+		//System.err.println(title);
+		//System.out.println(body + "\n" + resp);
 		
 		postmanResponse.name = response.getStatusCodeValue() + " - " + testCase + " " + paramName;
 		postmanResponse.status = response.getStatusCode().name();

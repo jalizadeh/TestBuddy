@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,9 @@ import com.jalizadeh.TestBuddy.types.Filters;
 
 @RestController
 public class Handler {
+	
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	private RestService restService;
@@ -38,7 +42,7 @@ public class Handler {
 		
 		extractFilters(input);
 		
-		String jsonPath = "C:/sample.json";
+		String jsonPath = env.getProperty("pm.file");
 
 		PostmanCollection collection = new PostmanCollection();
 		ObjectMapper mapper = new ObjectMapper();
@@ -47,7 +51,7 @@ public class Handler {
 		try {
 			collection = new PostmanCollectionRunner().parseCollection(jsonPath, null, "Test", false, false);
 			parsedCollection = restService.parseCollection(collection, delay);
-			mapper.writeValue(new File("C:/Users/Windows/Desktop/result-full.json"), parsedCollection);
+			mapper.writeValue(new File(env.getProperty("generatedFile.path")), parsedCollection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
