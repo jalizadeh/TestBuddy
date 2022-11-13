@@ -18,9 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestEndpoint {
+	
+	@GetMapping("/")
+	public ResponseEntity<String> rootApi() {
+		return new ResponseEntity<>("OK from home",HttpStatus.OK);
+	}
 
 	@GetMapping("/simple")
-	public ResponseEntity<String> simpleAPI() {
+	public ResponseEntity<String> simpleApi() {
 		return new ResponseEntity<>("OK",HttpStatus.OK);
 	}
 	

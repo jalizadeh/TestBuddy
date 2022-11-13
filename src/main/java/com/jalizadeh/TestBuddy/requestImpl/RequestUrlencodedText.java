@@ -58,8 +58,8 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 		String body = response.getBody();
 		String resp = response.toString();
 
-		System.err.println(title);
-		System.out.println(body + "\n" + resp);
+		//System.err.println(title);
+		// System.out.println(body + "\n" + resp);
 
 		postmanResponse.name = response.getStatusCodeValue() + " - " + testCase + " " + paramName;
 		postmanResponse.status = response.getStatusCode().name();

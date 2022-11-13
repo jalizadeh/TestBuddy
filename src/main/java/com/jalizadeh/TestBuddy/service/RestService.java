@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.jalizadeh.TestBuddy.central.FiltersManager;
 import com.jalizadeh.TestBuddy.central.RequestFactory;
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
+import com.jalizadeh.TestBuddy.interfaces.TempReq;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
@@ -52,30 +53,26 @@ public class RestService {
 			RequestPostmanAbstract request = null;
 			List<PostmanResponse> responseList = new ArrayList<PostmanResponse>();
 			
-			String url = item.request.url.raw;
-			String httpMethod = item.request.method;
-
-			//how data should be parsed and sent to endpoint
-			String bodyMode = item.request.body.mode;
-			//String bodyOptions = item.request.body.options.raw.language;
-			String dataType = bodyMode; // + "-" + bodyOptions;
 			
-			// set headers
-			HttpHeaders headers = new HttpHeaders();
-			for(Entry<String, String> e : item.request.getHeaders().entrySet()) {
-				headers.add(e.getKey(), e.getValue());
+			TempReq req = new TempReq(item.request.getFullUrl(), item.request.method);
+			
+			
+			// set headers, if exists
+			if(item.request.getHeaders().size() > 0) {
+				//System.out.println(item.request.getHeaders());
+				req.setHeaders(extractHeader(item.request.getHeaders()));
 			}
 			
 			
-			String data = item.request.getData();
-			Map<String, String> dataMap = new HashMap<String, String>();
-			
-			
-			String[] dataPair = data.split("&");
-			for(String dp : dataPair) {
-				String[] d = dp.split("=");
-				dataMap.put(d[0], d[1]);
+			if(item.request.getDataMap().size() > 0) {
+				req.setData(item.request.getData());
 			}
+			
+			//responseList.add(request.handleRequest(item, 0, "OK", "", url, dataMap, headers));
+			
+			
+			//200 OK
+			req.handleRequest();
 			
 			
 			/*
@@ -84,6 +81,9 @@ public class RestService {
 				System.out.println(entry.getKey() + "\t" + entry.getValue().toString());
 			}
 			*/
+			
+			
+			/*
 			
 			// T/F table of possibilities / cases
 			boolean[][] scenarioTable = scenarioTable(dataMap.size());
@@ -128,6 +128,7 @@ public class RestService {
 					responseList.add(request.handleRequest(item, j, filter.getFilterName().toString(), paramNames, url, modifiedParameters, headers));
 				}
 			}
+			*/
 			
 			item.response = responseList;
 		}
@@ -138,6 +139,15 @@ public class RestService {
 	}
 	
 	
+	private HttpHeaders extractHeader(Map<String, String> headers) {
+		HttpHeaders httpHeaders = new HttpHeaders();
+		for (Entry<String, String> e : headers.entrySet()) {
+			httpHeaders.add(e.getKey(), e.getValue());
+		}
+		return httpHeaders;
+	}
+
+
 	private boolean[][] scenarioTable(int dataMapSize) {
 		pNum = dataMapSize;
 		lenght = (int) Math.pow(2, pNum);
