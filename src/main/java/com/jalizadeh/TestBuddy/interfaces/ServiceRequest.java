@@ -1,7 +1,6 @@
 package com.jalizadeh.TestBuddy.interfaces;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,7 +11,7 @@ import com.jalizadeh.TestBuddy.central.RequestFactory;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
-public class TempReq extends RequestAbstract {
+public class ServiceRequest extends RequestAbstract {
 
 	@Autowired
 	RequestFactory requestFactory;
@@ -24,7 +23,7 @@ public class TempReq extends RequestAbstract {
 	private HttpHeaders headers;
 	private String data;
 
-	public TempReq(String url, String method, String bodyMode) {
+	public ServiceRequest(String url, String method, String bodyMode) {
 		this.requestFactory = new RequestFactory();
 		this.url = url;
 		this.method = method;
@@ -32,18 +31,18 @@ public class TempReq extends RequestAbstract {
 		this.entity = new HttpEntity<>(null);
 	}
 
-	public TempReq setHeaders(HttpHeaders headers) {
+	public ServiceRequest setHeaders(HttpHeaders headers) {
 		this.headers = headers;
 		this.entity = new HttpEntity<>(this.headers);
 		return this;
 	}
 
-	public TempReq setData(String data) {
+	public ServiceRequest setData(String data) {
 		this.data = data;
 		return setDataHeader(this.data, this.headers);
 	}
 
-	public TempReq setDataHeader(String data, HttpHeaders headers) {
+	public ServiceRequest setDataHeader(String data, HttpHeaders headers) {
 		this.headers = headers;
 		this.data = data;
 		this.entity = new HttpEntity<>(this.data, this.headers);

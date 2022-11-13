@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import com.jalizadeh.TestBuddy.model.PostmanHeader;

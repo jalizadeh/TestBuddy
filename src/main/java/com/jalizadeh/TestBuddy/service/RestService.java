@@ -8,14 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.jalizadeh.TestBuddy.central.FiltersManager;
-import com.jalizadeh.TestBuddy.central.RequestFactory;
-import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
-import com.jalizadeh.TestBuddy.interfaces.TempReq;
+import com.jalizadeh.TestBuddy.interfaces.ServiceRequest;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
@@ -49,9 +46,8 @@ public class RestService {
 		
 		for(PostmanItem item : collection.item.get(0).item) {
 
-			RequestPostmanAbstract request = null;
 			List<PostmanResponse> responseList = new ArrayList<PostmanResponse>();
-			TempReq req = new TempReq(item.request.getFullUrl(), item.request.method, item.request.getBodyMode());
+			ServiceRequest request = new ServiceRequest(item.request.getFullUrl(), item.request.method, item.request.getBodyMode());
 			
 			//having body as Map is easier to apply filters on the parameters
 			Map<String, String> dataMap = item.request.getDataMap();
@@ -59,11 +55,11 @@ public class RestService {
 			
 			// set headers, if exists
 			if(item.request.getHeaders().size() > 0)
-				req.setHeaders(extractHeader(item.request.getHeaders()));
+				request.setHeaders(extractHeader(item.request.getHeaders()));
 			
 			//set request body data, if exists
 			if(dataMap.size() > 0) 
-				req.setData(item.request.getData());
+				request.setData(item.request.getData());
 			
 			
 			/*
@@ -88,7 +84,7 @@ public class RestService {
 
 			
 			//200 OK
-			responseList.add(req.handleRequest(item, 0, "OK", "", dataMap));
+			responseList.add(request.handleRequest(item, 0, "OK", "", dataMap));
 			
 
 			//Not all requests have body to apply filters on them
@@ -113,7 +109,7 @@ public class RestService {
 						}
 						
 						String paramNames = String.join(",", parameterName);
-						responseList.add(req.handleRequest(item, j, filter.getFilterName().toString(), paramNames, modifiedParameters));
+						responseList.add(request.handleRequest(item, j, filter.getFilterName().toString(), paramNames, modifiedParameters));
 					}
 				}
 			}

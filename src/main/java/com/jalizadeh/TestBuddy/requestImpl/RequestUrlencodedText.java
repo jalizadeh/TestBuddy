@@ -3,14 +3,8 @@ package com.jalizadeh.TestBuddy.requestImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
 import com.jalizadeh.TestBuddy.model.PostmanBody;
@@ -31,36 +25,7 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 	public PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName,
 			Map<String, String> dataMap, ResponseEntity<String> response) throws CloneNotSupportedException {
 		
-		/*
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		
-		//extract data from "urlencoded" field of the Postman collection
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-		dataMap.entrySet().stream().forEach(e -> map.add(e.getKey(), e.getValue()));
-		
-
-		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
-		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
-		*/
-		
-		/*
-		String concatData = dataMap.entrySet().stream()
-				.map(e -> e.getKey() + "=" + e.getValue())
-				.collect(Collectors.joining("&"));
-		System.out.println(concatData);
-
-		HttpEntity<String> entity = new HttpEntity<String>(concatData, headers);
-		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
-		 */
-
 		PostmanResponse postmanResponse = new PostmanResponse();
-
-		String title = "<br><h3>Case: " + testCase + "</h3>";
-		String body = response.getBody();
-		String resp = response.toString();
-
-		//System.err.println(title);
-		// System.out.println(body + "\n" + resp);
 
 		postmanResponse.name = response.getStatusCodeValue() + " - " + testCase + " " + paramName;
 		postmanResponse.status = response.getStatusCode().name();
@@ -96,7 +61,5 @@ public class RequestUrlencodedText extends RequestPostmanAbstract{
 
 		return postmanResponse;
 	}
-
-	
 
 }
