@@ -9,7 +9,7 @@ First phase, focuses on importing requests from **Postman** collection and savin
 ## Test Case Analysis
 A parameter of a request can be a string, number, boolean, array, object, etc. Providing correct parameter leads to a positive test, while incorrect one (for any possible reason) can lead to negative test case.
 
-### Sceanrios:
+### Scenarios:
 - [x] All parameters are OK (+)
 - [x] Empty parameter (-)
     - the parameter exists but it is empty
@@ -62,7 +62,7 @@ curl -X POST 'localhost:8080/json?delay=1' \
 
 ### raw
 - The body is plain text
-- **&amp;** seperated
+- **&amp;** separated
 
 ### x-www-form-urlencoded
 - key-value pairs
@@ -88,8 +88,8 @@ Postman Collection Parser
 - [ ] Support all request methods
 	- [x] GET
 	- [x] POST
-	- [ ] PUT
-	- [ ] DELETE
+	- [x] PUT
+	- [x] DELETE
 - [ ] Fix _postman_previewlanguage
 - [ ] Detach delay from RestService
 - [ ] Prettify result JSON
@@ -103,5 +103,5 @@ Filters
 - [ ] Allow empty filter list
 - [ ] Apply filter on headers
 - [ ] Apply filter on query parameters
-- [ ] Boundry tests
+- [ ] Boundary tests
 - [ ] Test inventory (providing desired input data)
