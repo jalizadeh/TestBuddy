@@ -81,6 +81,79 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Simple",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/simple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"simple"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simple - No Path",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"delete"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -131,58 +204,32 @@
 					"response": []
 				},
 				{
-					"name": "Simple",
+					"name": "Protected Profile",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/simple",
+							"raw": "http://localhost:8080/protected/profile?id=100",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"simple"
+								"protected",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "100"
+								}
 							]
 						}
 					},
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Parse JSON",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"filters\" : [\r\n        \"EMPTY\",\r\n        \"RANDOM\",\r\n        \"INVALID\",\r\n        \"MISSING\"\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/json?delay=1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"json"
-					],
-					"query": [
-						{
-							"key": "delay",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }
