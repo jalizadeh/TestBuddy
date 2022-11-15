@@ -29,6 +29,7 @@ public class RequestNoBody extends RequestPostmanAbstract {
 		postmanResponse.code = response.getStatusCodeValue();
 		postmanResponse.header = extractResponseHeader(response);
 		postmanResponse._postman_previewlanguage = "json";
+		postmanResponse.body = response.getBody();
 
 		/**
 		 * As I need change the data for each body, I need to clone the original object

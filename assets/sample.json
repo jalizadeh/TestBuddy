@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ebcb7357-60d8-4923-8cbf-1704bd61ddac",
+		"_postman_id": "80e6318c-2e2f-40fd-a759-a0ca41ceca44",
 		"name": "TestBuddy",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24185867"
 	},
 	"item": [
 		{
@@ -65,12 +66,7 @@
 									"value": "123456",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "text"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "http://localhost:8080/xform",
@@ -81,6 +77,79 @@
 							"port": "8080",
 							"path": [
 								"xform"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simple",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/simple",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"simple"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simple - No Path",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"delete"
 							]
 						}
 					},
@@ -135,19 +204,26 @@
 					"response": []
 				},
 				{
-					"name": "Simple",
+					"name": "Protected Profile",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/simple",
+							"raw": "http://localhost:8080/protected/profile?id=100",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"simple"
+								"protected",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "100"
+								}
 							]
 						}
 					},

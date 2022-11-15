@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import com.jalizadeh.TestBuddy.central.RequestFactory;
@@ -63,6 +64,12 @@ public class ServiceRequest extends RequestAbstract {
 				break;
 			case "POST":
 				response = restTemplate.postForEntity(this.url, this.entity, String.class);
+				break;
+			case "PUT":
+				response = restTemplate.exchange(this.url, HttpMethod.PUT, null, String.class);
+				break;
+			case "DELETE":
+				response = restTemplate.exchange(this.url, HttpMethod.DELETE, null, String.class);
 				break;
 		}	
 
