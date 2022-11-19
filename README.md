@@ -78,27 +78,27 @@ Test Endpoint
 - [ ] RestAssured tests
 
 
-Postman Collection Parser
+**Postman Collection Parser**
 - [x] Parse Postman collection
 - [x] Parse *raw* body
 - [x] Parse *x-www-form-urlencoded* body
 - [x] Export populated Postman collection
 - [x] Add response's headers to PostmanResponse object
 - [x] Use requests's header in RestService
-- [ ] Support all request methods
+- [x] Support all request methods
 	- [x] GET
 	- [x] POST
 	- [x] PUT
 	- [x] DELETE
-- [ ] Fix _postman_previewlanguage
-- [ ] Detach delay from RestService
 - [ ] Prettify result JSON
 - [ ] Load Postman environment file
 - [ ] Statistics
 - [ ] Report / Log
 - [ ] Group similar results
+- [ ] Detach delay from RestService
+- [ ] Fix _postman_previewlanguage
 
-Filters
+**Filters**
 - [x] Selectable filter
 - [ ] Allow empty filter list
 - [ ] Apply filter on headers

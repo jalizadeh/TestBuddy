@@ -51,7 +51,8 @@ public class Handler {
 		try {
 			collection = new PostmanCollectionRunner().parseCollection(jsonPath, null, "Test", false, false);
 			parsedCollection = restService.parseCollection(collection, delay);
-			mapper.writeValue(new File(env.getProperty("generatedFile.path")), parsedCollection);
+			//String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(parsedCollection);
+			mapper.writerWithDefaultPrettyPrinter().writeValue(new File(env.getProperty("generatedFile.path")), parsedCollection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
