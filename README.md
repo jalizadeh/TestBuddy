@@ -90,7 +90,7 @@ Test Endpoint
 	- [x] POST
 	- [x] PUT
 	- [x] DELETE
-- [ ] Prettify result JSON
+- [x] Prettify result JSON file
 - [ ] Load Postman environment file
 - [ ] Statistics
 - [ ] Report / Log

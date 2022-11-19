@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import com.jalizadeh.TestBuddy.central.RequestFactory;
+import com.jalizadeh.TestBuddy.central.StatisticsManager;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
@@ -73,6 +74,9 @@ public class ServiceRequest extends RequestAbstract {
 				break;
 		}	
 
+		StatisticsManager statMng = StatisticsManager.getInstance();
+		statMng.addStat(response.getStatusCode().is2xxSuccessful() ? true : false);
+		
 		//based on the input collection, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);
 		return request.handleRequest(item, count, testCase, paramName, dataMap, response);
