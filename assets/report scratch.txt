@@ -1,0 +1,21 @@
+{
+    totalTimeMs: 321
+    totalrequests: 4
+    totalcalls: 29
+    totalpositive: 4 
+    totalnegative: 25
+    requests:[
+        {
+            name: Raw body
+            type: post
+            url: xxx
+            parameters:[
+                query: 0
+                header: 0
+                body: 3
+            ]
+            positive: 1
+            negative: 7
+        }
+    ]
+}

@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.TestBuddy.central.FilterFactory;
 import com.jalizadeh.TestBuddy.central.FiltersManager;
+import com.jalizadeh.TestBuddy.central.StatisticsManager;
 import com.jalizadeh.TestBuddy.model.InputRequest;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.runner.PostmanCollectionRunner;
 import com.jalizadeh.TestBuddy.service.RestService;
+import com.jalizadeh.TestBuddy.statistics.StatReport;
 import com.jalizadeh.TestBuddy.types.Filters;
 
 @RestController
@@ -32,7 +34,7 @@ public class Handler {
 	private FilterFactory filterFactory;
 
 	@PostMapping("/json")
-	public PostmanCollection parseJson(
+	public StatReport parseJson(
 			@RequestParam(required = false) Optional<Integer> delay, 
 			@RequestBody InputRequest input
 			) throws Exception {
@@ -51,12 +53,13 @@ public class Handler {
 		try {
 			collection = new PostmanCollectionRunner().parseCollection(jsonPath, null, "Test", false, false);
 			parsedCollection = restService.parseCollection(collection, delay);
-			mapper.writeValue(new File(env.getProperty("generatedFile.path")), parsedCollection);
+			mapper.writerWithDefaultPrettyPrinter().writeValue(new File(env.getProperty("generatedFile.path")), parsedCollection);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return parsedCollection;
+		
+		//return parsedCollection;
+		return StatisticsManager.getInstance().getReport();
 	}
 
 

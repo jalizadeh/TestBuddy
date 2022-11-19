@@ -1,5 +1,7 @@
 package com.jalizadeh.TestBuddy.service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import com.jalizadeh.TestBuddy.central.FiltersManager;
+import com.jalizadeh.TestBuddy.central.StatisticsManager;
 import com.jalizadeh.TestBuddy.interfaces.ServiceRequest;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
@@ -42,7 +45,8 @@ public class RestService {
 			throws Exception, CloneNotSupportedException {
 		
 		//optional delay between requests
-		delay = (int) inDelay.orElse(0); 
+		delay = (int) inDelay.orElse(0);
+		StatisticsManager statMng = StatisticsManager.getInstance();
 		
 		for(PostmanItem item : collection.item.get(0).item) {
 
@@ -82,6 +86,8 @@ public class RestService {
 			}
 			
 
+			Instant start_time = Instant.now();
+			
 			
 			//200 OK
 			responseList.add(request.handleRequest(item, 0, "OK", "", dataMap));
@@ -113,6 +119,9 @@ public class RestService {
 					}
 				}
 			}
+			
+			Instant end_time = Instant.now();
+			statMng.addTime(Duration.between(start_time, end_time).toMillis());
 			
 			item.response = responseList;
 		}
