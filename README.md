@@ -37,7 +37,7 @@ Considering a request with 3 parameters, will produce 8 test cases (2^3). The fo
 | Result  | **T**  | **F**  | **F**  | **F**  | **F**  | **F**  | **F**  | **F**  |
 
 ## Result
-The end result will be auto-generated JSON file of the collection containing all the test cases
+The end result will be auto-generated JSON file of the collection containing all the test cases as Postman`s Example
 
 ```
 curl -X POST 'localhost:8080/json?delay=1' \
@@ -52,19 +52,82 @@ curl -X POST 'localhost:8080/json?delay=1' \
 }'
 ```
 
-[Sample Result](assets/result-full.json)
+Response
 
+```json
+{
+    "collectionName": "TestBuddy_20221120_143823",
+    "totalTimeMs": 398,
+    "totalRequests": 6,
+    "totalCalls": 62,
+    "totalPositive": 6,
+    "totalNegative": 56,
+    "requests": [
+        {
+            "name": "Delete",
+            "method": "DELETE",
+            "url": "http://localhost:8080/delete",
+            "positive": 1,
+            "negative": 0
+        },
+        {
+            "name": "Raw Body",
+            "method": "POST",
+            "url": "http://localhost:8080/rawBody",
+            "positive": 1,
+            "negative": 28
+        },
+        {
+            "name": "Simple",
+            "method": "GET",
+            "url": "http://localhost:8080/simple",
+            "positive": 1,
+            "negative": 0
+        },
+        {
+            "name": "Simple - No Path",
+            "method": "GET",
+            "url": "http://localhost:8080",
+            "positive": 1,
+            "negative": 0
+        },
+        {
+            "name": "Update",
+            "method": "PUT",
+            "url": "http://localhost:8080/update",
+            "positive": 1,
+            "negative": 0
+        },
+        {
+            "name": "X-Form",
+            "method": "POST",
+            "url": "http://localhost:8080/xform",
+            "positive": 1,
+            "negative": 28
+        }
+    ]
+}
+```
+
+
+[Sample generated JSON file to load in Postman](assets/result-full.json)
+
+Generated result is loaded in Postman:
 ![](assets/result-1.JPG)
+
 
 
 
 ## Request Types based on body format
 
-### raw
+**empty**
+- The request doesn`t have body data
+
+**raw**
 - The body is plain text
 - **&amp;** separated
 
-### x-www-form-urlencoded
+**x-www-form-urlencoded**
 - key-value pairs
 - parameters can be disabled (*not implemented yet*)
 
@@ -92,7 +155,7 @@ Test Endpoint
 	- [x] DELETE
 - [x] Prettify result JSON file
 - [ ] Load Postman environment file
-- [ ] Statistics
+- [x] Statistics
 - [ ] Report / Log
 - [ ] Group similar results
 - [ ] Detach delay from RestService

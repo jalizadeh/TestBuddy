@@ -3,6 +3,7 @@ package com.jalizadeh.TestBuddy.service;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class RestService {
 		for(PostmanItem item : collection.item.get(0).item) {
 
 			List<PostmanResponse> responseList = new ArrayList<PostmanResponse>();
-			ServiceRequest request = new ServiceRequest(item.request.getFullUrl(), item.request.method, item.request.getBodyMode());
+			ServiceRequest request = new ServiceRequest(item.name, item.request.getFullUrl(), item.request.method, item.request.getBodyMode());
 			
 			//having body as Map is easier to apply filters on the parameters
 			Map<String, String> dataMap = item.request.getDataMap();
@@ -126,7 +127,8 @@ public class RestService {
 			item.response = responseList;
 		}
 		
-		collection.info.name = collection.info.name + " " + LocalDateTime.now(); 
+		collection.info.name = collection.info.name + "_" + 
+				LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")); 
 		
 		return collection;
 	}

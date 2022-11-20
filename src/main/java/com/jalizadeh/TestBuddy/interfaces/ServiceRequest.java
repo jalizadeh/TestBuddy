@@ -18,6 +18,7 @@ public class ServiceRequest extends RequestAbstract {
 	@Autowired
 	RequestFactory requestFactory;
 	
+	private final String name;
 	private final String url;
 	private final String method;
 	private final String bodyMode;
@@ -25,8 +26,9 @@ public class ServiceRequest extends RequestAbstract {
 	private HttpHeaders headers;
 	private String data;
 
-	public ServiceRequest(String url, String method, String bodyMode) {
+	public ServiceRequest(String name, String url, String method, String bodyMode) {
 		this.requestFactory = new RequestFactory();
+		this.name = name;
 		this.url = url;
 		this.method = method;
 		this.bodyMode = bodyMode;
@@ -75,7 +77,7 @@ public class ServiceRequest extends RequestAbstract {
 		}	
 
 		StatisticsManager statMng = StatisticsManager.getInstance();
-		statMng.addStat(response.getStatusCode().is2xxSuccessful() ? true : false);
+		statMng.addStat(this.name, this.method, this.url, response.getStatusCode().is2xxSuccessful() ? true : false);
 		
 		//based on the input collection, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);
