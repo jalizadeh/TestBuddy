@@ -113,6 +113,7 @@ Response
 [Sample generated JSON file to load in Postman](assets/result-full.json)
 
 Generated result is loaded in Postman:
+
 ![](assets/result-1.JPG)
 
 
@@ -154,8 +155,8 @@ Test Endpoint
 	- [x] PUT
 	- [x] DELETE
 - [x] Prettify result JSON file
-- [ ] Load Postman environment file
 - [x] Statistics
+- [ ] Load Postman environment file
 - [ ] Report / Log
 - [ ] Group similar results
 - [ ] Detach delay from RestService
@@ -163,7 +164,7 @@ Test Endpoint
 
 **Filters**
 - [x] Selectable filter
-- [ ] Allow empty filter list
+- [x] Allow empty filter list (run only positive case)
 - [ ] Apply filter on headers
 - [ ] Apply filter on query parameters
 - [ ] Boundary tests

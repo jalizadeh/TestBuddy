@@ -95,7 +95,7 @@ public class RestService {
 			
 
 			//Not all requests have body to apply filters on them
-			if(dataMap.size() > 0) {
+			if(dataMap.size() > 0 && FiltersManager.getInstance().getFilters().size() > 0) {
 				//List of filters should provided in the request's body
 				List<iFilter> filters = FiltersManager.getInstance().getFilters();
 
