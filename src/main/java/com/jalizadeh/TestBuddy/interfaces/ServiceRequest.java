@@ -81,7 +81,7 @@ public class ServiceRequest extends RequestAbstract {
 		
 		//based on the input collection, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);
-		return request.handleRequest(item, count, testCase, paramName, dataMap, response);
+		return request.handleRequest(item, count, testCase, paramName, dataMap, this.headers, response);
 	}
 
 }

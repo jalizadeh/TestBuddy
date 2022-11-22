@@ -41,10 +41,14 @@ public class RestService {
 
 		// optional delay between requests
 		delay = (int) inDelay.orElse(0);
+		
 		StatisticsManager statMng = StatisticsManager.getInstance();
 
 		for (PostmanItem item : collection.item.get(0).item) {
-
+			
+			// to capture the time for Statistics > totalTimeMs
+			Instant start_time = Instant.now();
+						
 			List<PostmanResponse> responseList = new ArrayList<PostmanResponse>();
 			ServiceRequest request = new ServiceRequest(item.name, item.request.getFullUrl(), item.request.method,
 					item.request.getBodyMode());
@@ -76,8 +80,7 @@ public class RestService {
 				//System.out.println("OK\t" + entry.getKey() + "\t" + entry.getValue().toString());
 			}
 
-			// to capture the time for Statistics > totalTimeMs
-			Instant start_time = Instant.now();
+			
 
 			// 200 OK (positive!) or the request as it is, without any change
 			responseList.add(request.handleRequest(item, 0, "OK", "", dataMap));
@@ -112,17 +115,21 @@ public class RestService {
 
 			
 			// T/F table of possibilities / cases
-			boolean[][] scenarioTableHeader = scenarioTable(item.request.getHeaders().size());
+			
+			System.err.println("no true: " + item.request.getHeaders());
+			System.err.println("with true: " + item.request.getHeaders(true));
+			
+			boolean[][] scenarioTableHeader = scenarioTable(item.request.getHeaders(true).size());
 
-			String[] headerArr = new String[item.request.getHeaders().size()];
+			String[] headerArr = new String[item.request.getHeaders(true).size()];
 			int headerCount = 0;
-			for (Entry<String, String> entry : item.request.getHeaders().entrySet()) {
+			for (Entry<String, String> entry : item.request.getHeaders(true).entrySet()) {
 				headerArr[headerCount++] = entry.getKey();
 				System.err.println("HEADR OK\t" + entry.getKey() + "\t" + entry.getValue().toString());
 			}
 
 			// Not all requests have body to apply filters on them
-			if (item.request.getHeaders().size() > 0 && FiltersManager.getInstance().getFilters().size() > 0) {
+			if (item.request.getHeaders(true).size() > 0 && FiltersManager.getInstance().getFilters().size() > 0) {
 				// List of filters should provided in the request's body
 				List<iFilter> filters = FiltersManager.getInstance().getFilters();
 

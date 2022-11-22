@@ -3,7 +3,13 @@ package com.jalizadeh.TestBuddy.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.springframework.http.HttpHeaders;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class PostmanRequest implements Cloneable{
 	
@@ -13,11 +19,12 @@ public class PostmanRequest implements Cloneable{
 	public PostmanBody body;
 	public PostmanUrl url;
 	
-	
+	@JsonIgnore
 	public String getBodyMode() {
 		return (body == null || body.mode == null) ? "" : body.mode;
 	}
 
+	@JsonIgnore
 	public String getData() {
 		if (body == null || body.mode == null)  {
 			return "";
@@ -33,7 +40,7 @@ public class PostmanRequest implements Cloneable{
 		}
 	}
 	
-	
+	@JsonIgnore
 	public Map<String,String> getDataMap() {
 		if (body == null || body.mode == null)  {
 			return new HashMap<>();
@@ -50,19 +57,7 @@ public class PostmanRequest implements Cloneable{
 	}
 
 	
-	//TODO: fix for request with raw-json which causes serialization issue
-	private Map<String, String> rawDataMap(String raw) {
-		if (body == null || body.raw == null)  {
-			return new HashMap<>();
-		}
-		
-		Map<String, String> dataMap = new HashMap<>();
-		for(String dp : raw.split("&")) {
-			String[] d = dp.split("=");
-			dataMap.put(d[0], (d.length == 1) ? "" : d[1]);
-		}
-		return dataMap;
-	}
+	
 
 	
 	/*
@@ -83,41 +78,15 @@ public class PostmanRequest implements Cloneable{
 	*/
 	
 	
-	private String urlFormEncodeData(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
-		String result = "";
-		int i = 0;
-		for (PostmanUrlEncoded encoded : formData) {
-			//result += encoded.key + "=" + URLEncoder.encode(var.replace(encoded.value));
-			result += encoded.key + "=" + encoded.value;
-			if (i < formData.size() - 1) {
-				result += "&";
-				i++;
-			}
-		}
-		return result;
-	}
+	
 
-	//TODO: it should be
-	//MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-	private Map<String, String> urlFormEncodeDataMap(/*PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
-		if (body == null || body.urlencoded == null)  {
-			return new HashMap<>();
-		}
-		
-		Map<String, String> dataMap = new HashMap<>();
-		formData.stream()
-			//.filter(i -> Objects.nonNull(i.disabled))
-			//.filter(i -> !i.disabled)
-			.forEach(i-> dataMap.put(i.key, i.value));
-		
-		return dataMap;
-	}
-
+	@JsonIgnore
 	public String getUrl(PostmanVariables var) {
 		return var.replace(url.raw);
 	}
 	
 	
+	@JsonIgnore
 	public String getFullUrl() {
 		PostmanUrl u = this.url;
 		String difiniteUrl = u.protocol + "://" 
@@ -132,6 +101,7 @@ public class PostmanRequest implements Cloneable{
 	}
 	
 
+	@JsonIgnore
 	public Map<String, String> getHeaders(PostmanVariables var) {
 		Map<String, String> result = new HashMap<>();
 		if (header == null || header.isEmpty()) {
@@ -147,7 +117,9 @@ public class PostmanRequest implements Cloneable{
 		return result;
 	}
 	
-	public Map<String, String> getHeaders() {
+	
+	@JsonIgnore
+	public Map<String, String> getHeaders(boolean... forTest) {
 		Map<String, String> result = new HashMap<>();
 		if (header == null || header.isEmpty()) {
 			return result;
@@ -155,18 +127,69 @@ public class PostmanRequest implements Cloneable{
 		for (PostmanHeader head : header) {
 			if (head.key.toUpperCase().equals(PoyntHttpHeaders.REQUEST_ID_HEADER)) {
 				result.put(head.key.toUpperCase(), head.value);
-			} else {
+			} 
+			
+			//TODO: improve logic
+			if (forTest.length == 0) {
+				result.put(head.key, head.value);
+			} else if (forTest.length > 0 && head.key.toLowerCase().contains("authorization")) {
 				result.put(head.key, head.value);
 			}
 		}
 		return result;
 	}
-
+	
+	
 	
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
+	}
+	
+	
+	//TODO: fix for request with raw-json which causes serialization issue
+	private Map<String, String> rawDataMap(String raw) {
+		if (body == null || body.raw == null) {
+			return new HashMap<>();
+		}
+
+		Map<String, String> dataMap = new HashMap<>();
+		for (String dp : raw.split("&")) {
+			String[] d = dp.split("=");
+			dataMap.put(d[0], (d.length == 1) ? "" : d[1]);
+		}
+		return dataMap;
+	}
+
+	private String urlFormEncodeData(/* PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
+		String result = "";
+		int i = 0;
+		for (PostmanUrlEncoded encoded : formData) {
+			// result += encoded.key + "=" + URLEncoder.encode(var.replace(encoded.value));
+			result += encoded.key + "=" + encoded.value;
+			if (i < formData.size() - 1) {
+				result += "&";
+				i++;
+			}
+		}
+		return result;
+	}
+
+	// TODO: it should be
+	// MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+	private Map<String, String> urlFormEncodeDataMap(/* PostmanVariables var, */ List<PostmanUrlEncoded> formData) {
+		if (body == null || body.urlencoded == null) {
+			return new HashMap<>();
+		}
+
+		Map<String, String> dataMap = new HashMap<>();
+		formData.stream()
+				// .filter(i -> Objects.nonNull(i.disabled))
+				// .filter(i -> !i.disabled)
+				.forEach(i -> dataMap.put(i.key, i.value));
+
+		return dataMap;
 	}
 	
 }

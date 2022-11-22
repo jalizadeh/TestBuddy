@@ -19,7 +19,7 @@ A parameter of a request can be a string, number, boolean, array, object, etc. P
     - the parameter does not exist
 - [x] Random parameter (-)
     - the parameter is a random value (first part of UUID)
-- [ ] Dummy parameter(s) (-/+)
+- [ ] Extra dummy parameter(s) (-/+)
     - the extra dummy parameter`s presence brakes the functionality or not
 - and more ...
 
@@ -158,7 +158,7 @@ Test Endpoint
 	- [x] DELETE
 - [x] Prettify result JSON file
 - [x] Statistics
-	- [ ] Set of response status
+	- [ ] Set of `{filter : [response status]}`
 - [ ] Load Postman environment file
 - [ ] Report / Log
 - [ ] Group similar results
@@ -169,6 +169,8 @@ Test Endpoint
 - [x] Selectable filter
 - [x] Allow empty filter list (run only positive case)
 - [ ] Apply filter on headers
+	- [x] ⚠️ Currently supports only `Authorization` header
+	- [ ] Support multi header item
 - [ ] Apply filter on query parameters
 - [ ] Boundary tests
 - [ ] Test inventory (providing desired input data)
