@@ -19,6 +19,8 @@ A parameter of a request can be a string, number, boolean, array, object, etc. P
     - the parameter does not exist
 - [x] Random parameter (-)
     - the parameter is a random value (first part of UUID)
+- [ ] Dummy parameter(s) (-/+)
+    - the extra dummy parameter`s presence brakes the functionality or not
 - and more ...
 
 The checked scenarios above are implemented via the **iFilter** interface.
@@ -156,6 +158,7 @@ Test Endpoint
 	- [x] DELETE
 - [x] Prettify result JSON file
 - [x] Statistics
+	- [ ] Set of response status
 - [ ] Load Postman environment file
 - [ ] Report / Log
 - [ ] Group similar results

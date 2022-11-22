@@ -65,8 +65,8 @@ public class Handler {
 
 
 	private void extractFilters(InputRequest input) {
-		if(!validateInput(input)) {
-			FiltersManager instance = FiltersManager.getInstance();
+		FiltersManager instance = FiltersManager.getInstance();
+		if(validateInput(input)) {
 			instance.clearFilters();
 			
 			for(Filters f : input.getFilters()) {
@@ -76,6 +76,9 @@ public class Handler {
 					e.printStackTrace();
 				}
 			}
+		} else {
+			instance = FiltersManager.getInstance();
+			instance.clearFilters();
 		}
 	}
 

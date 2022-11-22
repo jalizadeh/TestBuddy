@@ -159,17 +159,20 @@ public class TestEndpoint {
 	}
 	
 	//learn more about all header processing types
-	@GetMapping("/authorized")
-	public ResponseEntity<String> authorizedEndpoint(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String auth) {
-		 String[] values = new String[2];
-		if (auth != null && auth.toLowerCase().startsWith("basic")) {
+	//https://www.baeldung.com/spring-rest-http-headers
+	@GetMapping("/authorized/basic")
+	public ResponseEntity<String> basicAuthorizedEndpoint(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String auth) {
+		String[] values = new String[2];
+		boolean wasOK = false;
+		if (auth.length() > 0 && auth != null && auth.toLowerCase().startsWith("basic")) {
 		    String base64Credentials = auth.substring("Basic".length()).trim();
 		    byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
 		    String credentials = new String(credDecoded, StandardCharsets.UTF_8);
 		    values = credentials.split(":", 2);
+		    wasOK = true;
 		}
 		
-		if(values[0].equals(env.getProperty("basicAuth.username")) 
+		if(wasOK && values[0].equals(env.getProperty("basicAuth.username")) 
 				&&  values[1].equals(env.getProperty("basicAuth.password"))) {
 			return new ResponseEntity<String>("", HttpStatus.OK);
 		}
