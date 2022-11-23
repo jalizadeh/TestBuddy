@@ -158,7 +158,7 @@ Test Endpoint
 	- [x] DELETE
 - [x] Prettify result JSON file
 - [x] Statistics
-	- [ ] Set of `{filter : [response status]}`
+	- [x] Set of `{filter : [response status]}`
 - [ ] Load Postman environment file
 - [ ] Report / Log
 - [ ] Group similar results
