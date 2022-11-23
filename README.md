@@ -58,54 +58,89 @@ Response
 
 ```json
 {
-    "collectionName": "TestBuddy_20221120_143823",
-    "totalTimeMs": 398,
-    "totalRequests": 6,
-    "totalCalls": 62,
-    "totalPositive": 6,
-    "totalNegative": 56,
+    "collectionName": "TestBuddy_20221123_220044",
+    "totalTimeMs": 493,
+    "totalRequests": 7,
+    "totalCalls": 67,
+    "totalPositive": 7,
+    "totalNegative": 60,
     "requests": [
+        {
+            "name": "Authorized",
+            "method": "GET",
+            "url": "http://localhost:8080/authorized/basic",
+            "positive": 1,
+            "negative": 4,
+            "status": [
+                "200 OK",
+                "400 BAD_REQUEST",
+                "403 FORBIDDEN",
+                "500 INTERNAL_SERVER_ERROR"
+            ]
+        },
         {
             "name": "Delete",
             "method": "DELETE",
             "url": "http://localhost:8080/delete",
             "positive": 1,
-            "negative": 0
+            "negative": 0,
+            "status": [
+                "200 OK"
+            ]
         },
         {
             "name": "Raw Body",
             "method": "POST",
             "url": "http://localhost:8080/rawBody",
             "positive": 1,
-            "negative": 28
+            "negative": 28,
+            "status": [
+                "200 OK",
+                "400 BAD_REQUEST",
+                "401 UNAUTHORIZED"
+            ]
         },
         {
             "name": "Simple",
             "method": "GET",
             "url": "http://localhost:8080/simple",
             "positive": 1,
-            "negative": 0
+            "negative": 0,
+            "status": [
+                "200 OK"
+            ]
         },
         {
             "name": "Simple - No Path",
             "method": "GET",
             "url": "http://localhost:8080",
             "positive": 1,
-            "negative": 0
+            "negative": 0,
+            "status": [
+                "200 OK"
+            ]
         },
         {
             "name": "Update",
             "method": "PUT",
             "url": "http://localhost:8080/update",
             "positive": 1,
-            "negative": 0
+            "negative": 0,
+            "status": [
+                "200 OK"
+            ]
         },
         {
             "name": "X-Form",
             "method": "POST",
             "url": "http://localhost:8080/xform",
             "positive": 1,
-            "negative": 28
+            "negative": 28,
+            "status": [
+                "200 OK",
+                "400 BAD_REQUEST",
+                "401 UNAUTHORIZED"
+            ]
         }
     ]
 }

@@ -14,6 +14,6 @@ public class StatRequest {
 		private String url;
 		private int positive;
 		private int negative;
-		private List<Integer> status;
+		private List<String> status;
 		
 }

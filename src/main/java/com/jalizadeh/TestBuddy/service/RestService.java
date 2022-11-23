@@ -178,6 +178,7 @@ public class RestService {
 			}
 		}
 
+		/*
 		System.out.print("\t");
 		for (int j = 0; j < lenght; j++) {
 			System.out.print(j + "\t");
@@ -191,7 +192,8 @@ public class RestService {
 
 			System.out.println();
 		}
-
+		*/
+		
 		return arr;
 	}
 }

@@ -57,7 +57,7 @@ public class StatisticsManager {
 	}
 
 
-	public void addStat(String name, String method, String url, int statusCode, boolean isPos) {
+	public void addStat(String name, String method, String url, String string, boolean isPos) {
 		
 		this.totalCalls++ ;
 		
@@ -70,7 +70,7 @@ public class StatisticsManager {
 			reqMap.put(name, new Request(name, method, url,0,0, null));
 		}
 		reqMap.get(name).setPosNeg(isPos);
-		reqMap.get(name).setStatusCode(statusCode);
+		reqMap.get(name).setStatusCode(string);
 		
 	}
 	
@@ -100,19 +100,18 @@ class Request {
 	private String url;
 	private int positive;
 	private int negative;
-	private Set<Integer> status;
+	private Set<String> status;
 	
 	public void setPosNeg(boolean isPos) {
 		if(isPos) 	positive++;
 		else 		negative++;
 	}
 
-	public void setStatusCode(int statusCode) {
+	public void setStatusCode(String statusCode) {
 		if(status == null) {
 			status = new HashSet<>();
 		}
 		
 		status.add(statusCode);
-		System.err.println("Added new status: " + statusCode);
 	}
 }
