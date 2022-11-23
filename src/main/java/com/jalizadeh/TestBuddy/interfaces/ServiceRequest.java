@@ -77,7 +77,7 @@ public class ServiceRequest extends RequestAbstract {
 		}	
 
 		StatisticsManager statMng = StatisticsManager.getInstance();
-		statMng.addStat(this.name, this.method, this.url, response.getStatusCode().is2xxSuccessful() ? true : false);
+		statMng.addStat(this.name, this.method, this.url, response.getStatusCode().toString(), response.getStatusCode().is2xxSuccessful() ? true : false);
 		
 		//based on the input collection, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);

@@ -1,9 +1,10 @@
 package com.jalizadeh.TestBuddy.central;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.jalizadeh.TestBuddy.statistics.StatReport;
@@ -49,24 +50,28 @@ public class StatisticsManager {
 	private List<StatRequest> mapToList(Map<String, Request> req) {
 		return req.values().stream()
 				.sorted((a,b) -> a.getName().compareTo(b.getName()))
-				.map(r -> new StatRequest(r.getName(), r.getMethod(), r.getUrl(), r.getPositive(), r.getNegative()))
+				.map(r -> new StatRequest(r.getName(), r.getMethod(), r.getUrl(), 
+						r.getPositive(), r.getNegative(), 
+						r.getStatus().stream().sorted().collect(Collectors.toList())))
 				.collect(Collectors.toList());
 	}
 
 
-	public void addStat(String name, String method, String url, boolean isPos) {
+	public void addStat(String name, String method, String url, String string, boolean isPos) {
 		
 		this.totalCalls++ ;
 		
 		if(isPos) 	this.totalPositive++;
 		else 		this.totalNegative++;
 		
-		if(this.request.containsKey(name)) {
-			this.request.get(name).setPosNeg(isPos);
-		} else {
-			this.request.put(name, new Request(name, method, url,0,0));
-			this.request.get(name).setPosNeg(isPos);
+		Map<String, Request> reqMap = this.request;
+		if(!reqMap.containsKey(name)) {
+//			reqMap.get(name).setPosNeg(isPos);
+			reqMap.put(name, new Request(name, method, url,0,0, null));
 		}
+		reqMap.get(name).setPosNeg(isPos);
+		reqMap.get(name).setStatusCode(string);
+		
 	}
 	
 	
@@ -95,9 +100,18 @@ class Request {
 	private String url;
 	private int positive;
 	private int negative;
+	private Set<String> status;
 	
 	public void setPosNeg(boolean isPos) {
 		if(isPos) 	positive++;
 		else 		negative++;
+	}
+
+	public void setStatusCode(String statusCode) {
+		if(status == null) {
+			status = new HashSet<>();
+		}
+		
+		status.add(statusCode);
 	}
 }
