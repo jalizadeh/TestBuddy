@@ -166,7 +166,9 @@ Test Endpoint
 - [ ] Fix _postman_previewlanguage
 
 **Filters**
-- [x] Selectable filter
+- [ ] Filter request
+	- [x] List of desired filters
+	- [ ] Apply on target (body/query/header parameters)
 - [x] Allow empty filter list (run only positive case)
 - [ ] Apply filter on headers
 	- [x] ⚠️ Currently supports only `Authorization` header
