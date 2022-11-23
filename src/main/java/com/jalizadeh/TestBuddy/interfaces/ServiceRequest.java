@@ -63,16 +63,16 @@ public class ServiceRequest extends RequestAbstract {
 
 		switch (this.method) {
 			case "GET":
-				response = restTemplate.getForEntity(this.url, String.class);
+				response = restTemplate.exchange(this.url, HttpMethod.GET, this.entity, String.class);
 				break;
 			case "POST":
-				response = restTemplate.postForEntity(this.url, this.entity, String.class);
+				response = restTemplate.exchange(this.url, HttpMethod.POST, this.entity, String.class);
 				break;
 			case "PUT":
-				response = restTemplate.exchange(this.url, HttpMethod.PUT, null, String.class);
+				response = restTemplate.exchange(this.url, HttpMethod.PUT, this.entity, String.class);
 				break;
 			case "DELETE":
-				response = restTemplate.exchange(this.url, HttpMethod.DELETE, null, String.class);
+				response = restTemplate.exchange(this.url, HttpMethod.DELETE, this.entity, String.class);
 				break;
 		}	
 
@@ -81,7 +81,7 @@ public class ServiceRequest extends RequestAbstract {
 		
 		//based on the input collection, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);
-		return request.handleRequest(item, count, testCase, paramName, dataMap, response);
+		return request.handleRequest(item, count, testCase, paramName, dataMap, this.headers, response);
 	}
 
 }

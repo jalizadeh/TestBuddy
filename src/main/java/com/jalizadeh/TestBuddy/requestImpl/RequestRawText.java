@@ -2,6 +2,7 @@ package com.jalizadeh.TestBuddy.requestImpl;
 
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
@@ -21,7 +22,7 @@ public class RequestRawText extends RequestPostmanAbstract {
 	
 	@Override
 	public PostmanResponse handleRequest(PostmanItem item, int count, String testCase, String paramName, 
-			Map<String, String> dataMap, ResponseEntity<String> response) throws CloneNotSupportedException {
+			Map<String, String> dataMap, HttpHeaders headers, ResponseEntity<String> response) throws CloneNotSupportedException {
 
 		PostmanResponse postmanResponse = new PostmanResponse();
 
@@ -41,6 +42,7 @@ public class RequestRawText extends RequestPostmanAbstract {
 		newBody.raw = mapToString(dataMap);
 		newReq.body = newBody;
 		postmanResponse.originalRequest = newReq;
+		postmanResponse.originalRequest.header = setModifiedResponseHeader(headers);
 
 		return postmanResponse;
 	}

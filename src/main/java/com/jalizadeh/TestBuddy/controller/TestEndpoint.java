@@ -1,11 +1,15 @@
 package com.jalizadeh.TestBuddy.controller;
 
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,11 +19,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestEndpoint {
+	
+	@Autowired
+	private Environment env;
+
 	
 	@GetMapping("/")
 	public ResponseEntity<String> rootApi() {
@@ -149,7 +158,27 @@ public class TestEndpoint {
 		return response;
 	}
 	
-	
+	//learn more about all header processing types
+	//https://www.baeldung.com/spring-rest-http-headers
+	@GetMapping("/authorized/basic")
+	public ResponseEntity<String> basicAuthorizedEndpoint(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String auth) {
+		String[] values = new String[2];
+		boolean wasOK = false;
+		if (auth.length() > 0 && auth != null && auth.toLowerCase().startsWith("basic")) {
+		    String base64Credentials = auth.substring("Basic".length()).trim();
+		    byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
+		    String credentials = new String(credDecoded, StandardCharsets.UTF_8);
+		    values = credentials.split(":", 2);
+		    wasOK = true;
+		}
+		
+		if(wasOK && values[0].equals(env.getProperty("basicAuth.username")) 
+				&&  values[1].equals(env.getProperty("basicAuth.password"))) {
+			return new ResponseEntity<String>("", HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<String>("", HttpStatus.FORBIDDEN);
+	}
 	
 	@GetMapping("/protected/profile")
 	public String protectedProfile(@RequestParam("id") String id) {

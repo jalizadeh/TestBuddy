@@ -19,6 +19,8 @@ A parameter of a request can be a string, number, boolean, array, object, etc. P
     - the parameter does not exist
 - [x] Random parameter (-)
     - the parameter is a random value (first part of UUID)
+- [ ] Extra dummy parameter(s) (-/+)
+    - the extra dummy parameter`s presence brakes the functionality or not
 - and more ...
 
 The checked scenarios above are implemented via the **iFilter** interface.
@@ -113,6 +115,7 @@ Response
 [Sample generated JSON file to load in Postman](assets/result-full.json)
 
 Generated result is loaded in Postman:
+
 ![](assets/result-1.JPG)
 
 
@@ -154,17 +157,22 @@ Test Endpoint
 	- [x] PUT
 	- [x] DELETE
 - [x] Prettify result JSON file
-- [ ] Load Postman environment file
 - [x] Statistics
+	- [ ] Set of `{filter : [response status]}`
+- [ ] Load Postman environment file
 - [ ] Report / Log
 - [ ] Group similar results
 - [ ] Detach delay from RestService
 - [ ] Fix _postman_previewlanguage
 
 **Filters**
-- [x] Selectable filter
-- [ ] Allow empty filter list
+- [ ] Filter request
+	- [x] List of desired filters
+	- [ ] Apply on target (body/query/header parameters)
+- [x] Allow empty filter list (run only positive case)
 - [ ] Apply filter on headers
+	- [x] ⚠️ Currently supports only `Authorization` header
+	- [ ] Support multi header item
 - [ ] Apply filter on query parameters
 - [ ] Boundary tests
 - [ ] Test inventory (providing desired input data)

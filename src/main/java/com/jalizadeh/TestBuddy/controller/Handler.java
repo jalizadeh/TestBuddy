@@ -36,11 +36,7 @@ public class Handler {
 	@PostMapping("/json")
 	public StatReport parseJson(
 			@RequestParam(required = false) Optional<Integer> delay, 
-			@RequestBody InputRequest input
-			) throws Exception {
-		
-		if(!validateInput(input))
-			throw new Exception("Reuest body is not valid");
+			@RequestBody InputRequest input ) throws Exception {
 		
 		extractFilters(input);
 		
@@ -70,20 +66,25 @@ public class Handler {
 
 	private void extractFilters(InputRequest input) {
 		FiltersManager instance = FiltersManager.getInstance();
-		instance.clearFilters();
-		
-		for(Filters f : input.getFilters()) {
-			try {
-				instance.addFilter(filterFactory.create(f));
-			} catch (Exception e) {
-				e.printStackTrace();
+		if(validateInput(input)) {
+			instance.clearFilters();
+			
+			for(Filters f : input.getFilters()) {
+				try {
+					instance.addFilter(filterFactory.create(f));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+		} else {
+			instance = FiltersManager.getInstance();
+			instance.clearFilters();
 		}
 	}
 
 
 	private boolean validateInput(InputRequest input) {
-		return (input == null || input.getFilters().size() == 0) ? false : true; 
+		return (input == null || input.getFilters() == null ||  input.getFilters().size() == 0) ? false : true; 
 	}
 	
 
