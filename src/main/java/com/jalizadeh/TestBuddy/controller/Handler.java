@@ -1,10 +1,14 @@
 package com.jalizadeh.TestBuddy.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +36,9 @@ public class Handler {
 	
 	@Autowired
 	private FilterFactory filterFactory;
+	
+	@Value("${htmlReportFile.path}") 
+	private Resource reportTemplateLocation;
 
 	@PostMapping("/json")
 	public StatReport parseJson(
@@ -55,7 +62,48 @@ public class Handler {
 		}
 		
 		//return parsedCollection;
-		return StatisticsManager.getInstance().getReport(collection.info.name);
+		StatReport statReport = StatisticsManager.getInstance().getReport(collection.info.name);
+		generateHtmlReport(statReport);
+		return statReport;
+	}
+
+
+	private void generateHtmlReport(StatReport statReport) throws IOException {
+		File htmlTemplateFile = reportTemplateLocation.getFile();
+		String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+		String title = "TestBuddy | " + statReport.getCollectionName();
+		
+		htmlString = htmlString.replace("$title", title);
+		htmlString = htmlString.replace("$collectionName", statReport.getCollectionName());
+		htmlString = htmlString.replace("$totalRequests", statReport.getTotalRequests()+"");
+		htmlString = htmlString.replace("$totalCalls", statReport.getTotalCalls()+"");
+		htmlString = htmlString.replace("$totalPositive", statReport.getTotalPositive()+"");
+		htmlString = htmlString.replace("$totalNegative", statReport.getTotalNegative()+"");
+		
+		StringBuilder sbReq = new StringBuilder();
+		statReport.getRequests().stream()
+			.forEach(r -> {
+				sbReq
+					.append("<div>")
+					.append("<h2>")
+					.append(r.getName())
+					.append(" <span class=\"badge rounded-pill text-bg-secondary\">" + r.getMethod() + "</span>")
+					.append(" <span class=\"badge rounded-pill text-bg-success\">" + r.getPositive() + "</span>")
+					.append(" <span class=\"badge rounded-pill text-bg-danger\">" + r.getNegative() +"</span>")
+					.append("</h2>")
+					//.append("<p>" + r.getDescription() + "</p>")
+					.append("<ul class=\"icon-list ps-0 text-secondary\">");
+				
+				r.getStatus().forEach(s -> sbReq.append("<li class=\"d-flex align-items-start mb-1\">" + s + "</li>"));
+				
+				sbReq
+					.append("</ul>")
+					.append("</div>");
+			});
+		htmlString = htmlString.replace("$requests", sbReq);
+		
+		File newHtmlFile = new File(env.getProperty("generatedFile.path") + "report.html");
+		FileUtils.writeStringToFile(newHtmlFile, htmlString);
 	}
 
 

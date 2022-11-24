@@ -194,8 +194,9 @@ Test Endpoint
 - [x] Prettify result JSON file
 - [x] Statistics
 	- [x] Set of `{filter : [response status]}`
+- [x] HTML Report
 - [ ] Load Postman environment file
-- [ ] Report / Log
+- [ ] Log
 - [ ] Group similar results
 - [ ] Detach delay from RestService
 - [ ] Fix _postman_previewlanguage
