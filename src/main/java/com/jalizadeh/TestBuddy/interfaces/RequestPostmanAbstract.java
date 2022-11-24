@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.jalizadeh.TestBuddy.model.PostmanHeader;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
+import com.jalizadeh.TestBuddy.model.PostmanParameter;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
 public abstract class RequestPostmanAbstract extends RequestAbstract{
@@ -33,10 +34,10 @@ public abstract class RequestPostmanAbstract extends RequestAbstract{
 		return responseHeaderList;
 	}
 	
-	protected List<PostmanHeader> setModifiedResponseHeader(HttpHeaders headers) {
+	protected List<PostmanParameter> setModifiedResponseHeader(HttpHeaders headers) {
 		if(headers != null) {
-			List<PostmanHeader> headerList = new ArrayList<>();
-			PostmanHeader ph = new PostmanHeader();
+			List<PostmanParameter> headerList = new ArrayList<>();
+			PostmanParameter ph = new PostmanParameter();
 			headers.forEach((k, v) -> {
 				ph.key = k;
 				ph.value = v.get(0);

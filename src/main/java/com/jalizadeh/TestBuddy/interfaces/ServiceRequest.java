@@ -1,6 +1,9 @@
 package com.jalizadeh.TestBuddy.interfaces;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -11,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import com.jalizadeh.TestBuddy.central.RequestFactory;
 import com.jalizadeh.TestBuddy.central.StatisticsManager;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
+import com.jalizadeh.TestBuddy.model.PostmanParameter;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
 public class ServiceRequest extends RequestAbstract {
@@ -19,10 +23,11 @@ public class ServiceRequest extends RequestAbstract {
 	RequestFactory requestFactory;
 	
 	private final String name;
-	private final String url;
+	private String url;
 	private final String method;
 	private final String bodyMode;
 	private HttpEntity<?> entity;
+	private List<PostmanParameter> queries;
 	private HttpHeaders headers;
 	private String data;
 
@@ -33,8 +38,18 @@ public class ServiceRequest extends RequestAbstract {
 		this.method = method;
 		this.bodyMode = bodyMode;
 		this.entity = new HttpEntity<>(null);
+		this.queries = new ArrayList<>();
 	}
 
+	public ServiceRequest setQueries(Map<String, PostmanParameter> queries) {
+		String concatenatedQueryParams = queries.values().stream()
+			.map(p -> { return p.key + "=" + p.value; })
+			.collect(Collectors.joining("&"));
+		this.url += "?" + concatenatedQueryParams;
+		return this;
+	}
+
+	
 	public ServiceRequest setHeaders(HttpHeaders headers) {
 		this.headers = headers;
 		this.entity = new HttpEntity<>(this.headers);

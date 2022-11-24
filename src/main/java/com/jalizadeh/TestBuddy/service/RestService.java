@@ -14,12 +14,17 @@ import java.util.Optional;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.TestBuddy.central.FiltersManager;
 import com.jalizadeh.TestBuddy.central.StatisticsManager;
 import com.jalizadeh.TestBuddy.interfaces.ServiceRequest;
 import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
+import com.jalizadeh.TestBuddy.model.PostmanParameter;
+import com.jalizadeh.TestBuddy.model.PostmanParameterDescriptionJSON;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 import com.jalizadeh.TestBuddy.types.FilterTarget;
 
@@ -67,6 +72,11 @@ public class RestService {
 			// set request body data, if exists
 			if (dataMap.size() > 0)
 				request.setData(item.request.getData());
+			
+			
+			Map<String, PostmanParameter> queries = item.request.url.getQueries();
+			if(queries.size() > 0)
+				request.setQueries(queries);
 
 			/*
 			 * System.out.println(httpMethod + "\n" + url + "\n" + header.size() + "\n" +
