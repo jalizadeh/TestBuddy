@@ -84,7 +84,8 @@ public class Handler {
 		statReport.getRequests().stream()
 			.forEach(r -> {
 				sbReq
-					.append("<div>")
+					.append("\n")
+					.append("<div class=\"my-5\">")
 					.append("<h2>")
 					.append(r.getName())
 					.append(" <span class=\"badge rounded-pill text-bg-secondary\">" + r.getMethod() + "</span>")
@@ -98,7 +99,8 @@ public class Handler {
 				
 				sbReq
 					.append("</ul>")
-					.append("</div>");
+					.append("</div>")
+					.append("\n");
 			});
 		htmlString = htmlString.replace("$requests", sbReq);
 		

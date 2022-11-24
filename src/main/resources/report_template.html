@@ -80,30 +80,88 @@
 		no-repeat center center/100% auto;
 }
 </style>
-
-
-
-
 <body>
 
 	<div class="col-lg-8 mx-auto p-4 py-md-5">
 		<main>
-			<h2>$collectionName</h2>
-			 <div class="row">
-			 	<div class="col"><p>Requests: $totalRequests</p></div>
-				<div class="col"><p>Calls: $totalCalls</p></div>
-				<div class="col"><p>Positive Cases: $totalPositive</p></div>
-				<div class="col"><p>Negative Cases: $totalNegative</p></div>
-			 </div>
-	
-			<hr class="mb-5">
-	
-			<div class="row g-5">
-				$requests
+		<h2 class="p-3 border-bottom">$collectionName</h2>
+
+		<div class="row mt-3">
+			<div class="col-xl-3 col-sm-6 col-12">
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="media d-flex">
+								<div class="align-self-center">
+									<i class="icon-pencil primary font-large-2 float-left"></i>
+								</div>
+								<div class="media-body text-right">
+									<h3>$totalRequests</h3>
+									<span>Requests</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</main>
+			<div class="col-xl-3 col-sm-6 col-12">
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="media d-flex">
+								<div class="align-self-center">
+									<i class="icon-speech warning font-large-2 float-left"></i>
+								</div>
+								<div class="media-body text-right">
+									<h3>$totalCalls</h3>
+									<span>Http Calls</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6 col-12">
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="media d-flex">
+								<div class="align-self-center">
+									<i class="icon-graph success font-large-2 float-left"></i>
+								</div>
+								<div class="media-body text-right">
+									<h3 class="text-success">$totalPositive</h3>
+									<span>Positive Cases</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-3 col-sm-6 col-12">
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="media d-flex">
+								<div class="align-self-center">
+									<i class="icon-pointer danger font-large-2 float-left"></i>
+								</div>
+								<div class="media-body text-right">
+									<h3 class="text-danger">$totalNegative</h3>
+									<span>Negative Cases</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		
-		<footer class="pt-5 my-5 text-muted border-top"> Created by TestBuddy &middot; &copy; 2022 </footer>
+		<div class="mt-4">$requests</div>
+		</main>
+
+		<footer class="pt-5 my-5 text-muted border-top"> Created by
+		TestBuddy &middot; &copy; 2022 </footer>
 	</div>
 
 
