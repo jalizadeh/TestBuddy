@@ -71,7 +71,7 @@ public class Handler {
 	private void generateHtmlReport(StatReport statReport) throws IOException {
 		File htmlTemplateFile = reportTemplateLocation.getFile();
 		String htmlString = FileUtils.readFileToString(htmlTemplateFile);
-		String title = "Testbuddy | " + statReport.getCollectionName();
+		String title = "TestBuddy | " + statReport.getCollectionName();
 		
 		htmlString = htmlString.replace("$title", title);
 		htmlString = htmlString.replace("$collectionName", statReport.getCollectionName());
@@ -79,14 +79,29 @@ public class Handler {
 		htmlString = htmlString.replace("$totalCalls", statReport.getTotalCalls()+"");
 		htmlString = htmlString.replace("$totalPositive", statReport.getTotalPositive()+"");
 		htmlString = htmlString.replace("$totalNegative", statReport.getTotalNegative()+"");
+		
 		StringBuilder sbReq = new StringBuilder();
 		statReport.getRequests().stream()
 			.forEach(r -> {
 				sbReq
-					.append(r.getName() + " [" + r.getMethod() + "]")
-					.append("<br/>");
+					.append("<div>")
+					.append("<h2>")
+					.append(r.getName())
+					.append(" <span class=\"badge rounded-pill text-bg-secondary\">" + r.getMethod() + "</span>")
+					.append(" <span class=\"badge rounded-pill text-bg-success\">" + r.getPositive() + "</span>")
+					.append(" <span class=\"badge rounded-pill text-bg-danger\">" + r.getNegative() +"</span>")
+					.append("</h2>")
+					//.append("<p>" + r.getDescription() + "</p>")
+					.append("<ul class=\"icon-list ps-0 text-secondary\">");
+				
+				r.getStatus().forEach(s -> sbReq.append("<li class=\"d-flex align-items-start mb-1\">" + s + "</li>"));
+				
+				sbReq
+					.append("</ul>")
+					.append("</div>");
 			});
 		htmlString = htmlString.replace("$requests", sbReq);
+		
 		File newHtmlFile = new File(env.getProperty("generatedFile.path") + "report.html");
 		FileUtils.writeStringToFile(newHtmlFile, htmlString);
 	}

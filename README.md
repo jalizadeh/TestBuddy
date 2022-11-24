@@ -194,7 +194,7 @@ Test Endpoint
 - [x] Prettify result JSON file
 - [x] Statistics
 	- [x] Set of `{filter : [response status]}`
-- [ ] HTML Report
+- [x] HTML Report
 - [ ] Load Postman environment file
 - [ ] Log
 - [ ] Group similar results
