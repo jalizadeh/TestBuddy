@@ -1,7 +1,5 @@
 package com.jalizadeh.TestBuddy.interfaces;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import com.jalizadeh.TestBuddy.central.RequestFactory;
 import com.jalizadeh.TestBuddy.central.StatisticsManager;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
-import com.jalizadeh.TestBuddy.model.PostmanParameter;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 
 public class ServiceRequest extends RequestAbstract {
@@ -27,7 +24,7 @@ public class ServiceRequest extends RequestAbstract {
 	private final String method;
 	private final String bodyMode;
 	private HttpEntity<?> entity;
-	private List<PostmanParameter> queries;
+	private String queries;
 	private HttpHeaders headers;
 	private String data;
 
@@ -38,14 +35,13 @@ public class ServiceRequest extends RequestAbstract {
 		this.method = method;
 		this.bodyMode = bodyMode;
 		this.entity = new HttpEntity<>(null);
-		this.queries = new ArrayList<>();
+		this.queries = "";
 	}
 
-	public ServiceRequest setQueries(Map<String, PostmanParameter> queries) {
-		String concatenatedQueryParams = queries.values().stream()
-			.map(p -> { return p.key + "=" + p.value; })
-			.collect(Collectors.joining("&"));
-		this.url += "?" + concatenatedQueryParams;
+	public ServiceRequest setQueries(Map<String, String> map) {
+		this.queries = map.entrySet().stream()
+				.map(p -> { return p.getKey() + "=" + p.getValue(); })
+				.collect(Collectors.joining("&"));
 		return this;
 	}
 
@@ -78,16 +74,16 @@ public class ServiceRequest extends RequestAbstract {
 
 		switch (this.method) {
 			case "GET":
-				response = restTemplate.exchange(this.url, HttpMethod.GET, this.entity, String.class);
+				response = restTemplate.exchange(getUrl(), HttpMethod.GET, this.entity, String.class);
 				break;
 			case "POST":
-				response = restTemplate.exchange(this.url, HttpMethod.POST, this.entity, String.class);
+				response = restTemplate.exchange(getUrl(), HttpMethod.POST, this.entity, String.class);
 				break;
 			case "PUT":
-				response = restTemplate.exchange(this.url, HttpMethod.PUT, this.entity, String.class);
+				response = restTemplate.exchange(getUrl(), HttpMethod.PUT, this.entity, String.class);
 				break;
 			case "DELETE":
-				response = restTemplate.exchange(this.url, HttpMethod.DELETE, this.entity, String.class);
+				response = restTemplate.exchange(getUrl(), HttpMethod.DELETE, this.entity, String.class);
 				break;
 		}	
 
@@ -97,6 +93,10 @@ public class ServiceRequest extends RequestAbstract {
 		//based on the input collection, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);
 		return request.handleRequest(item, count, testCase, paramName, dataMap, this.headers, response);
+	}
+
+	private String getUrl() {
+		return this.url + (this.queries.length() > 0 ? "?" + this.queries : "");
 	}
 
 }

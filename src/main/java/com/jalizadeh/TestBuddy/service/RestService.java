@@ -14,17 +14,13 @@ import java.util.Optional;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.TestBuddy.central.FiltersManager;
 import com.jalizadeh.TestBuddy.central.StatisticsManager;
+import com.jalizadeh.TestBuddy.interfaces.FilterAbstract;
 import com.jalizadeh.TestBuddy.interfaces.ServiceRequest;
-import com.jalizadeh.TestBuddy.interfaces.iFilter;
 import com.jalizadeh.TestBuddy.model.PostmanCollection;
 import com.jalizadeh.TestBuddy.model.PostmanItem;
 import com.jalizadeh.TestBuddy.model.PostmanParameter;
-import com.jalizadeh.TestBuddy.model.PostmanParameterDescriptionJSON;
 import com.jalizadeh.TestBuddy.model.PostmanResponse;
 import com.jalizadeh.TestBuddy.types.FilterTarget;
 
@@ -76,7 +72,7 @@ public class RestService {
 			
 			Map<String, PostmanParameter> queries = item.request.url.getQueries();
 			if(queries.size() > 0)
-				request.setQueries(queries);
+				request.setQueries(item.request.url.getQueriesMap());
 
 			/*
 			 * System.out.println(httpMethod + "\n" + url + "\n" + header.size() + "\n" +
@@ -86,6 +82,9 @@ public class RestService {
 
 			// 200 OK (positive!) or the request as it is, without any change
 			responseList.add(request.handleRequest(item, 0, "OK", "", dataMap));
+			
+			
+			applyParameterFiltersOnQuery(FilterTarget.QUERY, item, queries);
 			
 			applyParameterFiltersOn(FilterTarget.BODY, item, dataMap);
 			
@@ -118,12 +117,12 @@ public class RestService {
 		// Not all requests have body to apply filters on them
 		if (dataMap.size() > 0 && FiltersManager.getInstance().getFilters().size() > 0) {
 			// List of filters should provided in the request's body
-			List<iFilter> filters = FiltersManager.getInstance().getFilters();
+			List<FilterAbstract> filters = FiltersManager.getInstance().getFilters();
 
 			List<String> parameterName = new ArrayList<String>();
 			Map<String, String> modifiedParameters = new HashMap<>();
 
-			for (iFilter filter : filters) {
+			for (FilterAbstract filter : filters) {
 				for (int j = 1; j < lenght; j++) {
 					parameterName.clear();
 					modifiedParameters.clear();
@@ -146,6 +145,60 @@ public class RestService {
 					
 					if(target.equals(FilterTarget.HEADER)) {
 						request.setHeaders(extractHttpHeader(modifiedParameters));
+					}
+					
+					responseList.add(request.handleRequest(item, j, filter.getFilterName().toString(), paramNames, modifiedParameters));
+				}
+			}
+		}
+	}
+	
+	private void applyParameterFiltersOnQuery(FilterTarget target, PostmanItem item, Map<String, PostmanParameter> queries) throws Exception {
+		// T/F table of possibilities / cases
+		boolean[][] scenarioTable = scenarioTable(queries.size());
+
+		String[] dataArr = new String[queries.size()];
+		int dataCount = 0;
+		for (PostmanParameter q : queries.values()) {
+			dataArr[dataCount++] = q.key;
+			// System.out.println("OK\t" + entry.getKey() + "\t" + entry.getValue().toString());
+		}
+
+		// Not all requests have body to apply filters on them
+		if (queries.size() > 0 && FiltersManager.getInstance().getFilters().size() > 0) {
+			// List of filters should provided in the request's body
+			List<FilterAbstract> filters = FiltersManager.getInstance().getFilters();
+
+			List<String> parameterName = new ArrayList<String>();
+			Map<String, String> modifiedParameters = new HashMap<>();
+
+			for (FilterAbstract filter : filters) {
+				for (int j = 1; j < lenght; j++) {
+					parameterName.clear();
+					modifiedParameters.clear();
+					
+					//TODO: improve
+					if(target.equals(FilterTarget.HEADER)) {
+						modifiedParameters.putAll(item.request.getHeaders());
+					} else {
+						modifiedParameters.putAll(item.request.url.getQueriesMap());
+					}
+
+					for (int i = 0; i < pNum; i++) {
+						if (!scenarioTable[i][j]) {
+							parameterName.add(dataArr[i]);
+							modifiedParameters = filter.applyFilter(modifiedParameters, dataArr[i], 
+									item.request.url.getQueries().get(dataArr[i]).descJson);
+							System.err.println(dataArr[i] + " / " + modifiedParameters);
+						}
+					}
+
+					String paramNames = String.join(",", parameterName);
+					
+					if(target.equals(FilterTarget.HEADER)) {
+						request.setHeaders(extractHttpHeader(modifiedParameters));
+					} else if(target.equals(FilterTarget.QUERY)) {
+						request.setQueries(modifiedParameters);
 					}
 					
 					responseList.add(request.handleRequest(item, j, filter.getFilterName().toString(), paramNames, modifiedParameters));

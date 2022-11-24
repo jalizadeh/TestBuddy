@@ -10,6 +10,61 @@
 			"name": "Test",
 			"item": [
 				{
+					"name": "Age",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/age?age=40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"age"
+							],
+							"query": [
+								{
+									"key": "age",
+									"value": "40",
+									"description": "{\"type\":\"integer\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorized",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/authorized/basic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authorized",
+								"basic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Raw Body",
 					"request": {
 						"method": "POST",
@@ -161,28 +216,28 @@
 			"name": "Second",
 			"item": [
 				{
-					"name": "Custom Header",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/customHeader",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"customHeader"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Age",
+					"name": "Age DescParam",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/javascript",
+								"description": "{\"type\":\"string\"}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "form",
+									"value": "x",
+									"description": "{\"type\":\"string\"}",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "http://localhost:8080/age?age=40",
 							"protocol": "http",
@@ -196,8 +251,27 @@
 							"query": [
 								{
 									"key": "age",
-									"value": "40"
+									"value": "40",
+									"description": "{\"type\":\"integer\"}"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Custom Header",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/customHeader",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customHeader"
 							]
 						}
 					},

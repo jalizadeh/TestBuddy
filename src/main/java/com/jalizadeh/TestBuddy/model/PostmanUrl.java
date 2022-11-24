@@ -20,11 +20,11 @@ public class PostmanUrl {
 	
 	@JsonIgnore
 	public Map<String, PostmanParameter> getQueries() {
-		Map<String, PostmanParameter> result = new HashMap<>();
 		if (query == null || query.isEmpty()) {
-			return result;
+			return new HashMap<>();
 		}
 		
+		Map<String, PostmanParameter> result = new HashMap<>(); 
 		System.err.println("Query list: ");
 		query.forEach(q -> {
 			System.err.println(q.key + "/" + q.value + "/" + q.description);
@@ -44,5 +44,21 @@ public class PostmanUrl {
 		});
 		
 		return result;
+	}
+	
+	
+	@JsonIgnore
+	public Map<String, String> getQueriesMap() {
+		if (query == null || query.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		Map<String, String> dataMap = new HashMap<>();
+		this.query.stream()
+				// .filter(i -> Objects.nonNull(i.disabled))
+				// .filter(i -> !i.disabled)
+				.forEach(i -> dataMap.put(i.key, i.value));
+
+		return dataMap;
 	}
 }
