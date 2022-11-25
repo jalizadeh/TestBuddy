@@ -64,6 +64,10 @@ public class ServiceRequest extends RequestAbstract {
 		return this;
 	}
 
+	/**
+	 * The only handler that sends the request using the <i>dataMap</i>. Before using this method,
+	 * the request (<i>this</i>) should be instantiated correctly  
+	 */
 	public PostmanResponse handleRequest(PostmanItem item, int count, String testCase, 
 			String paramName, Map<String, String> dataMap) throws Exception {
 		
