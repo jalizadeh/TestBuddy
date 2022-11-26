@@ -15,7 +15,7 @@ public class PostmanParameter implements Cloneable {
 	public String description;
 	
 	@JsonIgnore
-	public PostmanParameterDescriptionJSON descJson;
+	public PostmanParameterDescriptionJSON descJson = null;
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
