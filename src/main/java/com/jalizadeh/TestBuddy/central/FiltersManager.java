@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.jalizadeh.TestBuddy.interfaces.iFilter;
+import com.jalizadeh.TestBuddy.interfaces.FilterAbstract;
 import com.jalizadeh.TestBuddy.types.Filters;
 
 public class FiltersManager {
 
 	private static FiltersManager instance;
-	private Map<Filters, iFilter> filters;
+	private Map<Filters, FilterAbstract> filters;
 	
 	
 	private FiltersManager() {
@@ -27,12 +27,12 @@ public class FiltersManager {
 	}
 	
 	
-	public void addFilter(iFilter filter) {
+	public void addFilter(FilterAbstract filter) {
 		this.filters.put(filter.getFilterName(), filter);
 	}
 	
 	//List is sorted ascending by filter's name
-	public List<iFilter> getFilters(){
+	public List<FilterAbstract> getFilters(){
 		return this.filters.values().stream()
 				.sorted((a,b) -> a.getFilterName().compareTo(b.getFilterName()))
 				.collect(Collectors.toList());

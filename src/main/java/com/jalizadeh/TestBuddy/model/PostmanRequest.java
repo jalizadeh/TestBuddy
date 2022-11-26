@@ -11,7 +11,7 @@ public class PostmanRequest implements Cloneable{
 	
 	public PostmanAuth auth;
 	public String method;
-	public List<PostmanHeader> header;
+	public List<PostmanParameter> header;
 	public PostmanBody body;
 	public PostmanUrl url;
 	
@@ -103,7 +103,7 @@ public class PostmanRequest implements Cloneable{
 		if (header == null || header.isEmpty()) {
 			return result;
 		}
-		for (PostmanHeader head : header) {
+		for (PostmanParameter head : header) {
 			if (head.key.toUpperCase().equals(PoyntHttpHeaders.REQUEST_ID_HEADER)) {
 				result.put(head.key.toUpperCase(), var.replace(head.value));
 			} else {
@@ -120,7 +120,7 @@ public class PostmanRequest implements Cloneable{
 		if (header == null || header.isEmpty()) {
 			return result;
 		}
-		for (PostmanHeader head : header) {
+		for (PostmanParameter head : header) {
 			if (head.key.toUpperCase().equals(PoyntHttpHeaders.REQUEST_ID_HEADER)) {
 				result.put(head.key.toUpperCase(), head.value);
 			} 

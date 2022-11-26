@@ -180,20 +180,24 @@ Test Endpoint
 
 
 **Postman Collection Parser**
-- [x] Parse Postman collection
-- [x] Parse *raw* body
-- [x] Parse *x-www-form-urlencoded* body
-- [x] Export populated Postman collection
-- [x] Add response's headers to PostmanResponse object
-- [x] Use requests's header in RestService
+- [ ] Parse Postman collection
+	- [x] Parse the 1st collection
+	- [ ] Choose the `Collection` name (in multi-item collections)
 - [x] Support all request methods
 	- [x] GET
 	- [x] POST
 	- [x] PUT
 	- [x] DELETE
+- [x] Parse request bodies
+	- [x] Empty
+	- [x] *raw* body
+	- [x] Parse *x-www-form-urlencoded* body
+- [x] Export populated Postman collection
+- [x] Add response's headers to PostmanResponse object
+- [x] Use requests's header in RestService
 - [x] Prettify result JSON file
 - [x] Statistics
-	- [x] Set of `{filter : [response status]}`
+	- [x] Set of `{ filter : [response status] }`
 - [x] HTML Report
 - [ ] Load Postman environment file
 - [ ] Log
@@ -204,11 +208,15 @@ Test Endpoint
 **Filters**
 - [ ] Filter request
 	- [x] List of desired filters
-	- [ ] Apply on target (body/query/header parameters)
+	- [ ] Apply on target parameters
+		- [x] body
+		- [ ] query
+			- It is necessary to know the type of the `key`. 
+		- [x] header
+			- [x] ⚠️ Currently supports only `Authorization` header
+			- [ ] Support multi-header item
 - [x] Allow empty filter list (run only positive case)
-- [ ] Apply filter on headers
-	- [x] ⚠️ Currently supports only `Authorization` header
-	- [ ] Support multi header item
-- [ ] Apply filter on query parameters
 - [ ] Boundary tests
+- [ ] Extra parameter test
 - [ ] Test inventory (providing desired input data)
+	- [ ] 💡 IDEA: using parameter's (query/header/body) `Description` section for specific JSON-based rules/identification, like: `{"type":"integer","ignore":true}`💡
