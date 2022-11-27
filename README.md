@@ -177,6 +177,10 @@ Test Endpoint
 - [x] /rawBody for requests with *raw* body
 - [x] /xForm for requests with *x-www-form-urlencoded* body
 - [ ] RestAssured tests
+	- [ ] test endpoints
+	- [ ] /json endpoint
+	- [ ] generated Postman collection
+	- [ ] generated HTML report
 
 
 **Postman Collection Parser**
@@ -192,6 +196,11 @@ Test Endpoint
 	- [x] Empty
 	- [x] *raw* body
 	- [x] Parse *x-www-form-urlencoded* body
+- [x] Use of parameter's `Description` to extend parsing
+	- This feature is needed to let the parser understand the data type (up to now)
+	```json
+	{"type":"integer"}
+	```
 - [x] Export populated Postman collection
 - [x] Add response's headers to PostmanResponse object
 - [x] Use requests's header in RestService
@@ -202,16 +211,14 @@ Test Endpoint
 - [ ] Load Postman environment file
 - [ ] Log
 - [ ] Group similar results
-- [ ] Detach delay from RestService
-- [ ] Fix _postman_previewlanguage
 
 **Filters**
 - [ ] Filter request
 	- [x] List of desired filters
 	- [ ] Apply on target parameters
 		- [x] body
-		- [ ] query
-			- It is necessary to know the type of the `key`. 
+		- [x] query
+			- It is necessary to know the type of the `key` using `Description`
 		- [x] header
 			- [x] ⚠️ Currently supports only `Authorization` header
 			- [ ] Support multi-header item
@@ -219,4 +226,4 @@ Test Endpoint
 - [ ] Boundary tests
 - [ ] Extra parameter test
 - [ ] Test inventory (providing desired input data)
-	- [ ] 💡 IDEA: using parameter's (query/header/body) `Description` section for specific JSON-based rules/identification, like: `{"type":"integer","ignore":true}`💡
+	- [ ] 💡 IDEA: using parameter's (query/header/body) `Description` section for specific JSON-based rules/identification, like: `{"type":"integer","ignore":true}`

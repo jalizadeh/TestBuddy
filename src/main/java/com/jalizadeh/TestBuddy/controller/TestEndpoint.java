@@ -181,8 +181,8 @@ public class TestEndpoint {
 	}
 	
 	@GetMapping("/protected/profile")
-	public String protectedProfile(@RequestParam("id") String id) {
-		return "Your id is: " + id;
+	public ResponseEntity<String> protectedProfile(@RequestParam("id") String id) {
+		return new ResponseEntity<String>("Your id is: " + id, HttpStatus.OK);
 	}
 	
 	
