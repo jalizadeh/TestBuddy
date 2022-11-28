@@ -197,10 +197,7 @@ Test Endpoint
 	- [x] *raw* body
 	- [x] Parse *x-www-form-urlencoded* body
 - [x] Use of parameter's `Description` to extend parsing
-	- This feature is needed to let the parser understand the data type (up to now)
-	```json
-	{"type":"integer"}
-	```
+	- This feature is needed to let the parser understand the data type (up to now)`{"type":"integer"}`
 - [x] Export populated Postman collection
 - [x] Add response's headers to PostmanResponse object
 - [x] Use requests's header in RestService
