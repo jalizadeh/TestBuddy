@@ -177,10 +177,10 @@ Test Endpoint
 - [x] /rawBody for requests with *raw* body
 - [x] /xForm for requests with *x-www-form-urlencoded* body
 - [ ] RestAssured tests
-	- [ ] test endpoints
+	- [x] test endpoints
 	- [ ] /json endpoint
 	- [ ] generated Postman collection
-	- [ ] generated HTML report
+	- [ ] generated HTML report (Selenium)
 
 
 **Postman Collection Parser**
