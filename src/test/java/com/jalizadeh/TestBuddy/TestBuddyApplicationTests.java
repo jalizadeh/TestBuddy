@@ -1,6 +1,11 @@
 package com.jalizadeh.TestBuddy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.stream.StreamSupport;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,12 +30,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jalizadeh.TestBuddy.model.InputRequest;
+import com.jalizadeh.TestBuddy.types.Filters;
+
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles({ "logging-test" })
 class TestBuddyApplicationTests {
 
 	private final String baseUrl = "http://localhost";
-    private static final Logger LOGGER = LogManager.getLogger(TestBuddyApplicationTests.class);
+    private static final Logger logger = LogManager.getLogger(TestBuddyApplicationTests.class);
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
 	@LocalServerPort
@@ -37,6 +51,9 @@ class TestBuddyApplicationTests {
 
 	@Autowired
 	TestRestTemplate restTemplate;
+	
+	@Autowired
+	Environment env;
 	
 	@BeforeAll
 	public static void setErrorLogging() {
@@ -143,6 +160,36 @@ class TestBuddyApplicationTests {
 		assertEquals("Profile deleted", response.getBody());
 	}
 	
+	
+	@Test
+	@DisplayName("Endpoint \"/json\" is fine")
+	public void testJsonInput() throws JsonMappingException, JsonProcessingException {
+		InputRequest reqBody = new InputRequest();
+		
+		//empty list of filters
+		//reqBody.setFilters(new ArrayList<>());
+		
+		//4 unique filters (duplicates are ignored)
+		reqBody.setFilters(Arrays.asList(Filters.EMPTY, Filters.EMPTY, Filters.INVALID, Filters.MISSING, Filters.RANDOM));
+		
+		ResponseEntity<String> response = 
+				restTemplate.exchange(getUrl()+"/json?delay=0", HttpMethod.POST, getFullEntity(reqBody), String.class);
+		JsonNode root = objectMapper.readTree(response.getBody());
+
+		assertNotNull(response);
+		assertNotNull(root);
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+	    assertTrue(root.path("totalTimeMs").asInt() < 1000, "Parsing JSON took more than 1 second");
+	    assertEquals(8, root.path("totalRequests").asInt());
+	    assertEquals(8, root.path("requests").size());
+	    assertEquals(72, root.path("totalCalls").asInt());
+	    root.path("requests")
+	    	.forEach(r -> assertTrue(r.path("url").asText().contains(baseUrl),"url wrong"));
+	    assertEquals(root.path("totalCalls").asInt(), StreamSupport.stream(root.path("requests").spliterator(), false)
+	    	.map(r -> {return r.path("positive").asInt() + r.path("negative").asInt();})
+	    	.mapToInt(x -> x).sum());
+	}
+	
 
 	private String getUrl() {
 		return this.baseUrl + ":" + port;
@@ -151,8 +198,13 @@ class TestBuddyApplicationTests {
 	private HttpEntity<String> getSimpleEntity() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		return new HttpEntity<String>("", headers);
+		return new HttpEntity<String>(headers);
 	}
-
+	
+	private <T> HttpEntity<T> getFullEntity(T body){
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		return new HttpEntity<T>(body, headers);
+	}
 	
 }

@@ -1,3 +1,5 @@
+[![build-badge][]][build]
+
 # TestBuddy
 Your buddy helps you to simplifiy your test design and test coverage.
 
@@ -178,7 +180,10 @@ Test Endpoint
 - [x] /xForm for requests with *x-www-form-urlencoded* body
 - [ ] RestAssured tests
 	- [x] test endpoints
-	- [ ] /json endpoint
+	- [x] /json endpoint
+		- [x] load & parse JSON file
+		- [x] empty/single/multiple filters
+		- [x] ignore duplicate filter
 	- [ ] generated Postman collection
 	- [ ] generated HTML report (Selenium)
 
