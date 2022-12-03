@@ -1,10 +1,17 @@
-[![build-badge][]][build]
+[license]: http://www.apache.org/licenses/LICENSE-2.0 "Apache License 2.0"
+[site]: https://github.com/jalizadeh/TestBuddy
+[build]: https://github.com/jalizadeh/TestBuddy/actions/workflows/ci.yml
+[build-badge]: https://github.com/jalizadeh/TestBuddy/actions/workflows/ci.yml/badge.svg
+
 
 # TestBuddy
-Your buddy helps you to simplifiy your test design and test coverage.
+
+[![build-badge][]][build]
+
+Your buddy helps you to simplify your test design and test coverage.
 
 ## Scope
-Covering test cases (positive & negative) is crucial during test design and after that, test development. Covering all test cases and possible scenarios, while an REST request has different parameters, is not easy to anlayze. TestBuddy checks all the parameters and for each parameter, generate a new test case, runs it and will provide a report of the request and response.
+Covering test cases (positive & negative) is crucial during test design and after that, test development. Covering all test cases and possible scenarios, while an REST request has different parameters, is not easy to analyze. TestBuddy checks all the parameters and for each parameter, generate a new test case, runs it and will provide a report of the request and response.
 
 First phase, focuses on importing requests from **Postman** collection and saving the test cases as **Example** for each request.
 
