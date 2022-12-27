@@ -141,9 +141,13 @@ public class ServiceRequest extends RequestAbstract {
 				break;
 		}
 
-		StatisticsManager statMng = StatisticsManager.getInstance();
-		statMng.addStat(this.name, this.method, this.url, response.getStatusCode().toString(),
-				response.getStatusCode().is2xxSuccessful() ? true : false);
+		if(response != null) {
+			StatisticsManager statMng = StatisticsManager.getInstance();
+			statMng.addStat(this.name, this.method, this.url, response.getStatusCode().toString(),
+					response.getStatusCode().is2xxSuccessful() ? true : false);
+		} else {
+			throw new Exception("Request could not be initialized. It can be due to no supported HTTP method");
+		}
 
 		//Based on the item's body data, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);

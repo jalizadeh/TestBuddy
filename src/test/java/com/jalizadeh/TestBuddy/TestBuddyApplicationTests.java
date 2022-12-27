@@ -10,6 +10,7 @@ import java.util.stream.StreamSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,7 +39,7 @@ import com.jalizadeh.TestBuddy.model.InputRequest;
 import com.jalizadeh.TestBuddy.types.Filters;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles({ "logging-test" })
+@ActiveProfiles("test")
 class TestBuddyApplicationTests {
 
 	private final String baseUrl = "http://localhost";
@@ -67,6 +68,7 @@ class TestBuddyApplicationTests {
 		assertEquals(this.baseUrl + ":" + port, getUrl());
 	}
 
+	@Disabled
 	@Test
 	@DisplayName("Test endpoint \"Home [GET]\" is fine")
 	public void testEndpointHome() {
@@ -162,7 +164,8 @@ class TestBuddyApplicationTests {
 	
 	
 	//This test needs the server to be up and running, disabled for now
-	//@Test
+	@Disabled
+	@Test
 	@DisplayName("Endpoint \"/json\" is fine")
 	public void testJsonInput() throws JsonMappingException, JsonProcessingException {
 		InputRequest reqBody = new InputRequest();

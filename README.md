@@ -236,3 +236,9 @@ Test Endpoint
 - [ ] Extra parameter test
 - [ ] Test inventory (providing desired input data)
 	- [ ] 💡 IDEA: using parameter's (query/header/body) `Description` section for specific JSON-based rules/identification, like: `{"type":"integer","ignore":true}`
+	
+
+## Run
+- mvn spring-boot:run
+- mvn clean test
+- mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=12345

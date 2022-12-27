@@ -1,0 +1,87 @@
+a:visited, a:hover, a:active, a:focus {
+   text-decoration: none !important;
+}
+
+
+button{ 
+   text-decoration: none !important;
+}
+  
+  
+
+pre {
+   overflow-x: auto;
+   white-space: pre-wrap;
+   white-space: -moz-pre-wrap;
+   white-space: -pre-wrap;
+   white-space: -o-pre-wrap;
+   word-wrap: break-word;
+}
+
+
+.container {
+    max-width: 90%;
+}
+
+
+.badge {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.badge:before, .badge:after {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
+.callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+  h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+  p:last-child {
+    margin-bottom: 0;
+  }
+  code {
+    border-radius: 3px;
+  }
+  & + .bs-callout {
+    margin-top: -5px;
+  }
+}
+@each $name,$color in (default,#777),(primary,#428bca),(success,#5cb85c),(danger,#d9534f),(warning,#f0ad4e),(info,#5bc0de), (bdc,#29527a) {
+  .callout-#{$name} {
+    border-left-color: $color;
+    h4 {
+      color: $color;
+    }
+  }
+}
+
+
+.btn-delete-todo{
+	color: #ccc;
+}
+
+.btn-delete-todo:hover{
+	color: #a71d2a;
+}
+
+footer {
+    position: fixed;
+    /* height: 100px; */
+    bottom: 0;
+    width: 100%;
+}
+
+
+#page-content {
+  flex: 1 0 auto;
+}
