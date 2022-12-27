@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.controller;
+package com.jalizadeh.testbuddy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

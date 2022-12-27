@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.system;
+package com.jalizadeh.testbuddy.system;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

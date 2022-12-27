@@ -1,6 +1,6 @@
-package com.jalizadeh.TestBuddy.model;
+package com.jalizadeh.testbuddy.model;
 
-import com.jalizadeh.TestBuddy.interfaces.iTestCase;
+import com.jalizadeh.testbuddy.interfaces.iTestCase;
 
 public class TestCase implements iTestCase{
 

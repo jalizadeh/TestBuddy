@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.service;
+package com.jalizadeh.testbuddy.service;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -10,12 +10,12 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.jalizadeh.TestBuddy.central.StatisticsManager;
-import com.jalizadeh.TestBuddy.interfaces.ServiceRequest;
-import com.jalizadeh.TestBuddy.model.PostmanCollection;
-import com.jalizadeh.TestBuddy.model.PostmanItem;
-import com.jalizadeh.TestBuddy.model.PostmanResponse;
-import com.jalizadeh.TestBuddy.types.FilterTarget;
+import com.jalizadeh.testbuddy.central.StatisticsManager;
+import com.jalizadeh.testbuddy.interfaces.ServiceRequest;
+import com.jalizadeh.testbuddy.model.PostmanCollection;
+import com.jalizadeh.testbuddy.model.PostmanItem;
+import com.jalizadeh.testbuddy.model.PostmanResponse;
+import com.jalizadeh.testbuddy.types.FilterTarget;
 
 @Service
 public class RestService {

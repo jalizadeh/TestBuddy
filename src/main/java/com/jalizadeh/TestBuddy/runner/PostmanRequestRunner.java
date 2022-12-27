@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.runner;
+package com.jalizadeh.testbuddy.runner;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpRequest;
 
-import com.jalizadeh.TestBuddy.model.PostmanItem;
-import com.jalizadeh.TestBuddy.model.PostmanVariables;
+import com.jalizadeh.testbuddy.model.PostmanItem;
+import com.jalizadeh.testbuddy.model.PostmanVariables;
 
 
 public class PostmanRequestRunner {

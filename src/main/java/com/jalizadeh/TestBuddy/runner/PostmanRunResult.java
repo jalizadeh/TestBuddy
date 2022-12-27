@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.runner;
+package com.jalizadeh.testbuddy.runner;
 
 import java.util.ArrayList;
 import java.util.List;

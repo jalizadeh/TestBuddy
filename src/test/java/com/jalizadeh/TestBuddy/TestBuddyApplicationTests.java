@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy;
+package com.jalizadeh.testbuddy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -35,8 +35,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jalizadeh.TestBuddy.model.InputRequest;
-import com.jalizadeh.TestBuddy.types.Filters;
+import com.jalizadeh.testbuddy.model.InputRequest;
+import com.jalizadeh.testbuddy.types.Filters;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")

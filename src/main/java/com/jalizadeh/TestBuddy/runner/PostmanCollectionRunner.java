@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.runner;
+package com.jalizadeh.testbuddy.runner;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,11 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jalizadeh.TestBuddy.model.PostmanCollection;
-import com.jalizadeh.TestBuddy.model.PostmanFolder;
-import com.jalizadeh.TestBuddy.model.PostmanItem;
-import com.jalizadeh.TestBuddy.model.PostmanReader;
-import com.jalizadeh.TestBuddy.model.PostmanVariables;
+import com.jalizadeh.testbuddy.model.PostmanCollection;
+import com.jalizadeh.testbuddy.model.PostmanFolder;
+import com.jalizadeh.testbuddy.model.PostmanItem;
+import com.jalizadeh.testbuddy.model.PostmanReader;
+import com.jalizadeh.testbuddy.model.PostmanVariables;
 
 
 

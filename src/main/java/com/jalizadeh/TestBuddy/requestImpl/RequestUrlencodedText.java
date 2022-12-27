@@ -1,16 +1,16 @@
-package com.jalizadeh.TestBuddy.requestImpl;
+package com.jalizadeh.testbuddy.requestImpl;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
 
-import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
-import com.jalizadeh.TestBuddy.model.PostmanBody;
-import com.jalizadeh.TestBuddy.model.PostmanItem;
-import com.jalizadeh.TestBuddy.model.PostmanResponse;
-import com.jalizadeh.TestBuddy.model.PostmanUrlEncoded;
-import com.jalizadeh.TestBuddy.types.RequestBodyType;
+import com.jalizadeh.testbuddy.interfaces.RequestPostmanAbstract;
+import com.jalizadeh.testbuddy.model.PostmanBody;
+import com.jalizadeh.testbuddy.model.PostmanItem;
+import com.jalizadeh.testbuddy.model.PostmanResponse;
+import com.jalizadeh.testbuddy.model.PostmanUrlEncoded;
+import com.jalizadeh.testbuddy.types.RequestBodyType;
 
 public class RequestUrlencodedText extends RequestPostmanAbstract{
 

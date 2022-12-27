@@ -1,7 +1,7 @@
-package com.jalizadeh.TestBuddy.model;
+package com.jalizadeh.testbuddy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jalizadeh.TestBuddy.types.PostmanParameterDescriptionType;
+import com.jalizadeh.testbuddy.types.PostmanParameterDescriptionType;
 
 /**
  * This model expresses the details of the parameter's <i>key</i>

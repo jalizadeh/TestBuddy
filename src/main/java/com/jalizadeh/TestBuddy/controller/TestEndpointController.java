@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.controller;
+package com.jalizadeh.testbuddy.controller;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;

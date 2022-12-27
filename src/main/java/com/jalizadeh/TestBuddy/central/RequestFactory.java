@@ -1,14 +1,14 @@
-package com.jalizadeh.TestBuddy.central;
+package com.jalizadeh.testbuddy.central;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.jalizadeh.TestBuddy.interfaces.RequestPostmanAbstract;
-import com.jalizadeh.TestBuddy.requestImpl.RequestNoBody;
-import com.jalizadeh.TestBuddy.requestImpl.RequestRawText;
-import com.jalizadeh.TestBuddy.requestImpl.RequestUrlencodedText;
+import com.jalizadeh.testbuddy.interfaces.RequestPostmanAbstract;
+import com.jalizadeh.testbuddy.requestImpl.RequestNoBody;
+import com.jalizadeh.testbuddy.requestImpl.RequestRawText;
+import com.jalizadeh.testbuddy.requestImpl.RequestUrlencodedText;
 
 @Component
 public class RequestFactory {

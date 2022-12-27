@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.interfaces;
+package com.jalizadeh.testbuddy.interfaces;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,7 +9,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
-import com.jalizadeh.TestBuddy.exception.RestTemplateResponseErrorHandler;
+import com.jalizadeh.testbuddy.exception.RestTemplateResponseErrorHandler;
 
 public abstract class RequestAbstract {
 	

@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.interfaces;
+package com.jalizadeh.testbuddy.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import java.util.Map.Entry;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import com.jalizadeh.TestBuddy.model.PostmanHeader;
-import com.jalizadeh.TestBuddy.model.PostmanItem;
-import com.jalizadeh.TestBuddy.model.PostmanParameter;
-import com.jalizadeh.TestBuddy.model.PostmanRequest;
-import com.jalizadeh.TestBuddy.model.PostmanResponse;
+import com.jalizadeh.testbuddy.model.PostmanHeader;
+import com.jalizadeh.testbuddy.model.PostmanItem;
+import com.jalizadeh.testbuddy.model.PostmanParameter;
+import com.jalizadeh.testbuddy.model.PostmanRequest;
+import com.jalizadeh.testbuddy.model.PostmanResponse;
 
 public abstract class RequestPostmanAbstract extends RequestAbstract {
 

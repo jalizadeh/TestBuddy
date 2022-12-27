@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.controller;
+package com.jalizadeh.testbuddy.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jalizadeh.TestBuddy.central.FilterFactory;
-import com.jalizadeh.TestBuddy.central.FiltersManager;
-import com.jalizadeh.TestBuddy.central.StatisticsManager;
-import com.jalizadeh.TestBuddy.model.InputRequest;
-import com.jalizadeh.TestBuddy.model.PostmanCollection;
-import com.jalizadeh.TestBuddy.runner.PostmanCollectionRunner;
-import com.jalizadeh.TestBuddy.service.RestService;
-import com.jalizadeh.TestBuddy.statistics.StatReport;
-import com.jalizadeh.TestBuddy.types.Filters;
+import com.jalizadeh.testbuddy.central.FilterFactory;
+import com.jalizadeh.testbuddy.central.FiltersManager;
+import com.jalizadeh.testbuddy.central.StatisticsManager;
+import com.jalizadeh.testbuddy.model.InputRequest;
+import com.jalizadeh.testbuddy.model.PostmanCollection;
+import com.jalizadeh.testbuddy.runner.PostmanCollectionRunner;
+import com.jalizadeh.testbuddy.service.RestService;
+import com.jalizadeh.testbuddy.statistics.StatReport;
+import com.jalizadeh.testbuddy.types.Filters;
 
 @RestController
 public class JsonController {

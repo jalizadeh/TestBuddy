@@ -1,12 +1,12 @@
-package com.jalizadeh.TestBuddy.central;
+package com.jalizadeh.testbuddy.central;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.jalizadeh.TestBuddy.interfaces.FilterAbstract;
-import com.jalizadeh.TestBuddy.types.Filters;
+import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
+import com.jalizadeh.testbuddy.types.Filters;
 
 public class FiltersManager {
 

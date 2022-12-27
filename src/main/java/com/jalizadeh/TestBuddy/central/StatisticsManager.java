@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.central;
+package com.jalizadeh.testbuddy.central;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.jalizadeh.TestBuddy.statistics.StatReport;
-import com.jalizadeh.TestBuddy.statistics.StatRequest;
+import com.jalizadeh.testbuddy.statistics.StatReport;
+import com.jalizadeh.testbuddy.statistics.StatRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
