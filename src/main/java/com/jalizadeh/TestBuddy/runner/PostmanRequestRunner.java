@@ -32,8 +32,8 @@ public class PostmanRequestRunner {
 		void postTransport(PostmanItem item, HttpRange httpResponse);
 	}
 
-	public PostmanRequestRunner(PostmanVariables var, boolean haltOnError, List<Observer> observers) {
-		this.var = var;
+	public PostmanRequestRunner(PostmanVariables pv, boolean haltOnError, List<Observer> observers) {
+		this.var = pv;
 		this.haltOnError = haltOnError;
 		this.observers = observers;
 	}

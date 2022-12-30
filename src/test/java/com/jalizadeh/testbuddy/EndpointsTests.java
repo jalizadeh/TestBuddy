@@ -79,7 +79,7 @@ class EndpointsTests {
 	@Order(2)
 	@DisplayName("Test endpoint \"Home [GET]\" is fine")
 	void testEndpointHome() {
-		ResponseEntity<String> response = restTemplate.exchange(getUrl(), HttpMethod.GET, getSimpleEntity(),
+		ResponseEntity<String> response = restTemplate.exchange(getUrl(), HttpMethod.GET, getEntity(null),
 				String.class);
 		assertEquals("OK from home", response.getBody());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -101,7 +101,7 @@ class EndpointsTests {
 	@CsvSource({ "-1, Age is not valid", "20, age is 20-30", "35, age is 30-40", "45, 40-50 + custom header",
 			"10, 10" })
 	void testEndpointAge(int id, String resp) {
-		ResponseEntity<String> response = restTemplate.postForEntity(getUrl() + "/age?age=" + id, getSimpleEntity(),
+		ResponseEntity<String> response = restTemplate.postForEntity(getUrl() + "/age?age=" + id, getEntity(null),
 				String.class);
 		assertEquals(resp, response.getBody());
 		// assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -113,7 +113,7 @@ class EndpointsTests {
 	void testEndpointRawBody() {
 		// negative case
 		ResponseEntity<String> response = restTemplate.exchange(getUrl() + "/rawBody", HttpMethod.POST,
-				getSimpleEntity(), String.class);
+				getEntity(null), String.class);
 		assertEquals("Invalid body", response.getBody());
 		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
@@ -139,8 +139,8 @@ class EndpointsTests {
 	@DisplayName("Test endpoint \"Profile id\" is fine")
 	void testEndpointProfileId() {
 		int id = 40;
-		ResponseEntity<String> response = restTemplate.getForEntity(getUrl() + "/protected/profile?id=" + id,
-				String.class);
+		ResponseEntity<String> response = 
+				restTemplate.getForEntity(getUrl() + "/protected/profile?id=" + id,String.class);
 		assertEquals("Your id is: " + id, response.getBody());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
@@ -162,50 +162,19 @@ class EndpointsTests {
 	@Order(8)
 	@DisplayName("Test endpoint \"Update Profile\" is fine")
 	void testEndpointUpdate() {
-		ResponseEntity<String> response = restTemplate.exchange(getUrl()+"/update", HttpMethod.PUT, getSimpleEntity(), String.class);
+		ResponseEntity<String> response = restTemplate.exchange(getUrl()+"/update", HttpMethod.PUT, getEntity(null), String.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals("Profile updated", response.getBody());
 	}
 	
 	@Test
 	@Order(9)
-	@DisplayName("Test endpoint \"Update Profile\" is fine")
+	@DisplayName("Test endpoint \"Delete Profile\" is fine")
 	void testEndpointDelete() {
-		ResponseEntity<String> response = restTemplate.exchange(getUrl()+"/delete", HttpMethod.DELETE, getSimpleEntity(), String.class);
+		ResponseEntity<String> response = 
+				restTemplate.exchange(getUrl()+"/delete", HttpMethod.DELETE, getEntity(null), String.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals("Profile deleted", response.getBody());
-	}
-	
-	
-	@Disabled("This test needs the server to be up and running, disabled for now")
-	@Test
-	@Order(10)
-	@DisplayName("Endpoint \"/json\" is fine")
-	void testJsonInput() throws JsonMappingException, JsonProcessingException {
-		InputRequest reqBody = new InputRequest();
-		
-		//empty list of filters
-		//reqBody.setFilters(new ArrayList<>());
-		
-		//4 unique filters (duplicates are ignored)
-		reqBody.setFilters(Arrays.asList(Filters.EMPTY, Filters.EMPTY, Filters.INVALID, Filters.MISSING, Filters.RANDOM));
-		
-		ResponseEntity<String> response = 
-				restTemplate.exchange(getUrl()+"/json?delay=0", HttpMethod.POST, getFullEntity(reqBody), String.class);
-		JsonNode root = objectMapper.readTree(response.getBody());
-
-		assertNotNull(response);
-		assertNotNull(root);
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-	    assertTrue(root.path("totalTimeMs").asInt() < 1000, "Parsing JSON took more than 1 second");
-	    assertEquals(8, root.path("totalRequests").asInt());
-	    assertEquals(8, root.path("requests").size());
-	    assertEquals(72, root.path("totalCalls").asInt());
-	    root.path("requests")
-	    	.forEach(r -> assertTrue(r.path("url").asText().contains(baseUrl),"url wrong"));
-	    assertEquals(root.path("totalCalls").asInt(), StreamSupport.stream(root.path("requests").spliterator(), false)
-	    	.map(r -> {return r.path("positive").asInt() + r.path("negative").asInt();})
-	    	.mapToInt(x -> x).sum());
 	}
 	
 
@@ -213,16 +182,10 @@ class EndpointsTests {
 		return this.baseUrl + ":" + port;
 	}
 
-	private HttpEntity<String> getSimpleEntity() {
+	private <T> HttpEntity<T> getEntity(T body){
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		return new HttpEntity<String>(headers);
-	}
-	
-	private <T> HttpEntity<T> getFullEntity(T body){
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		return new HttpEntity<T>(body, headers);
+		return (body != null ? new HttpEntity<T>(body, headers) : new HttpEntity<>(headers));
 	}
 	
 }

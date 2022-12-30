@@ -15,7 +15,7 @@ public class FiltersManager {
 	
 	
 	private FiltersManager() {
-		this.filters = new EnumMap<>(Filters.class);
+		filters = new EnumMap<>(Filters.class);
 	}
 	
 	
@@ -28,19 +28,19 @@ public class FiltersManager {
 	
 	
 	public void addFilter(FilterAbstract filter) {
-		this.filters.put(filter.getFilterName(), filter);
+		filters.put(filter.getFilterName(), filter);
 	}
 	
 	//List is sorted ascending by filter's name
 	public List<FilterAbstract> getFilters(){
-		return this.filters.values().stream()
+		return filters.values().stream()
 				.sorted((a,b) -> a.getFilterName().compareTo(b.getFilterName()))
 				.collect(Collectors.toList());
 	}
 
 
 	public void clearFilters() {
-		this.filters.clear();
+		filters.clear();
 	}
 	
 }

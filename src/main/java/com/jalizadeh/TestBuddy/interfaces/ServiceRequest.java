@@ -143,11 +143,9 @@ public class ServiceRequest extends RequestAbstract {
 				throw new Exception("Request could not be initialized. It can be due to not supported HTTP method");
 		}
 
-		if(response != null) {
-			StatisticsManager statMng = StatisticsManager.getInstance();
-			statMng.addStat(this.name, this.method, this.url, response.getStatusCode().toString(),
+		StatisticsManager statMng = StatisticsManager.getInstance();
+		statMng.addStat(this.name, this.method, this.url, response.getStatusCode().toString(),
 					response.getStatusCode().is2xxSuccessful());
-		}
 
 		//Based on the item's body data, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);
@@ -177,7 +175,7 @@ public class ServiceRequest extends RequestAbstract {
 				dataMap = this.bodyDataMap;
 				break;
 			default:
-				return null;
+				return new ArrayList<>();
 		}
 		
 		// T/F table of possibilities / cases
