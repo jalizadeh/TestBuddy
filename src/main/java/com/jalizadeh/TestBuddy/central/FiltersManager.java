@@ -1,6 +1,6 @@
 package com.jalizadeh.testbuddy.central;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ public class FiltersManager {
 	
 	
 	private FiltersManager() {
-		this.filters = new HashMap<>();
+		this.filters = new EnumMap<>(Filters.class);
 	}
 	
 	

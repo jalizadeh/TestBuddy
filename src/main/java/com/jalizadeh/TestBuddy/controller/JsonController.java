@@ -134,7 +134,7 @@ public class JsonController {
 
 
 	private boolean validateInput(InputRequest input) {
-		return (input == null || input.getFilters() == null ||  input.getFilters().size() == 0) ? false : true; 
+		return !(input == null || input.getFilters() == null ||  input.getFilters().size() == 0); 
 	}
 	
 

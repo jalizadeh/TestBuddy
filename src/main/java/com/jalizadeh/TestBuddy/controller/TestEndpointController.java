@@ -26,6 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestEndpointController {
 	
+	private static final String GRANT_TYPE = "grant_type";
+
+	private static final String PASSWORD = "password";
+
+	private static final String USERNAME = "username";
+	
 	@Autowired
 	private Environment env;
 
@@ -66,7 +72,7 @@ public class TestEndpointController {
 		httpHeaders.add("Custom-Header", "foo");
 		httpHeaders.add("x-transaction-log", UUID.randomUUID().toString());
 		
-		return new ResponseEntity<String>("response with custome header",httpHeaders, HttpStatus.OK);
+		return new ResponseEntity<>("response with custome header",httpHeaders, HttpStatus.OK);
 	}
 	
 	
@@ -76,7 +82,7 @@ public class TestEndpointController {
 		String body = httpEntity.getBody();
 		
 		if( body == null || body.isEmpty() || !body.contains("&") || !body.contains("=")) {
-			return new ResponseEntity<String>("Invalid body", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Invalid body", HttpStatus.BAD_REQUEST);
 		}
 		
 		//by default it is bad request
@@ -90,27 +96,21 @@ public class TestEndpointController {
 				paramMap.put(pSplit[0], pSplit.length == 2 ? pSplit[1] : "");
 			});
 		
-		/*
-		for (Entry<String, String> p : paramMap.entrySet()) {
-			System.out.println(p.getKey() + "\t" + p.getValue().toString());
-		}
-		*/
-		
 		if(paramMap.size() != 3 
-				|| !paramMap.containsKey("username") 
-				|| !paramMap.containsKey("password")
-				|| !paramMap.containsKey("grant_type")) {
-			return new ResponseEntity<String>("Missing parameter",HttpStatus.BAD_REQUEST);
+				|| !paramMap.containsKey(USERNAME) 
+				|| !paramMap.containsKey(PASSWORD)
+				|| !paramMap.containsKey(GRANT_TYPE)) {
+			return new ResponseEntity<>("Missing parameter",HttpStatus.BAD_REQUEST);
 		}
 		
-		if(paramMap.get("username").equals("user@name.com") && paramMap.get("password").equals("123456")) {
-			response = new ResponseEntity<String>("OK", HttpStatus.OK);
+		if(paramMap.get(USERNAME).equals("user@name.com") && paramMap.get(PASSWORD).equals("123456")) {
+			response = new ResponseEntity<>("OK", HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<String>("Username or password is invalid",HttpStatus.UNAUTHORIZED);
+			response = new ResponseEntity<>("Username or password is invalid",HttpStatus.UNAUTHORIZED);
 		}
 		
-		if(!paramMap.get("grant_type").equals("password")) {
-			response = new ResponseEntity<String>("Invalid grant_type", HttpStatus.BAD_REQUEST);
+		if(!paramMap.get(GRANT_TYPE).equals(PASSWORD)) {
+			response = new ResponseEntity<>("Invalid grant_type", HttpStatus.BAD_REQUEST);
 		}
 		
 		return response;
@@ -121,33 +121,27 @@ public class TestEndpointController {
 	public ResponseEntity<String> parseXForm(@RequestParam Map<String, String> paramMap) throws Exception {
 		
 		if( paramMap == null || paramMap.isEmpty() ) {
-			return new ResponseEntity<String>("Invalid body", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Invalid body", HttpStatus.BAD_REQUEST);
 		}
 		
 		//by default it is bad request
 		ResponseEntity<String> response = new ResponseEntity<String>("Unknown error", HttpStatus.BAD_REQUEST);
 		
-		/*
-		for (Entry<String, String> p : paramMap.entrySet()) {
-			System.out.println(p.getKey() + "\t" + p.getValue().toString());
-		}
-		*/
-		
 		if(paramMap.size() != 3 
-				|| !paramMap.containsKey("username") 
-				|| !paramMap.containsKey("password")
-				|| !paramMap.containsKey("grant_type")) {
+				|| !paramMap.containsKey(USERNAME) 
+				|| !paramMap.containsKey(PASSWORD)
+				|| !paramMap.containsKey(GRANT_TYPE)) {
 			return new ResponseEntity<String>("Missing parameter",HttpStatus.BAD_REQUEST);
 		}
 		
-		if(URLDecoder.decode(paramMap.get("username")).equals("user@name.com") && URLDecoder.decode(paramMap.get("password")).equals("123456")) {
-			response = new ResponseEntity<String>("OK", HttpStatus.OK);
+		if(URLDecoder.decode(paramMap.get(USERNAME)).equals("user@name.com") && URLDecoder.decode(paramMap.get(PASSWORD)).equals("123456")) {
+			response = new ResponseEntity<>("OK", HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<String>("Username or password is invalid",HttpStatus.UNAUTHORIZED);
+			response = new ResponseEntity<>("Username or password is invalid",HttpStatus.UNAUTHORIZED);
 		}
 		
-		if(!paramMap.get("grant_type").equals("password")) {
-			response = new ResponseEntity<String>("Invalid grant_type", HttpStatus.BAD_REQUEST);
+		if(!paramMap.get(GRANT_TYPE).equals(PASSWORD)) {
+			response = new ResponseEntity<>("Invalid grant_type", HttpStatus.BAD_REQUEST);
 		}
 		
 		return response;
@@ -169,26 +163,26 @@ public class TestEndpointController {
 		
 		if(wasOK && values[0].equals(env.getProperty("basicAuth.username")) 
 				&&  values[1].equals(env.getProperty("basicAuth.password"))) {
-			return new ResponseEntity<String>("", HttpStatus.OK);
+			return new ResponseEntity<>("", HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<String>("", HttpStatus.FORBIDDEN);
+		return new ResponseEntity<>("", HttpStatus.FORBIDDEN);
 	}
 	
 	@GetMapping("/protected/profile")
 	public ResponseEntity<String> protectedProfile(@RequestParam("id") String id) {
-		return new ResponseEntity<String>("Your id is: " + id, HttpStatus.OK);
+		return new ResponseEntity<>("Your id is: " + id, HttpStatus.OK);
 	}
 	
 	
 	@PutMapping("/update")
 	public ResponseEntity<String> update(){
-		return new ResponseEntity<String>("Profile updated", HttpStatus.OK);
+		return new ResponseEntity<>("Profile updated", HttpStatus.OK);
 	}
 	
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<String> delete(){
-		return new ResponseEntity<String>("Profile deleted", HttpStatus.OK);
+		return new ResponseEntity<>("Profile deleted", HttpStatus.OK);
 	}
 }

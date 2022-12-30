@@ -58,20 +58,15 @@ public class StatisticsManager {
 
 
 	public void addStat(String name, String method, String url, String string, boolean isPos) {
-		
 		this.totalCalls++ ;
 		
 		if(isPos) 	this.totalPositive++;
 		else 		this.totalNegative++;
 		
 		Map<String, Request> reqMap = this.request;
-		if(!reqMap.containsKey(name)) {
-//			reqMap.get(name).setPosNeg(isPos);
-			reqMap.put(name, new Request(name, method, url,0,0, null));
-		}
+		reqMap.computeIfAbsent(name, k -> new Request(k, method, url,0,0, null));
 		reqMap.get(name).setPosNeg(isPos);
 		reqMap.get(name).setStatusCode(string);
-		
 	}
 	
 	

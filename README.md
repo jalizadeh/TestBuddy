@@ -241,4 +241,6 @@ Test Endpoint
 ## Run
 - mvn spring-boot:run
 - mvn clean test
+- mvn clean site
+	- Run and generate styled report
 - mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=12345

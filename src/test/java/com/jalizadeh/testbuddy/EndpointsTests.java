@@ -12,7 +12,10 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +41,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.testbuddy.model.InputRequest;
 import com.jalizadeh.testbuddy.types.Filters;
 
+@DisplayName("Check test endpoints")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ActiveProfiles("test")
-class TestBuddyApplicationTests {
+class EndpointsTests {
 
 	private final String baseUrl = "http://localhost";
-    private static final Logger logger = LogManager.getLogger(TestBuddyApplicationTests.class);
+    private static final Logger logger = LogManager.getLogger(EndpointsTests.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
@@ -63,15 +68,17 @@ class TestBuddyApplicationTests {
 	
 	
 	@Test
+	@Order(1)
 	@DisplayName("Application is started correctly on random port")
-	public void applicationIsRunning() {
+	void applicationIsRunning() {
 		assertEquals(this.baseUrl + ":" + port, getUrl());
 	}
 
-	@Disabled
+	@Disabled("it is no more an API, but a webpage")
 	@Test
+	@Order(2)
 	@DisplayName("Test endpoint \"Home [GET]\" is fine")
-	public void testEndpointHome() {
+	void testEndpointHome() {
 		ResponseEntity<String> response = restTemplate.exchange(getUrl(), HttpMethod.GET, getSimpleEntity(),
 				String.class);
 		assertEquals("OK from home", response.getBody());
@@ -79,8 +86,9 @@ class TestBuddyApplicationTests {
 	}
 
 	@Test
+	@Order(3)
 	@DisplayName("Test endpoint \"Simple [GET]\" is fine")
-	public void testEndpointSimple() {
+	void testEndpointSimple() {
 		ResponseEntity<String> response = restTemplate.getForEntity(getUrl() + "/simple", String.class);
 		assertEquals("OK", response.getBody());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -88,10 +96,11 @@ class TestBuddyApplicationTests {
 
 	// Only age=40 is tested, while the endpoint checks different values
 	@DisplayName("Test endpoint \"Age [POST]\" is fine")
+	@Order(4)
 	@ParameterizedTest(name = "id: {0} -> response: {1}")
 	@CsvSource({ "-1, Age is not valid", "20, age is 20-30", "35, age is 30-40", "45, 40-50 + custom header",
 			"10, 10" })
-	public void testEndpointAge(int id, String resp) {
+	void testEndpointAge(int id, String resp) {
 		ResponseEntity<String> response = restTemplate.postForEntity(getUrl() + "/age?age=" + id, getSimpleEntity(),
 				String.class);
 		assertEquals(resp, response.getBody());
@@ -99,8 +108,9 @@ class TestBuddyApplicationTests {
 	}
 
 	@Test
+	@Order(5)
 	@DisplayName("Test endpoint \"rawBody [POST]\" is fine")
-	public void testEndpointRawBody() {
+	void testEndpointRawBody() {
 		// negative case
 		ResponseEntity<String> response = restTemplate.exchange(getUrl() + "/rawBody", HttpMethod.POST,
 				getSimpleEntity(), String.class);
@@ -125,8 +135,9 @@ class TestBuddyApplicationTests {
 	}
 
 	@Test
+	@Order(6)
 	@DisplayName("Test endpoint \"Profile id\" is fine")
-	public void testEndpointProfileId() {
+	void testEndpointProfileId() {
 		int id = 40;
 		ResponseEntity<String> response = restTemplate.getForEntity(getUrl() + "/protected/profile?id=" + id,
 				String.class);
@@ -136,9 +147,10 @@ class TestBuddyApplicationTests {
 
 	
 	@DisplayName("Test endpoint \"Authorized Basic\" is fine")
+	@Order(7)
 	@ParameterizedTest(name = "{0}:{1} -> status: {3}")
 	@CsvSource({"username, password, ,200", "invalid_user, invalid_pass, ,403"})
-	public void testEndpointAuthorized(String user, String pass, String msg, String status) {
+	void testEndpointAuthorized(String user, String pass, String msg, String status) {
 		ResponseEntity<String> response = restTemplate.withBasicAuth(user,pass)
 			.getForEntity(getUrl()+"/authorized/basic", String.class);
 		assertEquals(msg, response.getBody());
@@ -147,27 +159,29 @@ class TestBuddyApplicationTests {
 	
 	
 	@Test
+	@Order(8)
 	@DisplayName("Test endpoint \"Update Profile\" is fine")
-	public void testEndpointUpdate() {
+	void testEndpointUpdate() {
 		ResponseEntity<String> response = restTemplate.exchange(getUrl()+"/update", HttpMethod.PUT, getSimpleEntity(), String.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals("Profile updated", response.getBody());
 	}
 	
 	@Test
+	@Order(9)
 	@DisplayName("Test endpoint \"Update Profile\" is fine")
-	public void testEndpointDelete() {
+	void testEndpointDelete() {
 		ResponseEntity<String> response = restTemplate.exchange(getUrl()+"/delete", HttpMethod.DELETE, getSimpleEntity(), String.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals("Profile deleted", response.getBody());
 	}
 	
 	
-	//This test needs the server to be up and running, disabled for now
-	@Disabled
+	@Disabled("This test needs the server to be up and running, disabled for now")
 	@Test
+	@Order(10)
 	@DisplayName("Endpoint \"/json\" is fine")
-	public void testJsonInput() throws JsonMappingException, JsonProcessingException {
+	void testJsonInput() throws JsonMappingException, JsonProcessingException {
 		InputRequest reqBody = new InputRequest();
 		
 		//empty list of filters
