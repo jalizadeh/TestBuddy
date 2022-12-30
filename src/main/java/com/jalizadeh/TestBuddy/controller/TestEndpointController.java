@@ -27,9 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestEndpointController {
 	
 	private static final String GRANT_TYPE = "grant_type";
-
 	private static final String PASSWORD = "password";
-
 	private static final String USERNAME = "username";
 	
 	@Autowired
@@ -86,7 +84,7 @@ public class TestEndpointController {
 		}
 		
 		//by default it is bad request
-		ResponseEntity<String> response = new ResponseEntity<String>("Unknown error", HttpStatus.BAD_REQUEST);
+		ResponseEntity<String> response = new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		
@@ -103,36 +101,37 @@ public class TestEndpointController {
 			return new ResponseEntity<>("Missing parameter",HttpStatus.BAD_REQUEST);
 		}
 		
+		if(!paramMap.get(GRANT_TYPE).equals(PASSWORD)) {
+			response = new ResponseEntity<>("Invalid grant_type", HttpStatus.BAD_REQUEST);
+		}
+		
 		if(paramMap.get(USERNAME).equals("user@name.com") && paramMap.get(PASSWORD).equals("123456")) {
 			response = new ResponseEntity<>("OK", HttpStatus.OK);
 		} else {
 			response = new ResponseEntity<>("Username or password is invalid",HttpStatus.UNAUTHORIZED);
 		}
 		
-		if(!paramMap.get(GRANT_TYPE).equals(PASSWORD)) {
-			response = new ResponseEntity<>("Invalid grant_type", HttpStatus.BAD_REQUEST);
-		}
 		
 		return response;
 	}
 	
 	
 	@PostMapping( value = "/xform", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public ResponseEntity<String> parseXForm(@RequestParam Map<String, String> paramMap) throws Exception {
+	public ResponseEntity<String> parseXForm(@RequestParam Map<String, String> paramMap) {
 		
 		if( paramMap == null || paramMap.isEmpty() ) {
 			return new ResponseEntity<>("Invalid body", HttpStatus.BAD_REQUEST);
 		}
 		
-		//by default it is bad request
-		ResponseEntity<String> response = new ResponseEntity<String>("Unknown error", HttpStatus.BAD_REQUEST);
-		
 		if(paramMap.size() != 3 
 				|| !paramMap.containsKey(USERNAME) 
 				|| !paramMap.containsKey(PASSWORD)
 				|| !paramMap.containsKey(GRANT_TYPE)) {
-			return new ResponseEntity<String>("Missing parameter",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Missing parameter",HttpStatus.BAD_REQUEST);
 		}
+		
+		//by default it is bad request
+		ResponseEntity<String> response = new ResponseEntity<>("Unknown error", HttpStatus.BAD_REQUEST);
 		
 		if(URLDecoder.decode(paramMap.get(USERNAME)).equals("user@name.com") && URLDecoder.decode(paramMap.get(PASSWORD)).equals("123456")) {
 			response = new ResponseEntity<>("OK", HttpStatus.OK);
@@ -153,7 +152,7 @@ public class TestEndpointController {
 	public ResponseEntity<String> basicAuthorizedEndpoint(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String auth) {
 		String[] values = new String[2];
 		boolean wasOK = false;
-		if (auth.length() > 0 && auth != null && auth.toLowerCase().startsWith("basic")) {
+		if (auth.length() > 0 && auth.toLowerCase().startsWith("basic")) {
 		    String base64Credentials = auth.substring("Basic".length()).trim();
 		    byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
 		    String credentials = new String(credDecoded, StandardCharsets.UTF_8);

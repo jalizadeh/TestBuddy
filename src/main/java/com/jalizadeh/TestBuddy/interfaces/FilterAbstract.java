@@ -15,6 +15,6 @@ public abstract class FilterAbstract {
 	}
 	
 	protected boolean hasDesc(PostmanParameterDescriptionJSON... desc) {
-		return (desc != null && desc.length != 0) ? true : false;
+		return (desc != null && desc.length != 0);
 	}
 }

@@ -20,7 +20,7 @@ public abstract class RequestAbstract {
 	protected RestTemplateBuilder restTemplateBuilder;
 	
 	
-	public RequestAbstract() {
+	protected RequestAbstract() {
 		this.restTemplateBuilder = new RestTemplateBuilder();
 		this.restTemplate = restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
 	}

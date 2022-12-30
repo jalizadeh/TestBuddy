@@ -22,7 +22,7 @@ public abstract class RequestPostmanAbstract extends RequestAbstract {
 			Map<String, String> queryMap, Map<String, String> dataMap, HttpHeaders headers) throws CloneNotSupportedException;
 
 	protected List<PostmanHeader> extractResponseHeader(ResponseEntity<String> response) {
-		List<PostmanHeader> responseHeaderList = new ArrayList<PostmanHeader>();
+		List<PostmanHeader> responseHeaderList = new ArrayList<>();
 		for (Entry<String, String> e : response.getHeaders().toSingleValueMap().entrySet()) {
 			PostmanHeader ph = new PostmanHeader();
 			ph.key = e.getKey();
@@ -64,19 +64,18 @@ public abstract class RequestPostmanAbstract extends RequestAbstract {
 
 	// Populate the generated example using response headers received from server
 	private List<PostmanParameter> convertModifiedMapToPP(Map<String, String> headers) {
+		List<PostmanParameter> headerList = new ArrayList<>();
+		
 		if (headers != null) {
-			List<PostmanParameter> headerList = new ArrayList<>();
 			PostmanParameter ph = new PostmanParameter();
 			headers.forEach((k, v) -> {
 				ph.key = k;
 				ph.value = v;
 				headerList.add(ph);
 			});
-
-			return headerList;
 		}
 
-		return null;
+		return headerList;
 	}
 
 }

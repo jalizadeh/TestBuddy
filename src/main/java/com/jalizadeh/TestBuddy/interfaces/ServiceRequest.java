@@ -139,14 +139,14 @@ public class ServiceRequest extends RequestAbstract {
 			case "DELETE":
 				response = restTemplate.exchange(getUrl(), HttpMethod.DELETE, this.entity, String.class);
 				break;
+			default:
+				throw new Exception("Request could not be initialized. It can be due to not supported HTTP method");
 		}
 
 		if(response != null) {
 			StatisticsManager statMng = StatisticsManager.getInstance();
 			statMng.addStat(this.name, this.method, this.url, response.getStatusCode().toString(),
-					response.getStatusCode().is2xxSuccessful() ? true : false);
-		} else {
-			throw new Exception("Request could not be initialized. It can be due to not supported HTTP method");
+					response.getStatusCode().is2xxSuccessful());
 		}
 
 		//Based on the item's body data, the appropriate request handler is selected
