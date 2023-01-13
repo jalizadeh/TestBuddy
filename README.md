@@ -240,7 +240,13 @@ Test Endpoint
 
 ## Run
 - mvn spring-boot:run
+
+## Run Tests
 - mvn clean test
+	- Allure reports are placed in `allure-report` folder
+	- Generate html report `allure serve <allure-report-folder>`
 - mvn clean site
 	- Run and generate styled report
+
+## Run Sonar
 - mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=12345

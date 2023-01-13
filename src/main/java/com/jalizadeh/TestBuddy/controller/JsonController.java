@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import com.jalizadeh.testbuddy.statistics.StatReport;
 import com.jalizadeh.testbuddy.types.Filters;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class JsonController {
 	
 	@Autowired

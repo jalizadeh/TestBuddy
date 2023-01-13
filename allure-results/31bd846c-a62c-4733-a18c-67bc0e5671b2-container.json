@@ -1,0 +1,1 @@
+{"uuid":"31bd846c-a62c-4733-a18c-67bc0e5671b2","name":"Test /json endpoints","children":["cdc3b971-87cc-4224-a5cb-5778521353cd"],"befores":[{"name":"setErrorLogging","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1673622746903,"stop":1673622746905}],"afters":[],"start":1673622746872,"stop":1673622747014}
