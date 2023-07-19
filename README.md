@@ -11,8 +11,8 @@
 Your buddy helps you to simplify your test design and test coverage.
 
 ## Scope
-Covering test cases (positive & negative) is crucial during test design and after that, test development. Covering all test cases and possible scenarios, while an REST request has different parameters, is not easy to analyze. TestBuddy checks all the parameters and for each parameter, generate a new test case, runs it and will provide a report of the request and response.
-
+Covering test cases (positive & negative) is crucial during test design and after that, test development. Covering all test cases and possible scenarios, while a REST request has different parameters, is not easy to analyze. TestBuddy checks all the parameters and for each parameter, generates a new test case, runs it and provides a report of the request and response.
+ 
 First phase, focuses on importing requests from **Postman** collection and saving the test cases as **Example** for each request.
 
 ## Test Case Analysis
@@ -30,6 +30,8 @@ A parameter of a request can be a string, number, boolean, array, object, etc. P
     - the parameter is a random value (first part of UUID)
 - [ ] Extra dummy parameter(s) (-/+)
     - the extra dummy parameter`s presence brakes the functionality or not
+- [ ] Range parameters (-/+)
+    - a range of values, like years from 2020 to 2023
 - and more ...
 
 The checked scenarios above are implemented via the **iFilter** interface.
