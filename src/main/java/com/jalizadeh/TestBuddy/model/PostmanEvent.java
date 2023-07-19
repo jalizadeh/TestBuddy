@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.model;
+package com.jalizadeh.testbuddy.model;
 
 public class PostmanEvent {
 	public String listen;

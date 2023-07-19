@@ -1,9 +1,9 @@
-package com.jalizadeh.TestBuddy.interfaces;
+package com.jalizadeh.testbuddy.interfaces;
 
 import java.util.Map;
 
-import com.jalizadeh.TestBuddy.model.PostmanParameterDescriptionJSON;
-import com.jalizadeh.TestBuddy.types.Filters;
+import com.jalizadeh.testbuddy.model.PostmanParameterDescriptionJSON;
+import com.jalizadeh.testbuddy.types.Filters;
 
 public abstract class FilterAbstract {
 	
@@ -15,6 +15,6 @@ public abstract class FilterAbstract {
 	}
 	
 	protected boolean hasDesc(PostmanParameterDescriptionJSON... desc) {
-		return (desc != null && desc.length != 0) ? true : false;
+		return (desc != null && desc.length != 0);
 	}
 }

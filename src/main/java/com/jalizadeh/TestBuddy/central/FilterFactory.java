@@ -1,16 +1,16 @@
-package com.jalizadeh.TestBuddy.central;
+package com.jalizadeh.testbuddy.central;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.jalizadeh.TestBuddy.filter.EmptyFilter;
-import com.jalizadeh.TestBuddy.filter.InvalidFilter;
-import com.jalizadeh.TestBuddy.filter.MissingFilter;
-import com.jalizadeh.TestBuddy.filter.RandomFilter;
-import com.jalizadeh.TestBuddy.interfaces.FilterAbstract;
-import com.jalizadeh.TestBuddy.types.Filters;
+import com.jalizadeh.testbuddy.filter.EmptyFilter;
+import com.jalizadeh.testbuddy.filter.InvalidFilter;
+import com.jalizadeh.testbuddy.filter.MissingFilter;
+import com.jalizadeh.testbuddy.filter.RandomFilter;
+import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
+import com.jalizadeh.testbuddy.types.Filters;
 
 @Component
 public class FilterFactory {

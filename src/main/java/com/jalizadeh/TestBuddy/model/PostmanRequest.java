@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.model;
+package com.jalizadeh.testbuddy.model;
 
 import java.util.HashMap;
 import java.util.List;
@@ -77,8 +77,8 @@ public class PostmanRequest implements Cloneable{
 	
 
 	@JsonIgnore
-	public String getUrl(PostmanVariables var) {
-		return var.replace(url.raw);
+	public String getUrl(PostmanVariables pv) {
+		return pv.replace(url.raw);
 	}
 	
 	
@@ -98,16 +98,16 @@ public class PostmanRequest implements Cloneable{
 	
 
 	@JsonIgnore
-	public Map<String, String> getHeaders(PostmanVariables var) {
+	public Map<String, String> getHeaders(PostmanVariables pv) {
 		Map<String, String> result = new HashMap<>();
 		if (header == null || header.isEmpty()) {
 			return result;
 		}
 		for (PostmanParameter head : header) {
 			if (head.key.toUpperCase().equals(PoyntHttpHeaders.REQUEST_ID_HEADER)) {
-				result.put(head.key.toUpperCase(), var.replace(head.value));
+				result.put(head.key.toUpperCase(), pv.replace(head.value));
 			} else {
-				result.put(head.key, var.replace(head.value));
+				result.put(head.key, pv.replace(head.value));
 			}
 		}
 		return result;

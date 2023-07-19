@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.exception;
+package com.jalizadeh.testbuddy.exception;
 
 import java.io.IOException;
 

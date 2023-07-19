@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.interfaces;
+package com.jalizadeh.testbuddy.interfaces;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,14 +12,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
-import com.jalizadeh.TestBuddy.central.FiltersManager;
-import com.jalizadeh.TestBuddy.central.RequestFactory;
-import com.jalizadeh.TestBuddy.central.StatisticsManager;
-import com.jalizadeh.TestBuddy.model.PostmanItem;
-import com.jalizadeh.TestBuddy.model.PostmanRequest;
-import com.jalizadeh.TestBuddy.model.PostmanResponse;
-import com.jalizadeh.TestBuddy.model.PostmanUrl;
-import com.jalizadeh.TestBuddy.types.FilterTarget;
+import com.jalizadeh.testbuddy.central.FiltersManager;
+import com.jalizadeh.testbuddy.central.RequestFactory;
+import com.jalizadeh.testbuddy.central.StatisticsManager;
+import com.jalizadeh.testbuddy.model.PostmanItem;
+import com.jalizadeh.testbuddy.model.PostmanRequest;
+import com.jalizadeh.testbuddy.model.PostmanResponse;
+import com.jalizadeh.testbuddy.model.PostmanUrl;
+import com.jalizadeh.testbuddy.types.FilterTarget;
 
 public class ServiceRequest extends RequestAbstract {
 
@@ -139,11 +139,13 @@ public class ServiceRequest extends RequestAbstract {
 			case "DELETE":
 				response = restTemplate.exchange(getUrl(), HttpMethod.DELETE, this.entity, String.class);
 				break;
+			default:
+				throw new Exception("Request could not be initialized. It can be due to not supported HTTP method");
 		}
 
 		StatisticsManager statMng = StatisticsManager.getInstance();
 		statMng.addStat(this.name, this.method, this.url, response.getStatusCode().toString(),
-				response.getStatusCode().is2xxSuccessful() ? true : false);
+					response.getStatusCode().is2xxSuccessful());
 
 		//Based on the item's body data, the appropriate request handler is selected
 		RequestPostmanAbstract request = requestFactory.getRequest(this.bodyMode);
@@ -173,7 +175,7 @@ public class ServiceRequest extends RequestAbstract {
 				dataMap = this.bodyDataMap;
 				break;
 			default:
-				return null;
+				return new ArrayList<>();
 		}
 		
 		// T/F table of possibilities / cases

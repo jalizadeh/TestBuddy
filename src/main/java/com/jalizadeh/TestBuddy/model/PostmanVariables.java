@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.model;
+package com.jalizadeh.testbuddy.model;
 
 import java.util.ArrayList;
 import java.util.List;

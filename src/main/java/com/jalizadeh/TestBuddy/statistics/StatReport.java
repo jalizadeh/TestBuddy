@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.statistics;
+package com.jalizadeh.testbuddy.statistics;
 
 import java.util.List;
 

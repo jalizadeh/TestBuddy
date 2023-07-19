@@ -1,8 +1,8 @@
-package com.jalizadeh.TestBuddy.model;
+package com.jalizadeh.testbuddy.model;
 
 import java.util.List;
 
-import com.jalizadeh.TestBuddy.types.Filters;
+import com.jalizadeh.testbuddy.types.Filters;
 
 import lombok.Data;
 

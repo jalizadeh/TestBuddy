@@ -1,6 +1,6 @@
-package com.jalizadeh.TestBuddy.requestImpl;
+package com.jalizadeh.testbuddy.requestImpl;
 
-import com.jalizadeh.TestBuddy.interfaces.RequestAbstract;
+import com.jalizadeh.testbuddy.interfaces.RequestAbstract;
 
 public class RequestTestGet extends RequestAbstract{
 

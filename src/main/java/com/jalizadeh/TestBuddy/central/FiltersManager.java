@@ -1,12 +1,12 @@
-package com.jalizadeh.TestBuddy.central;
+package com.jalizadeh.testbuddy.central;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.jalizadeh.TestBuddy.interfaces.FilterAbstract;
-import com.jalizadeh.TestBuddy.types.Filters;
+import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
+import com.jalizadeh.testbuddy.types.Filters;
 
 public class FiltersManager {
 
@@ -15,7 +15,7 @@ public class FiltersManager {
 	
 	
 	private FiltersManager() {
-		this.filters = new HashMap<>();
+		filters = new EnumMap<>(Filters.class);
 	}
 	
 	
@@ -28,19 +28,19 @@ public class FiltersManager {
 	
 	
 	public void addFilter(FilterAbstract filter) {
-		this.filters.put(filter.getFilterName(), filter);
+		filters.put(filter.getFilterName(), filter);
 	}
 	
 	//List is sorted ascending by filter's name
 	public List<FilterAbstract> getFilters(){
-		return this.filters.values().stream()
+		return filters.values().stream()
 				.sorted((a,b) -> a.getFilterName().compareTo(b.getFilterName()))
 				.collect(Collectors.toList());
 	}
 
 
 	public void clearFilters() {
-		this.filters.clear();
+		filters.clear();
 	}
 	
 }

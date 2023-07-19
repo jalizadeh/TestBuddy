@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.model;
+package com.jalizadeh.testbuddy.model;
 
 public class PostmanUrlEncoded {
 	public String key;

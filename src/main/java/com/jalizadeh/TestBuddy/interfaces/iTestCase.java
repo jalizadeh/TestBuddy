@@ -1,4 +1,4 @@
-package com.jalizadeh.TestBuddy.interfaces;
+package com.jalizadeh.testbuddy.interfaces;
 
 public interface iTestCase {
 	
