@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpHeaders;
 
 import com.jalizadeh.testbuddy.interfaces.RequestPostmanAbstract;
-import com.jalizadeh.testbuddy.model.PostmanBody;
-import com.jalizadeh.testbuddy.model.PostmanItem;
-import com.jalizadeh.testbuddy.model.PostmanResponse;
-import com.jalizadeh.testbuddy.model.PostmanUrlEncoded;
+import com.jalizadeh.testbuddy.model.postman.PostmanBody;
+import com.jalizadeh.testbuddy.model.postman.PostmanItem;
+import com.jalizadeh.testbuddy.model.postman.PostmanResponse;
+import com.jalizadeh.testbuddy.model.postman.PostmanUrlEncoded;
 import com.jalizadeh.testbuddy.types.RequestBodyType;
 
 public class RequestUrlencodedText extends RequestPostmanAbstract{

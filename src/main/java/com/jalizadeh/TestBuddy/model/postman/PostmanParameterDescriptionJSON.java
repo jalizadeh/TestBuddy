@@ -1,4 +1,4 @@
-package com.jalizadeh.testbuddy.model;
+package com.jalizadeh.testbuddy.model.postman;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jalizadeh.testbuddy.types.PostmanParameterDescriptionType;

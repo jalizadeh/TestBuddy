@@ -1,4 +1,4 @@
-package com.jalizadeh.testbuddy.model;
+package com.jalizadeh.testbuddy.model.postman;
 
 import java.util.ArrayList;
 import java.util.List;

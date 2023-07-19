@@ -3,18 +3,15 @@ package com.jalizadeh.testbuddy.runner;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jalizadeh.testbuddy.model.PostmanCollection;
-import com.jalizadeh.testbuddy.model.PostmanFolder;
-import com.jalizadeh.testbuddy.model.PostmanItem;
-import com.jalizadeh.testbuddy.model.PostmanReader;
-import com.jalizadeh.testbuddy.model.PostmanVariables;
-
+import com.jalizadeh.testbuddy.model.postman.PostmanCollection;
+import com.jalizadeh.testbuddy.model.postman.PostmanFolder;
+import com.jalizadeh.testbuddy.model.postman.PostmanItem;
+import com.jalizadeh.testbuddy.model.postman.PostmanReader;
 
 
 public class PostmanCollectionRunner implements Runnable {

@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.StreamSupport;
 
+import com.jalizadeh.testbuddy.types.FilterType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -42,7 +41,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.testbuddy.central.FiltersManager;
 import com.jalizadeh.testbuddy.model.InputRequest;
-import com.jalizadeh.testbuddy.types.Filters;
 
 @DisplayName("Test /json endpoints")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -74,10 +72,10 @@ class JSONEndpointTests {
 	
 	@Disabled("FiltersManager is a part of the service, not test application")
 	@ParameterizedTest
-	@EnumSource(Filters.class)
+	@EnumSource(FilterType.class)
 	@Order(1)
 	@DisplayName("FilterManager has correct number of filters")
-	void testJSONEndpoint_givenFilterList_createsCorrectlyTheFilterManager(Filters filter) {
+	void testJSONEndpoint_givenFilterList_createsCorrectlyTheFilterManager(FilterType filter) {
 		//empty list of filters => only positive cases
 		requestBody.setFilters(Arrays.asList(filter));
 		restTemplate.postForEntity(getUrl(), getEntity(requestBody), String.class);
@@ -95,7 +93,7 @@ class JSONEndpointTests {
 		//reqBody.setFilters(new ArrayList<>());
 		
 		//4 unique filters (duplicates are ignored)
-		requestBody.setFilters(Arrays.asList(Filters.EMPTY, Filters.EMPTY, Filters.INVALID, Filters.MISSING, Filters.RANDOM));
+		requestBody.setFilters(Arrays.asList(FilterType.EMPTY, FilterType.EMPTY, FilterType.INVALID, FilterType.MISSING, FilterType.RANDOM));
 		
 		ResponseEntity<String> r = restTemplate.exchange(getUrl(), HttpMethod.POST, 
 						getEntity(requestBody), String.class);

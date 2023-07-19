@@ -1,23 +1,14 @@
 package com.jalizadeh.testbuddy.runner;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.UUID;
-import javax.net.ssl.SSLContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRange;
 import org.springframework.http.HttpRequest;
 
-import com.jalizadeh.testbuddy.model.PostmanItem;
-import com.jalizadeh.testbuddy.model.PostmanVariables;
+import com.jalizadeh.testbuddy.model.postman.PostmanItem;
+import com.jalizadeh.testbuddy.model.postman.PostmanVariables;
 
 
 public class PostmanRequestRunner {

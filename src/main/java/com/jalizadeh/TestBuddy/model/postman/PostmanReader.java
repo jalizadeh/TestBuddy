@@ -1,4 +1,4 @@
-package com.jalizadeh.testbuddy.model;
+package com.jalizadeh.testbuddy.model.postman;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -8,11 +8,11 @@ import java.util.Map.Entry;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import com.jalizadeh.testbuddy.model.PostmanHeader;
-import com.jalizadeh.testbuddy.model.PostmanItem;
-import com.jalizadeh.testbuddy.model.PostmanParameter;
-import com.jalizadeh.testbuddy.model.PostmanRequest;
-import com.jalizadeh.testbuddy.model.PostmanResponse;
+import com.jalizadeh.testbuddy.model.postman.PostmanHeader;
+import com.jalizadeh.testbuddy.model.postman.PostmanItem;
+import com.jalizadeh.testbuddy.model.postman.PostmanParameter;
+import com.jalizadeh.testbuddy.model.postman.PostmanRequest;
+import com.jalizadeh.testbuddy.model.postman.PostmanResponse;
 
 public abstract class RequestPostmanAbstract extends RequestAbstract {
 

@@ -1,4 +1,4 @@
-package com.jalizadeh.testbuddy.model;
+package com.jalizadeh.testbuddy.model.postman;
 
 public class PostmanHeader implements Cloneable {
 	

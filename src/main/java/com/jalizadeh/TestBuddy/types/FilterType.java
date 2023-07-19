@@ -1,6 +1,6 @@
 package com.jalizadeh.testbuddy.types;
 
-public enum Filters {
+public enum FilterType {
 	EMPTY,
 	INVALID,
 	MISSING,

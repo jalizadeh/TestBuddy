@@ -4,14 +4,14 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
-import com.jalizadeh.testbuddy.model.PostmanParameterDescriptionJSON;
-import com.jalizadeh.testbuddy.types.Filters;
+import com.jalizadeh.testbuddy.model.postman.PostmanParameterDescriptionJSON;
+import com.jalizadeh.testbuddy.types.FilterType;
 
 public class RandomFilter extends FilterAbstract{
 
 	@Override
-	public Filters getFilterName() {
-		return Filters.RANDOM;
+	public FilterType getFilterName() {
+		return FilterType.RANDOM;
 	}
 
 	@Override

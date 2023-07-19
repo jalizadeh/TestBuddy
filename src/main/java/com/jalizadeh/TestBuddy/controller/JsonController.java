@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.jalizadeh.testbuddy.types.FilterType;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,11 +21,10 @@ import com.jalizadeh.testbuddy.central.FilterFactory;
 import com.jalizadeh.testbuddy.central.FiltersManager;
 import com.jalizadeh.testbuddy.central.StatisticsManager;
 import com.jalizadeh.testbuddy.model.InputRequest;
-import com.jalizadeh.testbuddy.model.PostmanCollection;
+import com.jalizadeh.testbuddy.model.postman.PostmanCollection;
 import com.jalizadeh.testbuddy.runner.PostmanCollectionRunner;
 import com.jalizadeh.testbuddy.service.RestService;
-import com.jalizadeh.testbuddy.statistics.StatReport;
-import com.jalizadeh.testbuddy.types.Filters;
+import com.jalizadeh.testbuddy.model.statistics.StatReport;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -121,7 +121,7 @@ public class JsonController {
 		if(validateInput(input)) {
 			instance.clearFilters();
 			
-			for(Filters f : input.getFilters()) {
+			for(FilterType f : input.getFilters()) {
 				try {
 					instance.addFilter(filterFactory.create(f));
 				} catch (Exception e) {

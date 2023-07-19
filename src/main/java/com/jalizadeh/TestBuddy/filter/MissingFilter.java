@@ -3,14 +3,14 @@ package com.jalizadeh.testbuddy.filter;
 import java.util.Map;
 
 import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
-import com.jalizadeh.testbuddy.model.PostmanParameterDescriptionJSON;
-import com.jalizadeh.testbuddy.types.Filters;
+import com.jalizadeh.testbuddy.model.postman.PostmanParameterDescriptionJSON;
+import com.jalizadeh.testbuddy.types.FilterType;
 
 public class MissingFilter extends FilterAbstract{
 
 	@Override
-	public Filters getFilterName() {
-		return Filters.MISSING;
+	public FilterType getFilterName() {
+		return FilterType.MISSING;
 	}
 	
 	@Override

@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.jalizadeh.testbuddy.central.StatisticsManager;
 import com.jalizadeh.testbuddy.interfaces.ServiceRequest;
-import com.jalizadeh.testbuddy.model.PostmanCollection;
-import com.jalizadeh.testbuddy.model.PostmanItem;
-import com.jalizadeh.testbuddy.model.PostmanResponse;
+import com.jalizadeh.testbuddy.model.postman.PostmanCollection;
+import com.jalizadeh.testbuddy.model.postman.PostmanItem;
+import com.jalizadeh.testbuddy.model.postman.PostmanResponse;
 import com.jalizadeh.testbuddy.types.FilterTarget;
 
 @Service

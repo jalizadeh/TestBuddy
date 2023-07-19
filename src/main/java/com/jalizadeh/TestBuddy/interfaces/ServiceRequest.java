@@ -15,10 +15,10 @@ import org.springframework.http.ResponseEntity;
 import com.jalizadeh.testbuddy.central.FiltersManager;
 import com.jalizadeh.testbuddy.central.RequestFactory;
 import com.jalizadeh.testbuddy.central.StatisticsManager;
-import com.jalizadeh.testbuddy.model.PostmanItem;
-import com.jalizadeh.testbuddy.model.PostmanRequest;
-import com.jalizadeh.testbuddy.model.PostmanResponse;
-import com.jalizadeh.testbuddy.model.PostmanUrl;
+import com.jalizadeh.testbuddy.model.postman.PostmanItem;
+import com.jalizadeh.testbuddy.model.postman.PostmanRequest;
+import com.jalizadeh.testbuddy.model.postman.PostmanResponse;
+import com.jalizadeh.testbuddy.model.postman.PostmanUrl;
 import com.jalizadeh.testbuddy.types.FilterTarget;
 
 public class ServiceRequest extends RequestAbstract {

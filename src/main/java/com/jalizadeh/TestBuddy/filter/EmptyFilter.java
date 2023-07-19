@@ -3,8 +3,8 @@ package com.jalizadeh.testbuddy.filter;
 import java.util.Map;
 
 import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
-import com.jalizadeh.testbuddy.model.PostmanParameterDescriptionJSON;
-import com.jalizadeh.testbuddy.types.Filters;
+import com.jalizadeh.testbuddy.model.postman.PostmanParameterDescriptionJSON;
+import com.jalizadeh.testbuddy.types.FilterType;
 
 /**
  * This filter will put empty value instead of the parameter's <i>value</i>
@@ -12,8 +12,8 @@ import com.jalizadeh.testbuddy.types.Filters;
 public class EmptyFilter extends FilterAbstract{
 	
 	@Override
-	public Filters getFilterName() {
-		return Filters.EMPTY;
+	public FilterType getFilterName() {
+		return FilterType.EMPTY;
 	}
 	
 	
