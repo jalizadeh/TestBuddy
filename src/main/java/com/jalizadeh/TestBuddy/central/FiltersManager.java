@@ -6,16 +6,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
-import com.jalizadeh.testbuddy.types.Filters;
+import com.jalizadeh.testbuddy.types.FilterType;
 
 public class FiltersManager {
 
 	private static FiltersManager instance;
-	private Map<Filters, FilterAbstract> filters;
+	private Map<FilterType, FilterAbstract> filters;
 	
 	
 	private FiltersManager() {
-		filters = new EnumMap<>(Filters.class);
+		filters = new EnumMap<>(FilterType.class);
 	}
 	
 	

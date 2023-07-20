@@ -1,30 +1,25 @@
 package com.jalizadeh.testbuddy.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
-
-import com.jalizadeh.testbuddy.types.FilterType;
-import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalizadeh.testbuddy.central.FilterFactory;
 import com.jalizadeh.testbuddy.central.FiltersManager;
 import com.jalizadeh.testbuddy.central.StatisticsManager;
 import com.jalizadeh.testbuddy.model.InputRequest;
 import com.jalizadeh.testbuddy.model.postman.PostmanCollection;
+import com.jalizadeh.testbuddy.model.statistics.StatReport;
 import com.jalizadeh.testbuddy.runner.PostmanCollectionRunner;
 import com.jalizadeh.testbuddy.service.RestService;
-import com.jalizadeh.testbuddy.model.statistics.StatReport;
+import com.jalizadeh.testbuddy.types.FilterType;
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")

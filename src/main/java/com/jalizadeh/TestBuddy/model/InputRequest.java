@@ -2,7 +2,7 @@ package com.jalizadeh.testbuddy.model;
 
 import java.util.List;
 
-import com.jalizadeh.testbuddy.types.Filters;
+import com.jalizadeh.testbuddy.types.FilterType;
 
 import lombok.Data;
 
@@ -10,6 +10,6 @@ import lombok.Data;
 @Data
 public class InputRequest {
 
-	List<Filters> filters;
+	List<FilterType> filters;
 	
 }

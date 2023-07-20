@@ -10,7 +10,7 @@ import com.jalizadeh.testbuddy.filter.InvalidFilter;
 import com.jalizadeh.testbuddy.filter.MissingFilter;
 import com.jalizadeh.testbuddy.filter.RandomFilter;
 import com.jalizadeh.testbuddy.interfaces.FilterAbstract;
-import com.jalizadeh.testbuddy.types.Filters;
+import com.jalizadeh.testbuddy.types.FilterType;
 
 @Component
 public class FilterFactory {
@@ -25,7 +25,7 @@ public class FilterFactory {
 	
 	
 	
-	public FilterAbstract create(Filters filterName) throws Exception {
+	public FilterAbstract create(FilterType filterName) throws Exception {
 		return listFilters.stream()
 			.filter(f -> f.getFilterName().equals(filterName))
 			.findFirst()
