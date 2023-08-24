@@ -1,87 +1,202 @@
-a:visited, a:hover, a:active, a:focus {
-   text-decoration: none !important;
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-
-button{ 
-   text-decoration: none !important;
-}
-  
-  
-
-pre {
-   overflow-x: auto;
-   white-space: pre-wrap;
-   white-space: -moz-pre-wrap;
-   white-space: -pre-wrap;
-   white-space: -o-pre-wrap;
-   word-wrap: break-word;
+body {
+    background-color: #fff;
+    font-family: Helvetica, Arial, sans-serif;
+    overflow: hidden;
 }
 
-
-.container {
-    max-width: 90%;
-}
-
-
-.badge {
-	-webkit-box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	box-sizing: content-box;
-}
-
-.badge:before, .badge:after {
-	-webkit-box-sizing: content-box;
-	-moz-box-sizing: content-box;
-	box-sizing: content-box;
-}
-
-.callout {
-  padding: 20px;
-  margin: 20px 0;
-  border: 1px solid #eee;
-  border-left-width: 5px;
-  border-radius: 3px;
-  h4 {
-    margin-top: 0;
-    margin-bottom: 5px;
-  }
-  p:last-child {
-    margin-bottom: 0;
-  }
-  code {
-    border-radius: 3px;
-  }
-  & + .bs-callout {
-    margin-top: -5px;
-  }
-}
-@each $name,$color in (default,#777),(primary,#428bca),(success,#5cb85c),(danger,#d9534f),(warning,#f0ad4e),(info,#5bc0de), (bdc,#29527a) {
-  .callout-#{$name} {
-    border-left-color: $color;
-    h4 {
-      color: $color;
-    }
-  }
-}
-
-
-.btn-delete-todo{
-	color: #ccc;
-}
-
-.btn-delete-todo:hover{
-	color: #a71d2a;
-}
-
-footer {
-    position: fixed;
-    /* height: 100px; */
-    bottom: 0;
+table {
+    height: 100%;
     width: 100%;
 }
 
+input, textarea {
+    border: 1px solid #EEE;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
 
-#page-content {
-  flex: 1 0 auto;
+#blocklyWorkspace {
+    height: 99%;
+    text-align: center;
+}
+
+
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+.dropdown-menu {
+    font-size: inherit;
+}
+
+.topbar {
+    background-color: #fbfbfb;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 104px;
+}
+
+.topbar > * {
+    position: absolute;
+}
+
+.topbar #docName {
+    right: 120px;
+    left: 60px;
+    top: 8px;
+    height: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 12px;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.topbar .app-logo {
+    width: 26px;
+    height: 36px;
+    margin: 14px 0 8px 23px;
+    background-image: url(img/docsign.svg.png);
+    background-position: center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: default;
+}
+
+.topbar .menubar {
+    padding-left: 62px;
+    box-sizing: border-box;
+    top: 36px;
+    color: #202124;
+}
+
+.topbar .menuitem {
+    padding: 6px 6px 6px 9px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.topbar .menuitem .fa {
+    margin-right: 0.5rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.topbar .toolbars {
+    left: 0;
+    right: 0;
+    top: 64px;
+    height: 38px;
+    border-top: 1px solid rgb(218, 220, 224);
+    padding: 6px 0 6px 12px;
+    color: rgba(0, 0, 0, .7);
+
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -ms-user-select: none; /* IE10+ */
+}
+
+.topbar .toolbars .toolbar {
+    display: inline-block;
+    border-right: 1px solid #e5e5e5;
+    padding: 0 6px;
+}
+
+.topbar .toolbars .toolbar.pull-right {
+    border-right: none;
+    border-left: 1px solid #e5e5e5;
+}
+
+.topbar .toolbars a, .topbar .toolbars a:link {
+    margin: 4px 6px;
+    color: inherit;
+    cursor: pointer;
+}
+
+#propsPane {
+    display: none;
+    border-top: 1px solid rgb(218, 220, 224);
+    border-left: 1px solid rgb(218, 220, 224);
+    width: 50%;
+    background-color: #fbfbfb;
+    vertical-align: top;
+    padding: 1em;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#propsPane img {
+    height: 1rem;
+    margin-right: 0.25rem;
+    vertical-align: baseline;
+}
+
+#propsPane .properties {
+}
+
+#propsPane .element-name {
+    width: 100%
+}
+
+#propsPane .element-class {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#propEditor {
+    padding-top: 0.5rem;
+}
+
+#propEditor .row {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#propEditor input, #propEditor textarea {
+    width: 100%;
+}
+
+#propEditor th, #propEditor .col-sm-4 {
+    vertical-align: middle;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*
+    overflow-wrap: break-word;
+    */
+}
+
+#propEditor td {
+    vertical-align: middle;
+    text-align: left;
+}
+
+#propEditor input[type=checkbox] {
+    width: auto;
+}
+
+.freq-divider {
+    border-bottom: 1px solid #fbfbfb;
+    text-align: right;
+    text-transform: uppercase;
+    color: #fbfbfb;
+    font-size: 0.5em;
+}
+
+
+.blocklyFlyoutBackground {
+    fill: #fbfbfb;
+    fill-opacity: 1.0;
+    stroke: rgb(218, 220, 224);
+    stroke-width: 1;
 }
